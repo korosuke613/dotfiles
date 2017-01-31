@@ -1,5 +1,6 @@
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/Futa/.oh-my-zsh
+export DOTFILES=~/dotfiles
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -92,5 +93,6 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 #ユーザー設定の読み込み
-source $HOME/.zshrc.custom
+source $DOTFILES/zsh/.zshrc.custom
+source $DOTFILES/zsh/.zshrc.alias
 
