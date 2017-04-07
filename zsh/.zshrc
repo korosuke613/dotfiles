@@ -96,3 +96,7 @@ source $ZSH/oh-my-zsh.sh
 source $DOTFILES/zsh/.zshrc.custom
 source $DOTFILES/zsh/.zshrc.alias
 
+#phpを7.xに
+PATH="/usr/local/bin:$PATH"
+export PATH="$(brew --prefix homebrew/php/php70)/bin:$PATH"
+PATH="/usr/local/sbin:$PATH"
