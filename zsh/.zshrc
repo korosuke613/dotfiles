@@ -96,3 +96,5 @@ source $ZSH/oh-my-zsh.sh
 source $DOTFILES/zsh/.zshrc.custom
 source $DOTFILES/zsh/.zshrc.alias
 
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
