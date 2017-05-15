@@ -60,7 +60,7 @@ export PATH="/usr/bin:/bin"
 export PATH="/usr/local/sbin:$PATH"
 export PATH="/usr/local/bin:$PATH"
 export PATH=/bin:/usr/bin:/usr/local/bin:${PATH}
-export PATH="/usr/sbin/$PATH"
+export PATH="/usr/sbin/:$PATH"
 export PATH="/usr/local/bin:$PATH"
 
 # export MANPATH="/usr/local/man:$MANPATH"
