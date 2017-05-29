@@ -97,6 +97,10 @@ source $ZSH/oh-my-zsh.sh
 source $DOTFILES/zsh/.zshrc.custom
 source $DOTFILES/zsh/.zshrc.alias
 
+
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
 #phpを7.xに
 PATH="/usr/local/bin:$PATH"
 export PATH="$(brew --prefix homebrew/php/php70)/bin:$PATH"
