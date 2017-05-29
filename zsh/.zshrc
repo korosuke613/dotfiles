@@ -59,9 +59,10 @@ plugins=(brew brew-cask cdd gem git rbenv vagrant)
 export PATH="/usr/bin:/bin"
 export PATH="/usr/local/sbin:$PATH"
 export PATH="/usr/local/bin:$PATH"
-export PATH=/bin:/usr/bin:/usr/local/bin:${PATH}
-export PATH="/usr/sbin/$PATH"
+export PATH="/bin:/usr/bin:/usr/local/bin:$PATH"
+export PATH="/usr/sbin/:$PATH"
 export PATH="/usr/local/bin:$PATH"
+export PATH=~/dotfiles/create:$PATH
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -100,3 +101,5 @@ source $DOTFILES/zsh/.zshrc.alias
 PATH="/usr/local/bin:$PATH"
 export PATH="$(brew --prefix homebrew/php/php70)/bin:$PATH"
 PATH="/usr/local/sbin:$PATH"
+
+export PATH=~/Dropbox/katlab/ETrobo/workspace/hrp2/gcc-arm-none-eabi-5_4-2016q3/bin:$PATH
