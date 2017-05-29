@@ -1,0 +1,21 @@
+#! /bin/bash -eu
+
+today=`date '+%Y_%m_%d'`
+extension='.tex'
+
+if [ -e $today ] ; then
+    echo Alraady exist directory
+    exit 1;
+fi
+
+mkdir $today
+echo made directory
+
+cd $today
+echo current directory is $today
+cp ../hinagata.tex ./$today$extension
+echo copied hinagata.tex
+open /Applications/TeX/TeXShop.app ./$today$extension
+echo open $today$extension
+
+echo done...
