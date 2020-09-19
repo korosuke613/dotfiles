@@ -15,9 +15,6 @@ export DOTFILES="${HOME}/dotfiles"
 source $DOTFILES/zsh/.zshrc.custom
 source $DOTFILES/zsh/.zshrc.alias
 
-fpath+=~/.zfunc
-
 eval "$(starship init zsh)"
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
