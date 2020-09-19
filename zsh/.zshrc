@@ -11,6 +11,7 @@ export PATH="$HOME/.poetry/bin:$PATH"
 
 
 #ユーザー設定の読み込み
+export DOTFILES="${HOME}/dotfiles"
 source $DOTFILES/zsh/.zshrc.custom
 source $DOTFILES/zsh/.zshrc.alias
 
