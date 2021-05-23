@@ -1,0 +1,25 @@
+[user]
+	name = Futa Hirakoba
+	email = futa-hirakoba@cybozu.co.jp
+
+[core]
+	autocrlf = input
+	pager = delta
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge --skip -- %f
+	process = git-lfs filter-process --skip
+	required = true
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    side-by-side = true
+    line-numbers-left-format = ""
+    line-numbers-right-format = "│ "
+    syntax-theme = Nord
+
+[init]
+	defaultBranch = main

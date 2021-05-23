@@ -1,0 +1,28 @@
+#!/usr/bin/env zsh
+
+export ZPLUG_HOME=/usr/local/opt/zplug
+
+# shellcheck source=/usr/local/opt/zplug
+source ${ZPLUG_HOME}/init.zsh
+
+## Completion
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
+zplug "zsh-users/zsh-autosuggestions", defer:2
+zplug "zsh-users/zsh-completions", defer:2
+
+#
+## Git alias
+#zplug "plugins/git",   from:oh-my-zsh
+#
+## Themeb
+#zplug mafredri/zsh-async, from:github
+#zplug sindresorhus/pure, use:pure.zsh, from:github, as:theme
+#
+if ! zplug check --verbose; then
+  printf "Install? [y/N]: "
+  if read -q; then
+    echo; zplug install
+  fi
+fi
+
+zplug load
