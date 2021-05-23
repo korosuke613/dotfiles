@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 
-export DOTFILES_ZSH_HOME=~/dotfiles/zsh
+export DOTFILES_HOME=~/dotfiles
+export DOTFILES_ZSH_HOME=${DOTFILES_HOME}/zsh
 
 # zplugの設定
 # shellcheck source=.zshrc.zplug
@@ -59,3 +60,7 @@ eval "$(starship init zsh)"
 # alias
 # shellcheck source=.zshrc.alias
 source ${DOTFILES_ZSH_HOME}/.zshrc.alias
+
+# check_update_dotfiles
+# shellcheck source=.zshrc.check_update_dotfiles
+source ${DOTFILES_ZSH_HOME}/.zshrc.check_update_dotfiles
