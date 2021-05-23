@@ -1,0 +1,16 @@
+#!/usr/bin/env zsh
+
+function is_dirty_worktree() {
+  git -C "${DOTFILES_HOME}" status --porcelain
+}
+
+if [ "$(is_dirty_worktree)" ]; then
+  echo -e "\e[33m=== DOTFILES IS DIRTY ===\e[m"
+  echo -e "\e[33m  The dotfiles have been changed. Please update them with the following command.\e[m"
+  echo
+  echo -e "  cd ${DOTFILES_HOME}"
+  echo -e "  git add ."
+  echo -e "  git commit -m \"update dotfiles\""
+  echo -e "  git push origin main"
+  echo -e "\e[33m=========================\e[m"
+fi
