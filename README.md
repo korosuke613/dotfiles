@@ -23,7 +23,7 @@ cd ~/dotfiles
 ./setup.sh
 ```
 
-### Features
+## Features
 
 ### Check update dotfiles repository
 When loading .zshrc, it will tell you if there are any changes in the dotfiles repository.
