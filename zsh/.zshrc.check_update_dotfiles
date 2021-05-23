@@ -1,16 +1,24 @@
 #!/usr/bin/env zsh
 
 function is_dirty_worktree() {
-  git -C "${DOTFILES_HOME}" status --porcelain
+	git -C "${DOTFILES_HOME}" status --porcelain
+	return $?
 }
 
-if [ "$(is_dirty_worktree)" ]; then
-  echo -e "\e[33m=== DOTFILES IS DIRTY ===\e[m"
-  echo -e "\e[33m  The dotfiles have been changed. Please update them with the following command.\e[m"
-  echo
-  echo -e "  cd ${DOTFILES_HOME}"
-  echo -e "  git add ."
-  echo -e "  git commit -m \"update dotfiles\""
-  echo -e "  git push origin main"
-  echo -e "\e[33m=========================\e[m"
+function is_dont_push() {
+	git -C "${DOTFILES_HOME}" diff --exit-code --stat --cached origin/main
+	return $?
+}
+
+if [ "$(is_dirty_worktree)" ] || [ "$(is_dont_push)" ]; then
+  echo -e "\e[36m=== DOTFILES IS DIRTY ===\e[m"
+  echo -e "\e[33mThe dotfiles have been changed.\e[m"
+  echo -e "\e[33mPlease update them with the following command.\e[m"
+  echo "  cd ${DOTFILES_HOME}"
+  echo "  git add ."
+  echo "  git commit -m \"update dotfiles\""
+  echo "  git push origin main"
+  echo -e "\e[33mor\e[m"
+  echo "  git push origin main"
+  echo -e "\e[36m=========================\e[m"
 fi
