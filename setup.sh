@@ -1,6 +1,17 @@
 #!/bin/sh
 
-echo "dotfilesLink is Start !"
+# brew がインストールされていなければインストール
+if [ -z "$(command -v brew)" ]; then
+    echo "--- Install Homebrew is Start! ---"
+
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    brew bundle
+
+    echo "--- Install Homebrew is Done!  ---"
+fi
+
+# dotfilesを配置
+echo "--- Link dotfiles is Start! ---"
 
 # vim
 ln -sf ~/dotfiles/vim/.vimrc ~/.vimrc
@@ -21,4 +32,4 @@ mkdir -p ~/.config/git
 ln -sf ~/dotfiles/git/.gitconfig ~/.gitconfig
 ln -sf ~/dotfiles/git/ignore ~/.config/git/ignore
 
-echo "dotfilesLink is End !"
+echo "--- Link dotfiles is Done!  ---"
