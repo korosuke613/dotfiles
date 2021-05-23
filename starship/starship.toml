@@ -1,0 +1,17 @@
+[character]
+error_symbol = "[✗](bold red)"
+
+[terraform]
+format = "[$symbol$version]($style) "
+
+[aws]
+format = 'on [$symbol($profile )(\[$duration\])]($style)'
+
+[gcloud]
+disabled = true
+
+[custom.git_email]
+command = "git config user.email | awk -F '[@]' '{print $2}'"
+when = """ git status """
+format = "📨 [$output]($style) "
+
