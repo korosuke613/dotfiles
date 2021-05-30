@@ -1,4 +1,4 @@
-nodejs 14.16.1
+nodejs 14.17.0
 golang 1.15.7
 terraform 0.14.9
 awscli 2.1.34
