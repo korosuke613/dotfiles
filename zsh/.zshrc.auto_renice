@@ -1,0 +1,19 @@
+#!/usr/bin/env zsh
+
+NICE_VALUE="-10"
+APPS=(
+  "JapaneseIM-RomajiTyping.app" # mac標準日本語入力IME
+  "EmojiFunctionRowIM.app" # mac標準日本語入力IME
+)
+
+for app in "${APPS[@]}"
+do
+  pids=($(pgrep -f "${app}"))
+  now_nice=$(ps -p "${pids[*]}" -o nice | tail -1)
+
+  if [ "${now_nice}" -ne $NICE_VALUE ]; then
+    # appのnice値が更新されてなかったらreniceする
+    echo -e "\e[33mRun renice ${app} \e[m"
+    sudo renice $NICE_VALUE "${pids[@]}"
+  fi
+done

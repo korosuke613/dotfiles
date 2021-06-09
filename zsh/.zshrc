@@ -50,6 +50,10 @@ source ${DOTFILES_ZSH_HOME}/.zshrc.asdf
 # shellcheck source=.zshrc.auto_assam
 source ${DOTFILES_ZSH_HOME}/.zshrc.auto_assam
 
+# auto renice
+# shellcheck source=.zshrc.auto_renice
+source ${DOTFILES_ZSH_HOME}/.zshrc.auto_renice
+
 # setting tabtab
 # shellcheck source=.zshrc.tabtab
 source ${DOTFILES_ZSH_HOME}/.zshrc.tabtab
