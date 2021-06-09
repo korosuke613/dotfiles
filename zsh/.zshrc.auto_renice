@@ -3,6 +3,8 @@
 NICE_VALUE="-10"
 APPS=(
   "JapaneseIM-RomajiTyping.app" # mac標準日本語入力IME
+  "TextInputMenuAgent.app" # mac標準日本語入力IME
+  "TextInputSwitcher.app" # mac標準日本語入力IME
   "EmojiFunctionRowIM.app" # mac標準日本語入力IME
 )
 
