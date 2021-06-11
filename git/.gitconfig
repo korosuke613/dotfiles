@@ -16,10 +16,11 @@
     diffFilter = delta --color-only
 
 [delta]
-    side-by-side = true
-    line-numbers-left-format = ""
-    line-numbers-right-format = "│ "
-    syntax-theme = Nord
+	#side-by-side = true
+	line-numbers = true
+	#line-numbers-left-format = ""
+	#line-numbers-right-format = "│ "
+    syntax-theme = Dracula
 
 [init]
 	defaultBranch = main
