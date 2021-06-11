@@ -6,6 +6,8 @@ APPS=(
   "TextInputMenuAgent.app" # mac標準日本語入力IME
   "TextInputSwitcher.app" # mac標準日本語入力IME
   "EmojiFunctionRowIM.app" # mac標準日本語入力IME
+  "GoogleJapaneseInput.app" # google IME
+  "Kawasemi3.app" # かわせみ3 IME
 )
 
 for app in "${APPS[@]}"
