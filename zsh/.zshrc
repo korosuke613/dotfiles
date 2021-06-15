@@ -52,7 +52,8 @@ source ${DOTFILES_ZSH_HOME}/.zshrc.auto_assam
 
 # auto renice
 # shellcheck source=.zshrc.auto_renice
-source ${DOTFILES_ZSH_HOME}/.zshrc.auto_renice
+source ${DOTFILES_ZSH_HOME}/.zshrc.auto_renice_fast
+source ${DOTFILES_ZSH_HOME}/.zshrc.auto_renice_slow
 
 # setting tabtab
 # shellcheck source=.zshrc.tabtab
