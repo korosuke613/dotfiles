@@ -69,3 +69,8 @@ source ${DOTFILES_ZSH_HOME}/.zshrc.alias
 # check_update_dotfiles
 # shellcheck source=.zshrc.check_update_dotfiles
 source ${DOTFILES_ZSH_HOME}/.zshrc.check_update_dotfiles
+
+# exec local script
+# shellcheck source=.zshrc.local
+source ${DOTFILES_ZSH_HOME}/.zshrc.local
+

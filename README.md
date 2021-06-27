@@ -15,6 +15,7 @@ git clone https://github.com/korosuke613/dotfiles.git
 ```shell
 cd ~/dotfiles/zsh
 touch .zshrc.proxy_ip
+touch .zshrc.local
 ```
 
 ### Install the required libraries && Place each dotfiles as a symbolic link
