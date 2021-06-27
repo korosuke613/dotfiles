@@ -12,7 +12,7 @@ brew "asdf"
 brew "bat"
 brew "direnv"
 brew "exa"
-brew "ffmpeg"                                                │
+brew "ffmpeg"                                                
 brew "gh"
 brew "ghq"
 brew "git"
