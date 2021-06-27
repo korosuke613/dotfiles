@@ -10,6 +10,10 @@ if [ -z "$(command -v brew)" ]; then
     echo "--- Install Homebrew is Done!  ---"
 fi
 
+# vim-plugをインストール
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
 # dotfilesを配置
 echo "--- Link dotfiles is Start! ---"
 
