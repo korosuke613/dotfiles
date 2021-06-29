@@ -7,3 +7,4 @@ deno 1.10.2
 kind 0.10.0
 rust stable
 python 3.9.5
+ruby 2.7.3
