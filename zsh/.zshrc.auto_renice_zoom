@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-NICE_VALUE="10"
+NICE_VALUE="-18"
 APPS=(
   "zoom.us.app"  # zoom
 )
