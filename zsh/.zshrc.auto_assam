@@ -1,10 +1,10 @@
 #!/usr/bin/env zsh
 
 # aws/credentials があれば assam する 
-if [ -d ~/.aws/credentials ]; then
+if [ -f ~/.aws/credentials ]; then
     LAST_USE_ASSAM_ELAPSED_TIME=$(( $(date +%s) - $(date -r ~/.aws/credentials +%s) ))
     HALF_DAY_UNIX_TIME=43200
-    
+
     if [ $(( $LAST_USE_ASSAM_ELAPSED_TIME - $HALF_DAY_UNIX_TIME )) -gt 0 ]; then
     	# 最後のassamから1日以上経過していたらassamする
     	echo -e "\e[33mRun assam. Because it has been 12 hours since the last run...\e[m"
