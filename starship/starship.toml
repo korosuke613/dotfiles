@@ -1,3 +1,5 @@
+command_timeout	= 1200
+
 [character]
 error_symbol = "[✗](bold red)"
 
