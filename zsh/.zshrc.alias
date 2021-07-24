@@ -11,6 +11,7 @@ alias gpsf='gps --force-with-lease'
 alias gsw="git switch"
 alias gswc="gsw -c"
 alias gl="git log"
+alias wip='echo "$(alias wip)\\n" && git commit -m "wip: $(TZ=-9 date +"%Y/%m/%d %H:%M:%S")" -m "$(git diff --staged --stat)"'
 
 alias tf="terraform"
 alias sed="gsed"
