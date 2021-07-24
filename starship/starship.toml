@@ -1,7 +1,7 @@
 command_timeout	= 1200
 
 [character]
-error_symbol = "[✗](bold red)"
+error_symbol = "[❯](bold #ff0000)"
 
 [terraform]
 format = "[$symbol$version]($style) "
