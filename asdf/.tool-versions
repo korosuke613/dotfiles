@@ -3,8 +3,9 @@ golang 1.16.4
 terraform 0.14.9
 awscli 2.1.34
 java corretto-11.0.10.9.1
-deno 1.12.0
+deno 1.13.1
 kind 0.10.0
 rust stable
 python 3.9.5
 ruby 2.7.3
+gradle 7.2
