@@ -10,8 +10,6 @@
 	<true/>
 	<key>AutoHideTmuxClientSession</key>
 	<true/>
-	<key>BootstrapDaemon</key>
-	<false/>
 	<key>BracketedPasteMode</key>
 	<true/>
 	<key>ConvertDosNewlines</key>
