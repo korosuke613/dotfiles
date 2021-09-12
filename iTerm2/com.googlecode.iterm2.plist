@@ -18,6 +18,12 @@
 	<true/>
 	<key>Default Bookmark Guid</key>
 	<string>5D9EAAD0-85F5-4970-93BF-2E88B293A3C3</string>
+	<key>DimBackgroundWindows</key>
+	<false/>
+	<key>DimInactiveSplitPanes</key>
+	<true/>
+	<key>DimOnlyText</key>
+	<false/>
 	<key>DisableWindowSizeSnap</key>
 	<false/>
 	<key>EnableDivisionView</key>
@@ -58,6 +64,8 @@ Preferences...</string>
 	<integer>10</integer>
 	<key>MaxVertically</key>
 	<false/>
+	<key>MinimalSplitPaneDividerProminence</key>
+	<real>0.15000000596046448</real>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -949,10 +957,14 @@ Preferences...</string>
 	<false/>
 	<key>SeparateWindowTitlePerTab</key>
 	<true/>
+	<key>ShowPaneTitles</key>
+	<true/>
 	<key>SmartPlacement</key>
 	<false/>
 	<key>SoundForEsc</key>
 	<false/>
+	<key>SplitPaneDimmingAmount</key>
+	<real>0.11588805798858288</real>
 	<key>StatusBarPosition</key>
 	<integer>0</integer>
 	<key>TabStyleWithAutomaticOption</key>
