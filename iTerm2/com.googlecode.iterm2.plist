@@ -26,6 +26,28 @@
 	<false/>
 	<key>EscapeShellCharsWithBackslash</key>
 	<false/>
+	<key>GlobalTouchBarMap</key>
+	<dict>
+		<key>touchbar:8E511EBD-701E-4191-BFD6-9BA8678C0EC3</key>
+		<dict>
+			<key>Action</key>
+			<integer>25</integer>
+			<key>Label</key>
+			<string>Preferences ⚙️</string>
+			<key>Text</key>
+			<string>Preferences...
+Preferences...</string>
+		</dict>
+		<key>touchbar:F0E6A2D9-40F1-4851-AE44-0E596B72AE3F</key>
+		<dict>
+			<key>Action</key>
+			<integer>15</integer>
+			<key>Label</key>
+			<string>Replay 📼</string>
+			<key>Text</key>
+			<string></string>
+		</dict>
+	</dict>
 	<key>HapticFeedbackForEsc</key>
 	<false/>
 	<key>HideScrollbar</key>
