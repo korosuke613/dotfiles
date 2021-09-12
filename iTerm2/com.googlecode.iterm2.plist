@@ -252,13 +252,13 @@ Preferences...</string>
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.27450980392156865</real>
+				<real>0.28301286697387695</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.12156862745098039</real>
+				<real>0.13504524705649601</real>
 				<key>Red Component</key>
-				<real>0.26666666666666666</real>
+				<real>0.27542478501015871</real>
 			</dict>
 			<key>Background Image Location</key>
 			<string></string>
@@ -267,7 +267,7 @@ Preferences...</string>
 			<key>Blinking Cursor</key>
 			<false/>
 			<key>Blur</key>
-			<true/>
+			<false/>
 			<key>Blur Radius</key>
 			<real>3.2256256418129832</real>
 			<key>Bold Color</key>
@@ -787,6 +787,19 @@ Preferences...</string>
 					<string></string>
 				</dict>
 			</dict>
+			<key>Link Color</key>
+			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
+				<key>Blue Component</key>
+				<real>1</real>
+				<key>Color Space</key>
+				<string>sRGB</string>
+				<key>Green Component</key>
+				<real>0.44313725490196076</real>
+				<key>Red Component</key>
+				<real>0.40784313725490196</real>
+			</dict>
 			<key>Minimum Contrast</key>
 			<real>0.0</real>
 			<key>Mouse Reporting</key>
@@ -883,7 +896,7 @@ Preferences...</string>
 			<key>Title Components</key>
 			<integer>6</integer>
 			<key>Transparency</key>
-			<real>0.17467898219563391</real>
+			<real>0.15734134949359696</real>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -964,7 +977,7 @@ Preferences...</string>
 	<key>SoundForEsc</key>
 	<false/>
 	<key>SplitPaneDimmingAmount</key>
-	<real>0.11588805798858288</real>
+	<real>0.025956026173006151</real>
 	<key>StatusBarPosition</key>
 	<integer>0</integer>
 	<key>TabStyleWithAutomaticOption</key>
