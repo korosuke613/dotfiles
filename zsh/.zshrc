@@ -78,3 +78,5 @@ source ${DOTFILES_ZSH_HOME}/.zshrc.check_update_dotfiles
 # shellcheck source=.zshrc.local
 source ${DOTFILES_ZSH_HOME}/.zshrc.local
 
+export LIMA_INSTANCE=docker
+export DOCKER_HOST=ssh://localhost:60006
