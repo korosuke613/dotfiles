@@ -54,6 +54,8 @@ Preferences...</string>
 	<false/>
 	<key>HotkeyMigratedFromSingleToMulti</key>
 	<true/>
+	<key>IRMemory</key>
+	<integer>10</integer>
 	<key>MaxVertically</key>
 	<false/>
 	<key>New Bookmarks</key>
@@ -804,7 +806,7 @@ Preferences...</string>
 			<key>Screen</key>
 			<integer>-1</integer>
 			<key>Scrollback Lines</key>
-			<integer>1000</integer>
+			<integer>5000</integer>
 			<key>Scrollback With Status Bar</key>
 			<false/>
 			<key>Selected Text Color</key>
