@@ -27,9 +27,6 @@ eval "$(direnv hook zsh)"
 # shellcheck source=.zshrc.autocomplete
 source ${DOTFILES_ZSH_HOME}/.zshrc.autocomplete
 
-# setting JAVA_HOME
-export JAVA_HOME=$(/usr/libexec/java_home)
-
 # ls を exa に置き換える
 # shellcheck source=.zshrc.exa
 source ${DOTFILES_ZSH_HOME}/.zshrc.exa
