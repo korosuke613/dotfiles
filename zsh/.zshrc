@@ -1,11 +1,11 @@
 #!/usr/bin/env zsh
+#### FIG ENV VARIABLES ####
+# Please make sure this block is at the start of this file.
+[ -s ~/.fig/shell/pre.sh ] && source ~/.fig/shell/pre.sh
+#### END FIG ENV VARIABLES ####
 
 export DOTFILES_HOME=~/dotfiles
 export DOTFILES_ZSH_HOME=${DOTFILES_HOME}/zsh
-
-# figの設定
-# shellcheck source=.zshrc.fig
-source ${DOTFILES_ZSH_HOME}/.zshrc.fig_start
 
 # zplugの設定
 # shellcheck source=.zshrc.zplug
@@ -79,6 +79,7 @@ source ${DOTFILES_ZSH_HOME}/.zshrc.check_update_dotfiles
 # shellcheck source=.zshrc.local
 source ${DOTFILES_ZSH_HOME}/.zshrc.local
 
-# figの設定
-# shellcheck source=.zshrc.fig
-source ${DOTFILES_ZSH_HOME}/.zshrc.fig_end
+#### FIG ENV VARIABLES ####
+# Please make sure this block is at the end of this file.
+[ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
+#### END FIG ENV VARIABLES ####
