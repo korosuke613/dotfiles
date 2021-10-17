@@ -3,6 +3,10 @@
 export DOTFILES_HOME=~/dotfiles
 export DOTFILES_ZSH_HOME=${DOTFILES_HOME}/zsh
 
+# figの設定
+# shellcheck source=.zshrc.fig
+source ${DOTFILES_ZSH_HOME}/.zshrc.fig_start
+
 # zplugの設定
 # shellcheck source=.zshrc.zplug
 source ${DOTFILES_ZSH_HOME}/.zshrc.zplug
@@ -75,5 +79,6 @@ source ${DOTFILES_ZSH_HOME}/.zshrc.check_update_dotfiles
 # shellcheck source=.zshrc.local
 source ${DOTFILES_ZSH_HOME}/.zshrc.local
 
-export LIMA_INSTANCE=docker
-export DOCKER_HOST=ssh://localhost:60006
+# figの設定
+# shellcheck source=.zshrc.fig
+source ${DOTFILES_ZSH_HOME}/.zshrc.fig_end
