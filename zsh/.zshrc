@@ -71,6 +71,10 @@ source ${DOTFILES_ZSH_HOME}/.zshrc.alias
 # shellcheck source=.zshrc.cd_fzf
 source ${DOTFILES_ZSH_HOME}/.zshrc.cd_fzf
 
+# lima
+# shellcheck source=.zshrc.lima
+source ${DOTFILES_ZSH_HOME}/.zshrc.lima
+
 # check_update_dotfiles
 # shellcheck source=.zshrc.check_update_dotfiles
 source ${DOTFILES_ZSH_HOME}/.zshrc.check_update_dotfiles
@@ -83,3 +87,4 @@ source ${DOTFILES_ZSH_HOME}/.zshrc.local
 # Please make sure this block is at the end of this file.
 [ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
 #### END FIG ENV VARIABLES ####
+export PATH="/usr/local/opt/ansible@2.9/bin:$PATH"
