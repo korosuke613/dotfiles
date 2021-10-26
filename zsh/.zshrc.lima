@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
 
 export LIMA_INSTANCE=example-docker
-export DOCKER_HOST=ssh://localhost:60006
+export DOCKER_HOST=ssh://lima@localhost:60006
 export DOCKER_BUILDKIT=1
