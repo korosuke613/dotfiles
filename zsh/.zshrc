@@ -83,6 +83,8 @@ source ${DOTFILES_ZSH_HOME}/.zshrc.check_update_dotfiles
 # shellcheck source=.zshrc.local
 source ${DOTFILES_ZSH_HOME}/.zshrc.local
 
+alias go-reshim='GOV=$(asdf where golang) export GOROOT=$GOV/go'
+
 #### FIG ENV VARIABLES ####
 # Please make sure this block is at the end of this file.
 [ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
