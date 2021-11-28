@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638121071562,
+  "lastUpdate": 1638121989898,
   "repoUrl": "https://github.com/korosuke613/dotfiles",
   "entries": {
     "Benchmark": [
@@ -101,6 +101,40 @@ window.BENCHMARK_DATA = {
           {
             "name": "zsh install time",
             "value": 0.01,
+            "unit": "Second"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "korosuke613613@gmail.com",
+            "name": "Futa HIRAKOBA",
+            "username": "korosuke613"
+          },
+          "committer": {
+            "email": "korosuke613613@gmail.com",
+            "name": "Futa HIRAKOBA",
+            "username": "korosuke613"
+          },
+          "distinct": true,
+          "id": "2b0b23bfd40972049378cb418a5d3fd59c933284",
+          "message": "wip: 2021/11/29 02:48:52\n\n .github/workflows/benchmark.yaml | 13 ++++++++++++-\n Brewfile                         |  1 +\n zsh/.zshrc                       |  4 +++-\n zsh/.zshrc.proxy                 |  4 ++++\n 4 files changed, 20 insertions(+), 2 deletions(-)",
+          "timestamp": "2021-11-29T02:48:52+09:00",
+          "tree_id": "4c6ba661f8b27033bc6a79a40d4b0d6821ccfcc8",
+          "url": "https://github.com/korosuke613/dotfiles/commit/2b0b23bfd40972049378cb418a5d3fd59c933284"
+        },
+        "date": 1638121989245,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "zsh load time",
+            "value": 0.0145161,
+            "unit": "Second"
+          },
+          {
+            "name": "zsh install time",
+            "value": 0.1,
             "unit": "Second"
           }
         ]
