@@ -1,6 +1,8 @@
 # dotfiles
 my dotfiles ...
 
+Benchmark: https://korosuke613.github.io/dotfiles/dev/bench/
+
 ## Setup
 
 ### Clone this repository
