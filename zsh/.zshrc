@@ -1,4 +1,5 @@
 #!/usr/bin/env zsh
+
 #### FIG ENV VARIABLES ####
 # Please make sure this block is at the start of this file.
 [ -s ~/.fig/shell/pre.sh ] && source ~/.fig/shell/pre.sh
@@ -7,9 +8,9 @@
 export DOTFILES_HOME=~/dotfiles
 export DOTFILES_ZSH_HOME=${DOTFILES_HOME}/zsh
 
-# zplugの設定
-# shellcheck source=.zshrc.zplug
-source ${DOTFILES_ZSH_HOME}/.zshrc.zplug
+# zshの設定
+# shellcheck source=.zshrc.setting
+source ${DOTFILES_ZSH_HOME}/.zshrc.setting
 
 # proxy設定
 # shellcheck source=.zshrc.proxy
@@ -89,4 +90,3 @@ alias go-reshim='GOV=$(asdf where golang) export GOROOT=$GOV/go'
 # Please make sure this block is at the end of this file.
 [ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
 #### END FIG ENV VARIABLES ####
-export PATH="/usr/local/opt/ansible@2.9/bin:$PATH"
