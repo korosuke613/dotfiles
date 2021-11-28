@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638124426161,
+  "lastUpdate": 1638125254348,
   "repoUrl": "https://github.com/korosuke613/dotfiles",
   "entries": {
     "Benchmark": [
@@ -203,6 +203,40 @@ window.BENCHMARK_DATA = {
           {
             "name": "zsh install time",
             "value": 0.1,
+            "unit": "Second"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "korosuke613@users.noreply.github.com",
+            "name": "Futa HIRAKOBA",
+            "username": "korosuke613"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7fa896383cfd1278bb9c359c810a9fdfc4026818",
+          "message": "Merge pull request #8 from korosuke613/setting-benchmark\n\nfeat: settings benchmark",
+          "timestamp": "2021-11-29T03:37:51+09:00",
+          "tree_id": "27154b9311851438c9323d012dcb3a58a23dc3a4",
+          "url": "https://github.com/korosuke613/dotfiles/commit/7fa896383cfd1278bb9c359c810a9fdfc4026818"
+        },
+        "date": 1638125253235,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "zsh load time",
+            "value": 0.0141935,
+            "unit": "Second"
+          },
+          {
+            "name": "zsh install time",
+            "value": 0.17,
             "unit": "Second"
           }
         ]
