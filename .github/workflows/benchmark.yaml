@@ -12,6 +12,8 @@ permissions:
   # contents permission to update benchmark contents in gh-pages branch
   contents: write
 
+concurrency: benchmark
+
 jobs:
   benchmark:
     runs-on: macos-latest
