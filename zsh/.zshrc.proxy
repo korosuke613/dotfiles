@@ -3,6 +3,10 @@
 # プロキシサーバ: proxy.xxx.yyy.zzz.jp:80
 # ネットワーク設定名: プロキシ設定
 
+if [[ ! -f "${DOTFILES_ZSH_HOME}/.zshrc.proxy_ip" ]]; then
+  exit 0
+fi
+
 proxy_name=$(cat "${DOTFILES_ZSH_HOME}/.zshrc.proxy_ip")
 switch_trigger=社内
 
