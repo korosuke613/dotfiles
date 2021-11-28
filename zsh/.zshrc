@@ -2,10 +2,15 @@
 
 #### FIG ENV VARIABLES ####
 # Please make sure this block is at the start of this file.
-[ -s ~/.fig/shell/pre.sh ] && source ~/.fig/shell/pre.sh
+if [[ -s ~/.fig/shell/pre.sh ]] then;
+ source ~/.fig/shell/pre.sh
+fi
 #### END FIG ENV VARIABLES ####
 
-export DOTFILES_HOME=~/dotfiles
+if [[ -z "${DOTFILES_HOME}" ]]; then
+  export DOTFILES_HOME=~/dotfiles
+fi
+
 export DOTFILES_ZSH_HOME=${DOTFILES_HOME}/zsh
 
 # zshの設定
@@ -82,11 +87,15 @@ source ${DOTFILES_ZSH_HOME}/.zshrc.check_update_dotfiles
 
 # exec local script
 # shellcheck source=.zshrc.local
-source ${DOTFILES_ZSH_HOME}/.zshrc.local
+if [[ -f "${DOTFILES_ZSH_HOME}/.zshrc.local" ]]; then
+  source ${DOTFILES_ZSH_HOME}/.zshrc.local
+fi
 
 alias go-reshim='GOV=$(asdf where golang) export GOROOT=$GOV/go'
 
 #### FIG ENV VARIABLES ####
 # Please make sure this block is at the end of this file.
-[ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
+if [[ -s ~/.fig/fig.sh ]] then;
+  source ~/.fig/fig.sh
+fi
 #### END FIG ENV VARIABLES ####
