@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638125675303,
+  "lastUpdate": 1638126013070,
   "repoUrl": "https://github.com/korosuke613/dotfiles",
   "entries": {
     "Benchmark": [
@@ -266,6 +266,38 @@ window.BENCHMARK_DATA = {
           {
             "name": "zsh load time",
             "value": 0.0148387,
+            "unit": "Second"
+          },
+          {
+            "name": "zsh install time",
+            "value": 0.11,
+            "unit": "Second"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Futa HIRAKOBA",
+            "username": "korosuke613",
+            "email": "korosuke613613@gmail.com"
+          },
+          "committer": {
+            "name": "Futa HIRAKOBA",
+            "username": "korosuke613",
+            "email": "korosuke613613@gmail.com"
+          },
+          "id": "ccce8d46d17eb9f4e3cf748e69e54977fb860f22",
+          "message": "feat: setting concurrency for benchmark",
+          "timestamp": "2021-11-28T18:43:54Z",
+          "url": "https://github.com/korosuke613/dotfiles/commit/ccce8d46d17eb9f4e3cf748e69e54977fb860f22"
+        },
+        "date": 1638126011869,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "zsh load time",
+            "value": 0.0145161,
             "unit": "Second"
           },
           {
