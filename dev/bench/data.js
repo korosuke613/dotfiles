@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1638126013070,
+  "lastUpdate": 1639444454365,
   "repoUrl": "https://github.com/korosuke613/dotfiles",
   "entries": {
     "Benchmark": [
@@ -303,6 +303,40 @@ window.BENCHMARK_DATA = {
           {
             "name": "zsh install time",
             "value": 0.11,
+            "unit": "Second"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "korosuke613613@gmail.com",
+            "name": "Futa HIRAKOBA",
+            "username": "korosuke613"
+          },
+          "committer": {
+            "email": "korosuke613613@gmail.com",
+            "name": "Futa HIRAKOBA",
+            "username": "korosuke613"
+          },
+          "distinct": true,
+          "id": "97072ff7186947d26e14256e65d541fced1f7265",
+          "message": "fix: docker host for lima",
+          "timestamp": "2021-12-14T10:06:01+09:00",
+          "tree_id": "b8c1b6e6ca7354184580be69f83711a6f6c8c260",
+          "url": "https://github.com/korosuke613/dotfiles/commit/97072ff7186947d26e14256e65d541fced1f7265"
+        },
+        "date": 1639444453336,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "zsh load time",
+            "value": 0.016129,
+            "unit": "Second"
+          },
+          {
+            "name": "zsh install time",
+            "value": 0.14,
             "unit": "Second"
           }
         ]
