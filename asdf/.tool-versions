@@ -14,3 +14,4 @@ helm 3.7.1
 eksctl 0.70.0
 conftest v0.28.2
 protoc 3.19.1
+kubectl-kots 1.58.2
