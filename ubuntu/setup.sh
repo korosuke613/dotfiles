@@ -56,5 +56,9 @@ mkdir -p ~/.config/git
 ln -sf ${DOTENV_HOME}/git/.gitconfig ~/.gitconfig
 ln -sf ${DOTENV_HOME}/git/ignore ~/.config/git/ignore
 
+if [[ ! -d ~/dotfiles ]]; then
+  ln -s $DOTENV_HOME/.. ~/dotfiles
+fi
+
 # デフォルトシェルの変更
 sudo chsh -s "$(which zsh)" $USER
