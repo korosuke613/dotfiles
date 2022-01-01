@@ -4,7 +4,7 @@ set -x
 
 cd `dirname $0`
 
-export DOTENV_HOME=$(pwd)/ubuntu
+export DOTENV_HOME=$(pwd)
 
 # apt
 sudo apt-get update
