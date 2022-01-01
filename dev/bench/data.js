@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641034549545,
+  "lastUpdate": 1641042764892,
   "repoUrl": "https://github.com/korosuke613/dotfiles",
   "entries": {
     "Benchmark": [
@@ -371,6 +371,40 @@ window.BENCHMARK_DATA = {
           {
             "name": "zsh install time",
             "value": 0.24,
+            "unit": "Second"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "korosuke613@users.noreply.github.com",
+            "name": "Futa HIRAKOBA",
+            "username": "korosuke613"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f4a0e5f003394a9924738f0695b735eaa0c062dd",
+          "message": "Merge pull request #10 from korosuke613/ubuntu\n\nfeat: setting ubuntu",
+          "timestamp": "2022-01-01T22:07:36+09:00",
+          "tree_id": "a8b359cac31257ffa4ed3da39c96f9d922d510ca",
+          "url": "https://github.com/korosuke613/dotfiles/commit/f4a0e5f003394a9924738f0695b735eaa0c062dd"
+        },
+        "date": 1641042764213,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "zsh load time",
+            "value": 0.0129032,
+            "unit": "Second"
+          },
+          {
+            "name": "zsh install time",
+            "value": 0.11,
             "unit": "Second"
           }
         ]
