@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641042764892,
+  "lastUpdate": 1641043421020,
   "repoUrl": "https://github.com/korosuke613/dotfiles",
   "entries": {
     "Benchmark": [
@@ -400,6 +400,40 @@ window.BENCHMARK_DATA = {
           {
             "name": "zsh load time",
             "value": 0.0129032,
+            "unit": "Second"
+          },
+          {
+            "name": "zsh install time",
+            "value": 0.11,
+            "unit": "Second"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "korosuke613@users.noreply.github.com",
+            "name": "Futa HIRAKOBA",
+            "username": "korosuke613"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "73098af01f9ebc03f8d889f200fafd78889b87cf",
+          "message": "fix: ubuntu setting for codespaces",
+          "timestamp": "2022-01-01T13:18:27Z",
+          "tree_id": "cb4cf621a2a5688724023b10c8dd8690d6d32a6f",
+          "url": "https://github.com/korosuke613/dotfiles/commit/73098af01f9ebc03f8d889f200fafd78889b87cf"
+        },
+        "date": 1641043420231,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "zsh load time",
+            "value": 0.0132258,
             "unit": "Second"
           },
           {
