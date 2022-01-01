@@ -8,7 +8,7 @@ fi
 #### END FIG ENV VARIABLES ####
 
 if [[ -z "${DOTFILES_HOME}" ]]; then
-  export DOTFILES_HOME=~/dotfiles
+  export DOTFILES_HOME=~/dotfiles/mac
 fi
 
 export DOTFILES_ZSH_HOME=${DOTFILES_HOME}/zsh
