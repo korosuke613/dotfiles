@@ -18,32 +18,27 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 echo "--- Link dotfiles is Start! ---"
 
 # vim
-ln -sf ~/dotfiles/vim/.vimrc ~/.vimrc
+ln -sf ~/dotfiles/mac/vim/.vimrc ~/.vimrc
 
 # zsh
-ln -sf ~/dotfiles/zsh/.zshrc ~/.zshrc
+ln -sf ~/dotfiles/mac/zsh/.zshrc ~/.zshrc
 
 # starship
 mkdir -p ~/.config
-ln -sf ~/dotfiles/starship/starship.toml ~/.config/starship.toml
+ln -sf ~/dotfiles/mac/starship/starship.toml ~/.config/starship.toml
 
 # asdf
-ln -sf ~/dotfiles/asdf/.asdfrc ~/.asdfrc
-ln -sf ~/dotfiles/asdf/.tool-versions ~/.tool-versions
+ln -sf ~/dotfiles/mac/asdf/.asdfrc ~/.asdfrc
+ln -sf ~/dotfiles/mac/asdf/.tool-versions ~/.tool-versions
 
 # git
 mkdir -p ~/.config/git
-ln -sf ~/dotfiles/git/.gitconfig ~/.gitconfig
-ln -sf ~/dotfiles/git/ignore ~/.config/git/ignore
-
-# kitty
-mkdir -p ~/.config/kitty
-ln -sf ~/dotfiles/kitty/kitty.conf ~/.config/kitty/kitty.conf
-ln -sf ~/dotfiles/kitty/macos-launch-services-cmdline ~/.config/kitty/macos-launch-services-cmdline
+ln -sf ~/dotfiles/mac/git/.gitconfig ~/.gitconfig
+ln -sf ~/dotfiles/mac/git/ignore ~/.config/git/ignore
 
 # hammerspoon
 mkdir -p ~/.hammerspoon
-ln -sf ~/dotfiles/hammerspoon/init.lua ~/.hammerspoon/init.lua
+ln -sf ~/dotfiles/mac/hammerspoon/init.lua ~/.hammerspoon/init.lua
 
 
 echo "--- Link dotfiles is Done!  ---"

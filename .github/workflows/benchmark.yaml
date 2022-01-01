@@ -20,13 +20,13 @@ jobs:
     timeout-minutes: 15
     env:
       DOTFILES_HOME: /Users/runner/work/dotfiles/dotfiles
-      ZDOTDIR: /Users/runner/work/dotfiles/dotfiles/zsh
+      ZDOTDIR: /Users/runner/work/dotfiles/dotfiles/mac/zsh
       TERM_PROGRAM: Apple_Terminal
-      XDG_CONFIG_HOME: /Users/runner/work/dotfiles/dotfiles/zsh
-      
+      XDG_CONFIG_HOME: /Users/runner/work/dotfiles/dotfiles/mac/zsh
+
     steps:
     - uses: actions/checkout@v2
-    
+
     - name: link zshrc
       run: ln -sf $ZDOTDIR/.zshrc ~/.zshrc && echo $ZDOTDIR
 
@@ -44,7 +44,7 @@ jobs:
     - name: Set up Homebrew
       id: set-up-homebrew
       uses: Homebrew/actions/setup-homebrew@94e3bec1ef6f44b49185f96a83e716756fd7b088
-      
+
     - name: Install Formula
       env:
         HOMEBREW_NO_INSTALL_UPGRADE: 1
@@ -56,7 +56,7 @@ jobs:
       run: |
         echo $ZDOTDIR
         ./.github/workflows/benchmark.sh > result.json
-    
+
     - name: Upload benchmark
       uses: benchmark-action/github-action-benchmark@v1
       with:

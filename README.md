@@ -3,7 +3,7 @@ my dotfiles ...
 
 Benchmark: https://korosuke613.github.io/dotfiles/dev/bench/
 
-## Setup
+## Setup (mac)
 
 ### Clone this repository
 **Please clone the dotfiles directly under your home directory.**
@@ -15,14 +15,14 @@ git clone https://github.com/korosuke613/dotfiles.git
 
 ### Add zsh/.zshrc.proxy_ip
 ```shell
-cd ~/dotfiles/zsh
+cd ~/dotfiles/mac/zsh
 touch .zshrc.proxy_ip
 touch .zshrc.local
 ```
 
 ### Install the required libraries && Place each dotfiles as a symbolic link
 ```shell
-cd ~/dotfiles
+cd ~/dotfiles/mac
 ./setup.sh
 ```
 
@@ -31,7 +31,7 @@ cd ~/dotfiles
 ### Check update dotfiles repository
 When loading .zshrc, it will tell you if there are any changes in the dotfiles repository.
 
-[details](./zsh/.zshrc.check_update_dotfiles)
+[details](mac/zsh/.zshrc.check_update_dotfiles)
 
 ```
 === DOTFILES IS DIRTY ===
