@@ -1,0 +1,25 @@
+#!/usr/bin/env zsh
+
+alias gs="git status"
+alias gcm="git commit -m"
+alias gca="git commit --amend"
+alias gcan="git commit --amend --no-edit"
+alias gaa="git add -A"
+alias gpl='git pull --rebase --set-upstream origin $(git branch --show-current)'
+alias gps='git push --set-upstream origin $(git branch --show-current)'
+alias gpsf='gps --force-with-lease'
+alias gsw="git switch"
+alias gswc="gsw -c"
+alias gl="git log"
+alias wip='echo "$(alias wip)\\n" && git commit -m "wip: $(TZ=-9 date +"%Y/%m/%d %H:%M:%S")" -m "$(git diff --staged --stat)"'
+
+alias tf="terraform"
+alias tigs="tig status"
+alias cdq='cd $(ghq root)/$(ghq list | fzf)'
+
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+alias vi='vim'
+
+alias fd='fdfind'

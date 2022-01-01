@@ -1,0 +1,8 @@
+[user]
+	name = Futa HIRAKOBA
+	email = futa-hirakoba@cybozu.co.jp
+
+[init]
+	defaultBranch = main
+[pull]
+	rebase = true
