@@ -2,7 +2,9 @@
 
 set -x
 
-export DOTENV_HOME=~/dotfiles/ubuntu
+cd `dirname $0`
+
+export DOTENV_HOME=$(pwd)/ubuntu
 
 # apt
 sudo apt-get update
@@ -56,6 +58,3 @@ ln -sf ${DOTENV_HOME}/git/ignore ~/.config/git/ignore
 
 # デフォルトシェルの変更
 sudo chsh -s "$(which zsh)" $USER
-
-# zsh 再起動
-exec zsh -l
