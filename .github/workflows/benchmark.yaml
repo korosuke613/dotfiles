@@ -19,7 +19,7 @@ jobs:
     runs-on: macos-latest
     timeout-minutes: 15
     env:
-      DOTFILES_HOME: /Users/runner/work/dotfiles/dotfiles
+      DOTFILES_HOME: /Users/runner/work/dotfiles/dotfiles/mac
       ZDOTDIR: /Users/runner/work/dotfiles/dotfiles/mac/zsh
       TERM_PROGRAM: Apple_Terminal
       XDG_CONFIG_HOME: /Users/runner/work/dotfiles/dotfiles/mac/zsh
