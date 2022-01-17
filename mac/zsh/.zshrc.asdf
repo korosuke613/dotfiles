@@ -2,10 +2,6 @@
 
 . "$(brew --prefix asdf)/asdf.sh"
 
-#Use the "where" command
-GOV=$(asdf where golang)
-export GOROOT=$GOV/go
-
 # setting JAVA_HOME
 # shellcheck source=$HOME/.asdf/plugins/java/set-java-home.zsh
 . ~/.asdf/plugins/java/set-java-home.zsh
