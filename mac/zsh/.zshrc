@@ -91,7 +91,9 @@ if [[ -f "${DOTFILES_ZSH_HOME}/.zshrc.local" ]]; then
   source ${DOTFILES_ZSH_HOME}/.zshrc.local
 fi
 
-alias go-reshim='GOV=$(asdf where golang) export GOROOT=$GOV/go'
+# Setting of Go
+export GOPATH=$(go env GOPATH)
+export PATH=$PATH:$GOPATH/bin
 
 #### FIG ENV VARIABLES ####
 # Please make sure this block is at the end of this file.
