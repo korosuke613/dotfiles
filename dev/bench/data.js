@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1641045303892,
+  "lastUpdate": 1642412727497,
   "repoUrl": "https://github.com/korosuke613/dotfiles",
   "entries": {
     "Benchmark": [
@@ -497,6 +497,40 @@ window.BENCHMARK_DATA = {
           "url": "https://github.com/korosuke613/dotfiles/commit/bbb96cffc7c21126458682098245e94c0bfa8625"
         },
         "date": 1641045302713,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "zsh load time",
+            "value": 0.0141935,
+            "unit": "Second"
+          },
+          {
+            "name": "zsh install time",
+            "value": 0.11,
+            "unit": "Second"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "korosuke613613@gmail.com",
+            "name": "Futa HIRAKOBA",
+            "username": "korosuke613"
+          },
+          "committer": {
+            "email": "korosuke613613@gmail.com",
+            "name": "Futa HIRAKOBA",
+            "username": "korosuke613"
+          },
+          "distinct": true,
+          "id": "23990ed74fdc789929805da66c1f4b0a05d07b11",
+          "message": "fix: 試しにreniceオフにする",
+          "timestamp": "2022-01-17T18:39:45+09:00",
+          "tree_id": "33b33db757348c123702817bf81be6a69e5a830c",
+          "url": "https://github.com/korosuke613/dotfiles/commit/23990ed74fdc789929805da66c1f4b0a05d07b11"
+        },
+        "date": 1642412725912,
         "tool": "customSmallerIsBetter",
         "benches": [
           {
