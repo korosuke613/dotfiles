@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642412727497,
+  "lastUpdate": 1642987817924,
   "repoUrl": "https://github.com/korosuke613/dotfiles",
   "entries": {
     "Benchmark": [
@@ -536,6 +536,40 @@ window.BENCHMARK_DATA = {
           {
             "name": "zsh load time",
             "value": 0.0141935,
+            "unit": "Second"
+          },
+          {
+            "name": "zsh install time",
+            "value": 0.11,
+            "unit": "Second"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "korosuke613613@gmail.com",
+            "name": "Futa HIRAKOBA",
+            "username": "korosuke613"
+          },
+          "committer": {
+            "email": "korosuke613613@gmail.com",
+            "name": "Futa HIRAKOBA",
+            "username": "korosuke613"
+          },
+          "distinct": true,
+          "id": "b6a57a6f3d6961506bcfedd75dd791e743a687a3",
+          "message": "fix: disable default DOCKER_HOST",
+          "timestamp": "2022-01-24T10:24:56+09:00",
+          "tree_id": "afa95534463afa9be9488ee1768f0ae2a2a9a3fc",
+          "url": "https://github.com/korosuke613/dotfiles/commit/b6a57a6f3d6961506bcfedd75dd791e743a687a3"
+        },
+        "date": 1642987816716,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "zsh load time",
+            "value": 0.0129032,
             "unit": "Second"
           },
           {
