@@ -35,6 +35,8 @@ ln -sf ~/dotfiles/mac/asdf/.tool-versions ~/.tool-versions
 mkdir -p ~/.config/git
 ln -sf ~/dotfiles/mac/git/.gitconfig ~/.gitconfig
 ln -sf ~/dotfiles/mac/git/ignore ~/.config/git/ignore
+ln -sf ~/dotfiles/mac/git/office ~/.config/git/office
+
 
 # hammerspoon
 mkdir -p ~/.hammerspoon

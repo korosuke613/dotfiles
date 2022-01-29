@@ -1,6 +1,9 @@
 [user]
 	name = Futa HIRAKOBA
-	email = futa-hirakoba@example.invalid
+	email = korosuke613613@gmail.com
+
+[includeIf "gitdir:~/ghq/private-github.example.invalid/"]
+	path = ~/.config/git/office
 
 [core]
 	autocrlf = input
