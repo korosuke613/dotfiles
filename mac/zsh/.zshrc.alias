@@ -18,6 +18,8 @@ alias sed="gsed"
 alias tigs="tig status"
 alias cdq='cd $(ghq root)/$(ghq list | peco)'
 
+alias python=python3
+
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
