@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1642987817924,
+  "lastUpdate": 1643451911595,
   "repoUrl": "https://github.com/korosuke613/dotfiles",
   "entries": {
     "Benchmark": [
@@ -575,6 +575,40 @@ window.BENCHMARK_DATA = {
           {
             "name": "zsh install time",
             "value": 0.11,
+            "unit": "Second"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "korosuke613613@gmail.com",
+            "name": "Futa HIRAKOBA",
+            "username": "korosuke613"
+          },
+          "committer": {
+            "email": "korosuke613613@gmail.com",
+            "name": "Futa HIRAKOBA",
+            "username": "korosuke613"
+          },
+          "distinct": true,
+          "id": "19aabbcea8455fccf7d28fc220c2b29494bb55dd",
+          "message": "feat: setting auto git config user.email",
+          "timestamp": "2022-01-29T19:17:21+09:00",
+          "tree_id": "89b3fb7ef503a7c9616516feeedc6d0888524867",
+          "url": "https://github.com/korosuke613/dotfiles/commit/19aabbcea8455fccf7d28fc220c2b29494bb55dd"
+        },
+        "date": 1643451910942,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "zsh load time",
+            "value": 0.0370968,
+            "unit": "Second"
+          },
+          {
+            "name": "zsh install time",
+            "value": 0.16,
             "unit": "Second"
           }
         ]
