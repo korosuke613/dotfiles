@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643451911595,
+  "lastUpdate": 1643459069522,
   "repoUrl": "https://github.com/korosuke613/dotfiles",
   "entries": {
     "Benchmark": [
@@ -604,6 +604,40 @@ window.BENCHMARK_DATA = {
           {
             "name": "zsh load time",
             "value": 0.0370968,
+            "unit": "Second"
+          },
+          {
+            "name": "zsh install time",
+            "value": 0.16,
+            "unit": "Second"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "korosuke613613@gmail.com",
+            "name": "Futa HIRAKOBA",
+            "username": "korosuke613"
+          },
+          "committer": {
+            "email": "korosuke613613@gmail.com",
+            "name": "Futa HIRAKOBA",
+            "username": "korosuke613"
+          },
+          "distinct": true,
+          "id": "3b05e3071e1e8b740a88b8b3795c38a326f0e5a1",
+          "message": "feat: alias python",
+          "timestamp": "2022-01-29T21:14:26+09:00",
+          "tree_id": "f272b5a2d380b735ac34aa463a8da519ff317d5d",
+          "url": "https://github.com/korosuke613/dotfiles/commit/3b05e3071e1e8b740a88b8b3795c38a326f0e5a1"
+        },
+        "date": 1643459068369,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "zsh load time",
+            "value": 0.0348387,
             "unit": "Second"
           },
           {
