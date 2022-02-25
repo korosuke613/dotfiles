@@ -20,7 +20,7 @@
         "revision": "2ff17eab70d183f5a3e6121b0b8537bd3ccfd507"
       },
       "homebrew/core": {
-        "revision": "d13d41b1cfab4b7393e182294f108011c50b7165"
+        "revision": "1bf5ce071bc057157edad9cb0c39e8cd63b2770e"
       },
       "homebrew/services": {
         "revision": "1f3c8933df866dd499cdfc27bcae873551c2e481"
@@ -1448,6 +1448,18 @@
         "options": {
           "full_name": "google-cloud-sdk"
         }
+      },
+      "istat-menus": {
+        "version": "6.61",
+        "options": {
+          "full_name": "istat-menus"
+        }
+      },
+      "iterm2": {
+        "version": "3.4.15",
+        "options": {
+          "full_name": "iterm2"
+        }
       }
     }
   },
@@ -1456,7 +1468,7 @@
       "monterey": {
         "HOMEBREW_VERSION": "3.3.16",
         "HOMEBREW_PREFIX": "/opt/homebrew",
-        "Homebrew/homebrew-core": "d13d41b1cfab4b7393e182294f108011c50b7165",
+        "Homebrew/homebrew-core": "1bf5ce071bc057157edad9cb0c39e8cd63b2770e",
         "CLT": "13.0.0.0.1.1627064638",
         "Xcode": "13.2.1",
         "macOS": "12.0.1"
