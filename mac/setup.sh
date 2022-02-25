@@ -44,5 +44,8 @@ ln -sf ~/dotfiles/mac/git/office ~/.config/git/office
 mkdir -p ~/.hammerspoon
 ln -sf ~/dotfiles/mac/hammerspoon/init.lua ~/.hammerspoon/init.lua
 
+# dotfiles
+mkdir -p ~/ghq
+ln -sf ~/dotfiles ~/ghq/dotfiles
 
 echo "--- Link dotfiles is Done!  ---"
