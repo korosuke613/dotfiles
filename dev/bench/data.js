@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1643459069522,
+  "lastUpdate": 1645772708727,
   "repoUrl": "https://github.com/korosuke613/dotfiles",
   "entries": {
     "Benchmark": [
@@ -643,6 +643,40 @@ window.BENCHMARK_DATA = {
           {
             "name": "zsh install time",
             "value": 0.16,
+            "unit": "Second"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "korosuke613@users.noreply.github.com",
+            "name": "Futa HIRAKOBA",
+            "username": "korosuke613"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b885e746bb00f7cd82a68d80eecd197b683bceab",
+          "message": "fix: brew setup",
+          "timestamp": "2022-02-25T15:57:00+09:00",
+          "tree_id": "7933098959cd3c802a31c13e51b6805aa8d719f2",
+          "url": "https://github.com/korosuke613/dotfiles/commit/b885e746bb00f7cd82a68d80eecd197b683bceab"
+        },
+        "date": 1645772708009,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "zsh load time",
+            "value": 0.0377419,
+            "unit": "Second"
+          },
+          {
+            "name": "zsh install time",
+            "value": 0.15,
             "unit": "Second"
           }
         ]
