@@ -3,33 +3,15 @@
 if [ ! -d ~/.zsh ]; then
 	mkdir -p ~/.zsh
 	curl -o ~/.zsh/git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
-    curl -o ~/.zsh/_git https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.zsh
+	curl -o ~/.zsh/_git https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.zsh
 fi
 
+
 zstyle ':completion:*:*:git:*' script ~/.zsh/git-completion.bash
-#fpath=(~/.zsh $fpath)
+
 FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 
 autoload -Uz compinit && compinit -i
 
 source <(limactl completion zsh)
 
-#compdef cdktf
-###-begin-cdktf-completions-###
-#
-# yargs command completion script
-#
-# Installation: /usr/local/bin/cdktf completion >> ~/.zshrc
-#    or /usr/local/bin/cdktf completion >> ~/.zsh_profile on OSX.
-#
-_cdktf_yargs_completions()
-{
-  local reply
-  local si=$IFS
-  IFS=$'
-' reply=($(COMP_CWORD="$((CURRENT-1))" COMP_LINE="$BUFFER" COMP_POINT="$CURSOR" /usr/local/bin/cdktf --get-yargs-completions "${words[@]}"))
-  IFS=$si
-  _describe 'values' reply
-}
-compdef _cdktf_yargs_completions cdktf
-###-end-cdktf-completions-###
