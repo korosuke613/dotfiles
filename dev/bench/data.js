@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645772708727,
+  "lastUpdate": 1645773360227,
   "repoUrl": "https://github.com/korosuke613/dotfiles",
   "entries": {
     "Benchmark": [
@@ -677,6 +677,40 @@ window.BENCHMARK_DATA = {
           {
             "name": "zsh install time",
             "value": 0.15,
+            "unit": "Second"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "korosuke613@users.noreply.github.com",
+            "name": "Futa HIRAKOBA",
+            "username": "korosuke613"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "edd8f7b860f040fddc044775c95439eaca44f1aa",
+          "message": "feat: add brew cask iStat Menus",
+          "timestamp": "2022-02-25T15:57:54+09:00",
+          "tree_id": "5a56d9120b3f1dc71c2452d25dc5e0ffb8e10be9",
+          "url": "https://github.com/korosuke613/dotfiles/commit/edd8f7b860f040fddc044775c95439eaca44f1aa"
+        },
+        "date": 1645773359210,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "zsh load time",
+            "value": 0.036129,
+            "unit": "Second"
+          },
+          {
+            "name": "zsh install time",
+            "value": 0.16,
             "unit": "Second"
           }
         ]
