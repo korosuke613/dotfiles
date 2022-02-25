@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645773908594,
+  "lastUpdate": 1645774814587,
   "repoUrl": "https://github.com/korosuke613/dotfiles",
   "entries": {
     "Benchmark": [
@@ -745,6 +745,40 @@ window.BENCHMARK_DATA = {
           {
             "name": "zsh install time",
             "value": 0.16,
+            "unit": "Second"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "korosuke613613@gmail.com",
+            "name": "Futa HIRAKOBA",
+            "username": "korosuke613"
+          },
+          "committer": {
+            "email": "korosuke613613@gmail.com",
+            "name": "Futa HIRAKOBA",
+            "username": "korosuke613"
+          },
+          "distinct": true,
+          "id": "d8a3cd21ba7e2c25cb79b9952fcf276c15957e9d",
+          "message": "chore: update lockfile",
+          "timestamp": "2022-02-25T16:31:15+09:00",
+          "tree_id": "57d5bd0e65e77e32b8721d1bd2e76d6c033d8236",
+          "url": "https://github.com/korosuke613/dotfiles/commit/d8a3cd21ba7e2c25cb79b9952fcf276c15957e9d"
+        },
+        "date": 1645774813949,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "zsh load time",
+            "value": 0.0380645,
+            "unit": "Second"
+          },
+          {
+            "name": "zsh install time",
+            "value": 0.19,
             "unit": "Second"
           }
         ]
