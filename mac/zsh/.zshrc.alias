@@ -14,6 +14,7 @@ alias gl="git log"
 alias wip='echo "$(alias wip)\\n" && git commit -m "wip: $(TZ=-9 date +"%Y/%m/%d %H:%M:%S")" -m "$(git diff --staged --stat)"'
 
 alias tf="terraform"
+alias k='kubectl'
 alias sed="gsed"
 alias tigs="tig status"
 alias cdq='cd $(ghq root)/$(ghq list | peco)'
