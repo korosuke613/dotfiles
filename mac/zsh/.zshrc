@@ -1,11 +1,8 @@
 #!/usr/bin/env zsh
 
-#### FIG ENV VARIABLES ####
-# Please make sure this block is at the start of this file.
-if [[ -s ~/.fig/shell/pre.sh ]] then;
- source ~/.fig/shell/pre.sh
-fi
-#### END FIG ENV VARIABLES ####
+# Fig pre block. Keep at the top of this file.
+export PATH="${PATH}:${HOME}/.local/bin"
+eval "$(fig init zsh pre)"
 
 if [[ -z "${DOTFILES_HOME}" ]]; then
   export DOTFILES_HOME=~/dotfiles/mac
@@ -97,9 +94,7 @@ fi
 export GOPATH=$(go env GOPATH)
 export PATH=$PATH:$GOPATH/bin
 
-#### FIG ENV VARIABLES ####
-# Please make sure this block is at the end of this file.
-if [[ -s ~/.fig/fig.sh ]] then;
-  source ~/.fig/fig.sh
-fi
-#### END FIG ENV VARIABLES ####
+
+
+# Fig post block. Keep at the bottom of this file.
+eval "$(fig init zsh post)"
