@@ -1,5 +1,5 @@
-nodejs 16.13.0
-terraform 1.0.7
+nodejs 16.15.0
+terraform 1.1.7
 awscli 2.1.34
 java corretto-17.0.2.8.1
 python 3.9.5
