@@ -1,8 +1,9 @@
 nodejs 16.15.0
-terraform 1.1.7
+terraform 1.2.0
 awscli 2.1.34
 java corretto-17.0.2.8.1
 python 3.9.5
 helm 3.7.1
 kubectl-kots 1.58.2
 cmctl 1.7.1
+kubectl 1.20.15
