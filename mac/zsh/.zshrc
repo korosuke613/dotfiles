@@ -1,5 +1,5 @@
 # Fig pre block. Keep at the top of this file.
-. "$HOME/.fig/shell/zshrc.pre.zsh"
+[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && . "$HOME/.fig/shell/zshrc.pre.zsh"
 #!/usr/bin/env zsh
 if [[ -z "${DOTFILES_HOME}" ]]; then
   export DOTFILES_HOME=~/dotfiles/mac
@@ -92,4 +92,4 @@ export GOPATH=$(go env GOPATH)
 export PATH=$PATH:$GOPATH/bin
 
 # Fig post block. Keep at the bottom of this file.
-. "$HOME/.fig/shell/zshrc.post.zsh"
+[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && . "$HOME/.fig/shell/zshrc.post.zsh"
