@@ -932,7 +932,7 @@ Preferences...</string>
 			<key>Terminal Type</key>
 			<string>xterm-256color</string>
 			<key>Title Components</key>
-			<integer>6</integer>
+			<integer>396</integer>
 			<key>Transparency</key>
 			<real>0.15734134949359696</real>
 			<key>Unlimited Scrollback</key>
