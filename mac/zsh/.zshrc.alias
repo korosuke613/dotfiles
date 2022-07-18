@@ -1,18 +1,41 @@
 #!/usr/bin/env zsh
 
-alias gs="git status"
-alias gcm="git commit -m"
-alias gca="git commit --amend"
-alias gcan="git commit --amend --no-edit"
-alias gaa="git add -A"
-alias gpl='git pull --rebase --set-upstream origin $(git branch --show-current)'
-alias gps='git push --set-upstream origin $(git branch --show-current)'
-alias gpsf='gps --force-with-lease'
-alias gsw="git switch"
-alias gswc="gsw -c"
-alias gl="git log"
-alias wip='echo "$(alias wip)\\n" && git commit -m "wip: $(TZ=-9 date +"%Y/%m/%d %H:%M:%S")" -m "$(git diff --staged --stat)"'
+function echo_and_exec (){
+	echo "alias: $1 $2"
+	echo
+	eval $1 $2
+}
 
+function echo_eval (){
+	eval "$1"
+}
+
+function echo_eval_arg (){
+	eval "$1 ${@:2}"
+}
+
+function echo_eval_arg_single (){
+	eval "$1 \"$2\""
+}
+
+typeset -ft echo_eval
+typeset -ft echo_eval_arg
+typeset -ft echo_eval_arg_single
+
+alias gs='echo_eval "git status"'
+alias gcm='echo_eval_arg_single "git commit -m"'
+alias gca='echo_eval "git commit --amend"'
+alias gcan='echo_eval "gca --no-edit"'
+alias gaa='echo_eval "git add -A"'
+alias gpl='echo_eval "git pull --rebase --set-upstream origin $(git branch --show-current)"'
+alias gps='echo_eval "git push --set-upstream origin $(git branch --show-current)"'
+alias gpsf='echo_eval "gps --force-with-lease"'
+alias gsw='echo_eval_arg "git switch"'
+alias gswc='gsw -c'
+alias gl='echo_eval "git log"'
+# alias wip='echo_eval "FIXUP_SHA=\$(git log -1 --pretty=format:\"%H\" --grep=\"^fixup\!\" --invert-grep) && echo FIXUP_SHA: \$FIXUP_SHA && echo && git commit --fixup \$FIXUP_SHA"'
+# alias wip='echo_eval "FIXUP_SHA=\$(git log -1 --pretty=format:\"%H\" --grep=\"^fixup\!\" --invert-grep) && git commit --fixup \$FIXUP_SHA"'
+alias wip='echo_eval "git commit --fixup \$(git log -1 --pretty=format:\"%H\" --grep=\"^fixup\!\" --invert-grep)"'
 alias tf="terraform"
 alias k='kubectl'
 alias sed="gsed"
