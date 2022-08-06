@@ -7,3 +7,4 @@ helm 3.7.1
 kubectl-kots 1.58.2
 cmctl 1.7.1
 kubectl 1.20.15
+direnv 2.32.1
