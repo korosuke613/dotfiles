@@ -1,6 +1,7 @@
 [user]
 	name = Futa HIRAKOBA
 	email = korosuke613613@gmail.com
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBQ9une2BjZT/F1aqINsSES6LtG1d0iLKo9pmElUI3aS korosuke613613@gmail.com
 
 [includeIf "gitdir:~/ghq/github.dev.cybozu.co.jp/"]
 	path = ~/.config/git/office
@@ -34,3 +35,13 @@
 	rebase = true
 [push]
 	autoSetupRemote = true 
+[gpg]
+	format = ssh
+
+[gpg "ssh"]
+    program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+	allowedSignersFile = /Users/korosuke613/.ssh/allowed_signers
+
+[commit]
+	gpgsign = true
+
