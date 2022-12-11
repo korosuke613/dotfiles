@@ -1,3 +1,4 @@
 #!/usr/bin/env zsh
 
 export PATH="/usr/local/opt/ansible@2.9/bin:$PATH"
+export PATH="$HOME/.deno/bin:$PATH"
