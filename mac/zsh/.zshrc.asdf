@@ -1,7 +1,4 @@
 #!/usr/bin/env zsh
 
-. "$(brew --prefix asdf)/asdf.sh"
+$(brew --prefix asdf)/libexec/asdf.sh
 
-# setting JAVA_HOME
-# shellcheck source=$HOME/.asdf/plugins/java/set-java-home.zsh
-. ~/.asdf/plugins/java/set-java-home.zsh
