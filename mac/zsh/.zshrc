@@ -9,6 +9,11 @@ export DOTFILES_ZSH_HOME=${DOTFILES_HOME}/zsh
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/korosuke613/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
+
+
 # zshの設定
 # shellcheck source=.zshrc.setting
 source ${DOTFILES_ZSH_HOME}/.zshrc.setting
@@ -101,12 +106,6 @@ export PATH=$PATH:$GOPATH/bin
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
-
-
-
-### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-export PATH="/Users/korosuke613/.rd/bin:$PATH"
-### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
