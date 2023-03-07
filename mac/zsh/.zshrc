@@ -100,6 +100,8 @@ source ${DOTFILES_ZSH_HOME}/.zshrc.path
 export GOPATH=$(go env GOPATH)
 export PATH=$PATH:$GOPATH/bin
 
+eval "$(github-copilot-cli alias -- "$0")"
+
 # bun completions
 [ -s "/Users/korosuke613/.bun/_bun" ] && source "/Users/korosuke613/.bun/_bun"
 
