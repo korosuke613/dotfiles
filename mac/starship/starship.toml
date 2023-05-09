@@ -2,6 +2,8 @@ format = "$username$hostname$localip$shlvl$singularity$directory$vcsh$git_branch
 
 command_timeout	= 1200
 
+add_newline = false
+
 [character]
 error_symbol = "[❯](bold #ff0000)"
 
