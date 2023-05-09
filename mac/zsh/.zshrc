@@ -102,12 +102,18 @@ export PATH=$PATH:$GOPATH/bin
 
 eval "$(github-copilot-cli alias -- "$0")"
 
+source ~/.config/op/plugins.sh
+
 # bun completions
 [ -s "~/.bun/_bun" ] && source "~/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+# Terraform
+export TF_CLI_ARGS_plan="--parallelism=50"
+export TF_CLI_ARGS_apply="--parallelism=50"
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
