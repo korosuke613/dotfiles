@@ -284,24 +284,24 @@ Preferences...</string>
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.28235294117647058</real>
+				<real>0.2015380859375</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.13333333333333333</real>
+				<real>0.09700188972055912</real>
 				<key>Red Component</key>
-				<real>0.27450980392156865</real>
+				<real>0.1960361814236114</real>
 			</dict>
 			<key>Background Image Location</key>
 			<string></string>
 			<key>Blend</key>
-			<real>0.39079692101603392</real>
+			<real>0.14127671041820788</real>
 			<key>Blinking Cursor</key>
 			<false/>
 			<key>Blur</key>
-			<false/>
+			<true/>
 			<key>Blur Radius</key>
-			<real>3.2256256418129832</real>
+			<real>3.1618955886214937</real>
 			<key>Bold Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -841,13 +841,13 @@ Preferences...</string>
 			<key>Name</key>
 			<string>Default</string>
 			<key>Non Ascii Font</key>
-			<string>HackNerdFontComplete-Regular 16</string>
+			<string>HackNF-Regular 16</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Non-ASCII Ligatures</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>JetBrainsMono-Regular 16</string>
+			<string>HackNFM-Regular 15</string>
 			<key>Only The Default BG Color Uses Transparency</key>
 			<true/>
 			<key>Option Key Sends</key>
@@ -861,7 +861,7 @@ Preferences...</string>
 			<key>Screen</key>
 			<integer>-1</integer>
 			<key>Scrollback Lines</key>
-			<integer>5000</integer>
+			<integer>10000</integer>
 			<key>Scrollback With Status Bar</key>
 			<false/>
 			<key>Selected Text Color</key>
@@ -936,7 +936,7 @@ Preferences...</string>
 			<key>Title Components</key>
 			<integer>396</integer>
 			<key>Transparency</key>
-			<real>0.15734134949359696</real>
+			<real>0.14015126329787236</real>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
