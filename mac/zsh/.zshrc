@@ -50,10 +50,6 @@ source ${DOTFILES_ZSH_HOME}/.zshrc.bat
 # shellcheck source=.zshrc.history
 source ${DOTFILES_ZSH_HOME}/.zshrc.history
 
-# setting asdf
-# shellcheck source=.zshrc.asdf
-source ${DOTFILES_ZSH_HOME}/.zshrc.asdf
-
 # auto assam
 # shellcheck source=.zshrc.auto_assam
 source ${DOTFILES_ZSH_HOME}/.zshrc.auto_assam
@@ -100,7 +96,6 @@ source ${DOTFILES_ZSH_HOME}/.zshrc.path
 export GOPATH=$(go env GOPATH)
 export PATH=$PATH:$GOPATH/bin
 
-eval "$(github-copilot-cli alias -- "$0")"
 
 source /Users/korosuke613/.config/op/plugins.sh
 
@@ -114,6 +109,16 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # Terraform
 export TF_CLI_ARGS_plan="--parallelism=50"
 export TF_CLI_ARGS_apply="--parallelism=50"
+
+# atuin
+eval "$(atuin init zsh --disable-up-arrow)"
+
+# setting asdf
+# shellcheck source=.zshrc.asdf
+source ${DOTFILES_ZSH_HOME}/.zshrc.asdf
+
+
+eval "$(github-copilot-cli alias -- "$0")"
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
