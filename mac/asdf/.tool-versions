@@ -1,4 +1,4 @@
-nodejs 18.12.1
+nodejs 18.17.1
 terraform 1.2.8
 awscli 2.1.34
 python 3.9.5
