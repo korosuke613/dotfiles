@@ -42,7 +42,7 @@ alias tf="terraform"
 alias k='kubectl'
 alias sed="gsed"
 alias tigs="tig status"
-alias cdq='cd $(ghq root)/$(ghq list | peco)'
+alias cdq='cd $(ghq root)/$(ghq list | fzf)'
 
 alias python=python3
 
