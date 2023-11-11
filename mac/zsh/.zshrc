@@ -50,13 +50,6 @@ source ${DOTFILES_ZSH_HOME}/.zshrc.history
 # shellcheck source=.zshrc.auto_assam
 source ${DOTFILES_ZSH_HOME}/.zshrc.auto_assam
 
-# auto renice
-# shellcheck source=.zshrc.auto_renice
-
-# reniceする必要がなくなってきたので一旦オフにする
-# source ${DOTFILES_ZSH_HOME}/.zshrc.auto_renice_fast
-# source ${DOTFILES_ZSH_HOME}/.zshrc.auto_renice_zoom
-
 # setting starship
 eval "$(starship init zsh)"
 
