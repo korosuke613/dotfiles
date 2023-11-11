@@ -139,12 +139,16 @@ Preferences...</string>
 			</dict>
 			<key>Ansi 12 Color</key>
 			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
 				<key>Blue Component</key>
 				<real>1</real>
+				<key>Color Space</key>
+				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.3333333432674408</real>
+				<real>0.75006651586351081</real>
 				<key>Red Component</key>
-				<real>0.3333333432674408</real>
+				<real>0.734100341796875</real>
 			</dict>
 			<key>Ansi 13 Color</key>
 			<dict>
@@ -260,13 +264,13 @@ Preferences...</string>
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.40392156862745099</real>
+				<real>0.643463134765625</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.40392156862745099</real>
+				<real>0.643463134765625</real>
 				<key>Red Component</key>
-				<real>0.40392156862745099</real>
+				<real>0.643463134765625</real>
 			</dict>
 			<key>Ansi 9 Color</key>
 			<dict>
@@ -936,7 +940,7 @@ Preferences...</string>
 			<key>Title Components</key>
 			<integer>396</integer>
 			<key>Transparency</key>
-			<real>0.14015126329787236</real>
+			<real>0.067470079787234044</real>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -1867,6 +1871,8 @@ Preferences...</string>
 	<string></string>
 	<key>PasteSpecialUseRegexSubstitution</key>
 	<false/>
+	<key>PasteTabToStringTabStopSize</key>
+	<integer>4</integer>
 	<key>PointerActions</key>
 	<dict>
 		<key>Button,1,1,,</key>
