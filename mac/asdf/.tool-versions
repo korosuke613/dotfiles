@@ -10,3 +10,4 @@ direnv 2.32.1
 tflint 0.39.1
 golangci-lint 1.50.1
 velero 1.10.1
+java corretto-17.0.9.8.1
