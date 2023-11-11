@@ -26,10 +26,6 @@ source ${DOTFILES_ZSH_HOME}/.zshrc.proxy
 # shellcheck source=.zshrc.gcp
 source ${DOTFILES_ZSH_HOME}/.zshrc.gcp
 
-# pecoでhistory検索
-# shellcheck source=.zshrc.peco
-source ${DOTFILES_ZSH_HOME}/.zshrc.peco
-
 # direnv
 export EDITOR=vim
 eval "$(direnv hook zsh)"
