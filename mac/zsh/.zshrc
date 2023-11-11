@@ -61,10 +61,6 @@ source ${DOTFILES_ZSH_HOME}/.zshrc.auto_assam
 # source ${DOTFILES_ZSH_HOME}/.zshrc.auto_renice_fast
 # source ${DOTFILES_ZSH_HOME}/.zshrc.auto_renice_zoom
 
-# setting tabtab
-# shellcheck source=.zshrc.tabtab
-source ${DOTFILES_ZSH_HOME}/.zshrc.tabtab
-
 # setting starship
 eval "$(starship init zsh)"
 
@@ -132,3 +128,5 @@ eval "$(github-copilot-cli alias -- "$0")"
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
+
+[ -f ~/.inshellisense/key-bindings.zsh ] && source ~/.inshellisense/key-bindings.zsh
