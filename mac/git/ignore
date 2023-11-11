@@ -2,3 +2,5 @@
 .envrc
 .DS_Store
 *.iml
+git-sim_media/
+
