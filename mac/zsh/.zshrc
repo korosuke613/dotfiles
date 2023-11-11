@@ -68,10 +68,6 @@ source ${DOTFILES_ZSH_HOME}/.zshrc.alias
 # shellcheck source=.zshrc.cd_fzf
 source ${DOTFILES_ZSH_HOME}/.zshrc.cd_fzf
 
-# lima
-# shellcheck source=.zshrc.lima
-source ${DOTFILES_ZSH_HOME}/.zshrc.lima
-
 # check_update_dotfiles
 # shellcheck source=.zshrc.check_update_dotfiles
 source ${DOTFILES_ZSH_HOME}/.zshrc.check_update_dotfiles
