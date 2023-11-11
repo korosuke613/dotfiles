@@ -4,7 +4,7 @@
 # ネットワーク設定名: プロキシ設定
 
 if [[ ! -f "${DOTFILES_ZSH_HOME}/.zshrc.proxy_ip" ]]; then
-  exit 0
+  return
 fi
 
 proxy_name=$(cat "${DOTFILES_ZSH_HOME}/.zshrc.proxy_ip")
