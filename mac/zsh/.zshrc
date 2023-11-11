@@ -109,13 +109,6 @@ source ${DOTFILES_ZSH_HOME}/.zshrc.asdf
 
 setopt completealiases
 
-if type brew &>/dev/null
-then
-  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-  autoload -Uz compinit
-  compinit
-fi
-
 eval "$(github-copilot-cli alias -- "$0")"
 
 # Fig post block. Keep at the bottom of this file.
