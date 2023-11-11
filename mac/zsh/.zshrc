@@ -1,6 +1,8 @@
+# zmodload zsh/zprof
+
 # Fig pre block. Keep at the top of this file.
 [[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
-#!/usr/bin/env zsh
+
 if [[ -z "${DOTFILES_HOME}" ]]; then
   export DOTFILES_HOME=~/dotfiles/mac
 fi
@@ -29,10 +31,6 @@ source ${DOTFILES_ZSH_HOME}/.zshrc.gcp
 # direnv
 export EDITOR=vim
 eval "$(direnv hook zsh)"
-
-# autocomplete
-# shellcheck source=.zshrc.autocomplete
-source ${DOTFILES_ZSH_HOME}/.zshrc.autocomplete
 
 # ls を exa に置き換える
 # shellcheck source=.zshrc.exa
@@ -63,7 +61,11 @@ source ${DOTFILES_ZSH_HOME}/.zshrc.cd_fzf
 
 # check_update_dotfiles
 # shellcheck source=.zshrc.check_update_dotfiles
-source ${DOTFILES_ZSH_HOME}/.zshrc.check_update_dotfiles
+(source ${DOTFILES_ZSH_HOME}/.zshrc.check_update_dotfiles &) > /dev/null
+
+# autocomplete
+# shellcheck source=.zshrc.autocomplete
+(source ${DOTFILES_ZSH_HOME}/.zshrc.autocomplete &) > /dev/null
 
 # exec local script
 # shellcheck source=.zshrc.local
@@ -108,3 +110,5 @@ eval "$(github-copilot-cli alias -- "$0")"
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
 
 [ -f ~/.inshellisense/key-bindings.zsh ] && source ~/.inshellisense/key-bindings.zsh
+
+# zprof
