@@ -113,10 +113,20 @@ export TF_CLI_ARGS_apply="--parallelism=50"
 # atuin
 eval "$(atuin init zsh --disable-up-arrow)"
 
+source "$HOME/.rye/env"
+
 # setting asdf
 # shellcheck source=.zshrc.asdf
 source ${DOTFILES_ZSH_HOME}/.zshrc.asdf
 
+setopt completealiases
+
+if type brew &>/dev/null
+then
+  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+  autoload -Uz compinit
+  compinit
+fi
 
 eval "$(github-copilot-cli alias -- "$0")"
 
