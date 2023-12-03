@@ -1,7 +1,6 @@
-# zmodload zsh/zprof
-
 # Fig pre block. Keep at the top of this file.
 [[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
+# zmodload zsh/zprof
 
 if [[ -z "${DOTFILES_HOME}" ]]; then
   export DOTFILES_HOME=~/dotfiles/mac
@@ -65,7 +64,7 @@ source ${DOTFILES_ZSH_HOME}/.zshrc.cd_fzf
 
 # autocomplete
 # shellcheck source=.zshrc.autocomplete
-(source ${DOTFILES_ZSH_HOME}/.zshrc.autocomplete &) > /dev/null
+source ${DOTFILES_ZSH_HOME}/.zshrc.autocomplete
 
 # exec local script
 # shellcheck source=.zshrc.local
@@ -106,9 +105,9 @@ setopt completealiases
 
 eval "$(github-copilot-cli alias -- "$0")"
 
-# Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
-
 [ -f ~/.inshellisense/key-bindings.zsh ] && source ~/.inshellisense/key-bindings.zsh
 
 # zprof
+
+# Fig post block. Keep at the bottom of this file.
+[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
