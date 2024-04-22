@@ -97,15 +97,14 @@ eval "$(atuin init zsh --disable-up-arrow)"
 
 source "$HOME/.rye/env"
 
-# setting asdf
-# shellcheck source=.zshrc.asdf
-source ${DOTFILES_ZSH_HOME}/.zshrc.asdf
 
 setopt completealiases
 
 eval "$(github-copilot-cli alias -- "$0")"
 
 [ -f ~/.inshellisense/key-bindings.zsh ] && source ~/.inshellisense/key-bindings.zsh
+
+eval "$(mise activate)"
 
 # zprof
 
