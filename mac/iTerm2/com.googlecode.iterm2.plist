@@ -282,7 +282,7 @@ Preferences...</string>
 				<real>1</real>
 			</dict>
 			<key>BM Growl</key>
-			<true/>
+			<false/>
 			<key>Background Color</key>
 			<dict>
 				<key>Alpha Component</key>
@@ -898,6 +898,8 @@ Preferences...</string>
 			<true/>
 			<key>Shortcut</key>
 			<string></string>
+			<key>Show Offscreen Command line</key>
+			<true/>
 			<key>Show Status Bar</key>
 			<false/>
 			<key>Silence Bell</key>

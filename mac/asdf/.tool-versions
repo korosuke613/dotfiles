@@ -6,4 +6,3 @@ direnv 2.32.1
 tflint 0.39.1
 golangci-lint 1.50.1
 java corretto-17.0.9.8.1
-actionlint 1.6.26
