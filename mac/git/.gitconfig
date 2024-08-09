@@ -8,7 +8,7 @@
 
 [core]
 	autocrlf = input
-	pager = delta
+#	pager = delta
 	hooksPath = /Users/korosuke613/ghq/github.com/secretlint/git-hooks/hooks
 
 [filter "lfs"]
@@ -44,3 +44,12 @@
 
 [commit]
 	gpgsign = true
+[credential "https://github.dev.cybozu.co.jp"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
