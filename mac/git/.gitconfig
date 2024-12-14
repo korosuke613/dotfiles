@@ -9,7 +9,7 @@
 [core]
 	autocrlf = input
 #	pager = delta
-	hooksPath = /Users/korosuke613/ghq/github.com/secretlint/git-hooks/hooks
+	hookspath = 
 
 [filter "lfs"]
 	clean = git-lfs clean -- %f
