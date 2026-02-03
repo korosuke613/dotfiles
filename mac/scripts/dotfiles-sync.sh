@@ -16,7 +16,21 @@ export GIT_TERMINAL_PROMPT=0
 mkdir -p "$LOG_DIR" "$STATE_DIR"
 
 LOG_FILE="$LOG_DIR/dotfiles-sync.log"
-SHOW_OUTPUT=0
+NOTICE_PRINTED=0
+
+if [[ -t 2 ]]; then
+  C_CYAN=$'\033[36m'
+  C_YELLOW=$'\033[33m'
+  C_GREEN=$'\033[32m'
+  C_DIM=$'\033[2m'
+  C_RESET=$'\033[0m'
+else
+  C_CYAN=""
+  C_YELLOW=""
+  C_GREEN=""
+  C_DIM=""
+  C_RESET=""
+fi
 
 log() {
   local msg="$1"
@@ -25,16 +39,22 @@ log() {
 
 err() {
   local msg="$1"
-  printf '[%s] %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$msg" >&2
+  printf '%s[%s] %s%s\n' "$C_YELLOW" "$(date '+%Y-%m-%d %H:%M:%S')" "$msg" "$C_RESET" >&2
   printf '[%s] %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$msg" >> "$LOG_FILE"
 }
 
+info() {
+  local msg="$1"
+  printf '%s%s%s\n' "$C_CYAN" "$msg" "$C_RESET" >&2
+}
+
+success() {
+  local msg="$1"
+  printf '%s%s%s\n' "$C_GREEN" "$msg" "$C_RESET" >&2
+}
+
 run() {
-  if [[ "$SHOW_OUTPUT" == "1" ]]; then
-    "$@" 2>&1 | tee -a "$LOG_FILE"
-  else
-    "$@" >> "$LOG_FILE" 2>&1
-  fi
+  "$@" >> "$LOG_FILE" 2>&1
 }
 
 if [[ ! -d "$REPO/.git" ]]; then
@@ -68,9 +88,10 @@ fi
 trap 'rmdir "$LOCK_DIR" >/dev/null 2>&1 || true' EXIT
 
 printf '=== DOTFILES CHANGES DETECTED ===\n' >&2
-printf 'Syncing now (runs at most once per hour)...\n' >&2
-printf 'Log: %s\n' "$LOG_FILE" >&2
-printf '=================================\n' >&2
+printf '%sSyncing now%s (runs at most once per hour)...\n' "$C_YELLOW" "$C_RESET" >&2
+printf 'Log: %s%s%s\n' "$C_DIM" "$LOG_FILE" "$C_RESET" >&2
+NOTICE_PRINTED=1
+trap 'if [[ "$NOTICE_PRINTED" == "1" ]]; then printf "=================================\n" >&2; fi' EXIT
 
 echo "$now_epoch" > "$LAST_RUN_FILE"
 log "Starting dotfiles sync"
@@ -114,14 +135,16 @@ if git -C "$REPO" status --porcelain | grep -q .; then
     exit 0
   fi
 
-  SHOW_OUTPUT=1
+  info "Staging changes..."
   run git -C "$REPO" add -A
   if ! git -C "$REPO" diff --cached --quiet; then
     local_ts=$(date '+%Y-%m-%d %H:%M')
+    info "Creating commit: sync: $local_ts"
     if run git -C "$REPO" commit -m "sync: $local_ts"; then
+      info "Pushing to origin/$SYNC_BRANCH..."
       if run git -C "$REPO" push origin "$SYNC_BRANCH"; then
         log "Pushed sync changes"
-        SHOW_OUTPUT=0
+        success "Sync complete."
       else
         err "git push failed"
         exit 1
