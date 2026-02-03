@@ -99,6 +99,16 @@ fi
 
 # Commit and push if staged changes exist
 if git -C "$REPO" status --porcelain | grep -q .; then
+  printf 'Commit and push dotfiles changes now? [y/N]: ' >&2
+  if ! read -r reply; then
+    err "Failed to read user input"
+    exit 1
+  fi
+  if [[ ! "$reply" =~ ^[Yy]$ ]]; then
+    log "User declined commit/push"
+    exit 0
+  fi
+
   run git -C "$REPO" add -A
   if ! git -C "$REPO" diff --cached --quiet; then
     local_ts=$(date '+%Y-%m-%d %H:%M')
