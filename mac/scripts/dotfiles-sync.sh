@@ -20,7 +20,7 @@ log() {
   printf '[%s] %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$msg" >> "$LOG_DIR/dotfiles-sync.log"
 }
 
-exec >> "$LOG_DIR/dotfiles-sync.log" 2>&1
+exec >> "$LOG_DIR/dotfiles-sync.log"
 
 if [[ ! -d "$REPO/.git" ]]; then
   log "Repo not found: $REPO"
