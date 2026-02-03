@@ -66,7 +66,7 @@ source ${DOTFILES_ZSH_HOME}/.zshrc.cd_fzf
 (source ${DOTFILES_ZSH_HOME}/.zshrc.check_update_dotfiles &) > /dev/null
 
 # dotfiles auto sync (runs at most once per hour)
-(${DOTFILES_HOME}/scripts/dotfiles-sync.sh &) > /dev/null
+(${DOTFILES_HOME}/scripts/dotfiles-sync.sh >/dev/null 2>&1 &) > /dev/null
 
 # autocomplete
 # shellcheck source=.zshrc.autocomplete
