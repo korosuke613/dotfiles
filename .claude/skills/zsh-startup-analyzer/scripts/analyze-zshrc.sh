@@ -31,9 +31,38 @@ fi
 
 echo -e "${GREEN}✓${NC} .zshrc検出: $ZSHRC_FILE\n"
 
+# sourceされているファイルを再帰的に収集
+collect_source_files() {
+    local file="$1"
+    local base_dir="$(dirname "$file")"
+
+    grep -E '^\s*(source|\.)' "$file" 2>/dev/null | grep -v '^#' | while IFS= read -r line; do
+        # source または . の後のファイルパスを抽出
+        local src_file=$(echo "$line" | sed -E 's/^\s*(source|\.)\s+//' | sed 's/["'\'']//g')
+
+        # 変数展開を試みる（基本的なもののみ）
+        src_file=$(eval echo "$src_file" 2>/dev/null || echo "$src_file")
+
+        # 相対パスの場合は絶対パスに変換
+        if [[ "$src_file" != /* ]]; then
+            src_file="$base_dir/$src_file"
+        fi
+
+        if [ -f "$src_file" ]; then
+            echo "$src_file"
+            collect_source_files "$src_file"
+        fi
+    done
+}
+
 # sourceされているファイル一覧
 echo -e "${BLUE}【sourceされているファイル】${NC}"
-grep -E '^\s*(source|\.)' "$ZSHRC_FILE" | grep -v '^#' | sed 's/^/  /' || echo "  (なし)"
+ALL_SOURCE_FILES=$(collect_source_files "$ZSHRC_FILE" | sort -u)
+echo "$ALL_SOURCE_FILES" | while read -r file; do
+    if [ -n "$file" ]; then
+        echo "  $(basename "$file") ($file)"
+    fi
+done
 echo ""
 
 # ボトルネック候補の検出
@@ -50,14 +79,30 @@ else
 fi
 echo ""
 
-# compinit
-echo -e "${YELLOW}2. compinit${NC}"
-if grep -q 'compinit' "$ZSHRC_FILE"; then
-    echo -e "  ${RED}⚠${NC} 検出"
-    grep -n 'compinit' "$ZSHRC_FILE" | sed 's/^/    /' || true
-else
+# compinit（再帰的に検出）
+echo -e "${YELLOW}2. compinit（source先を含む）${NC}"
+COMPINIT_FOUND=0
+echo "$ZSHRC_FILE" > /tmp/zsh_all_files.txt
+echo "$ALL_SOURCE_FILES" >> /tmp/zsh_all_files.txt
+
+while IFS= read -r file; do
+    if [ -f "$file" ] && grep -q 'compinit' "$file" 2>/dev/null; then
+        if [ "$COMPINIT_FOUND" -eq 0 ]; then
+            echo -e "  ${RED}⚠${NC} 検出（複数ファイルで呼び出されている可能性あり）"
+        fi
+        COMPINIT_FOUND=$((COMPINIT_FOUND + 1))
+        echo -e "    ${YELLOW}[$COMPINIT_FOUND]${NC} $(basename "$file"): $file"
+        grep -n 'compinit' "$file" | sed 's/^/        /' | head -3 || true
+    fi
+done < /tmp/zsh_all_files.txt
+
+if [ "$COMPINIT_FOUND" -eq 0 ]; then
     echo -e "  ${GREEN}✓${NC} 検出なし"
+elif [ "$COMPINIT_FOUND" -gt 1 ]; then
+    echo -e "  ${RED}✗ 警告: compinit が ${COMPINIT_FOUND} 箇所で呼ばれています（重複の可能性）${NC}"
 fi
+
+rm -f /tmp/zsh_all_files.txt
 echo ""
 
 # サブシェル（コマンド置換）
@@ -87,6 +132,55 @@ done
 if [ "$FOUND" -eq 0 ]; then
     echo -e "  ${GREEN}✓${NC} 検出なし"
 fi
+echo ""
+
+# 重複コード検出
+echo -e "${YELLOW}5. 重複コード検出${NC}"
+TEMP_ALL_FILES=$(mktemp)
+echo "$ZSHRC_FILE" > "$TEMP_ALL_FILES"
+echo "$ALL_SOURCE_FILES" >> "$TEMP_ALL_FILES"
+
+# eval の重複検出
+echo -e "  ${BLUE}eval コマンドの重複:${NC}"
+TEMP_EVAL=$(mktemp)
+while IFS= read -r file; do
+    if [ -f "$file" ]; then
+        grep -h 'eval' "$file" 2>/dev/null | sed 's/^[[:space:]]*//' >> "$TEMP_EVAL" || true
+    fi
+done < "$TEMP_ALL_FILES"
+
+DUPLICATE_EVALS=$(sort "$TEMP_EVAL" | uniq -d)
+if [ -n "$DUPLICATE_EVALS" ]; then
+    echo "$DUPLICATE_EVALS" | while IFS= read -r line; do
+        if [ -n "$line" ]; then
+            echo -e "    ${RED}⚠${NC} $line"
+        fi
+    done
+else
+    echo -e "    ${GREEN}✓${NC} 重複なし"
+fi
+
+# alias の重複検出
+echo -e "  ${BLUE}alias 定義の重複:${NC}"
+TEMP_ALIAS=$(mktemp)
+while IFS= read -r file; do
+    if [ -f "$file" ]; then
+        grep -h '^[[:space:]]*alias' "$file" 2>/dev/null | sed 's/^[[:space:]]*//' >> "$TEMP_ALIAS" || true
+    fi
+done < "$TEMP_ALL_FILES"
+
+DUPLICATE_ALIASES=$(sort "$TEMP_ALIAS" | uniq -d)
+if [ -n "$DUPLICATE_ALIASES" ]; then
+    echo "$DUPLICATE_ALIASES" | while IFS= read -r line; do
+        if [ -n "$line" ]; then
+            echo -e "    ${RED}⚠${NC} $line"
+        fi
+    done
+else
+    echo -e "    ${GREEN}✓${NC} 重複なし"
+fi
+
+rm -f "$TEMP_ALL_FILES" "$TEMP_EVAL" "$TEMP_ALIAS"
 echo ""
 
 # 分割ファイルの検出
