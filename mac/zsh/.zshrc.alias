@@ -53,3 +53,7 @@ alias cp='cp -i'
 alias mv='mv -i'
 alias vi='vim'
 
+# zshキャッシュ管理
+alias zsh-cache-clear='rm -rf ~/.cache/zsh/*.zsh && echo "zshキャッシュをクリアしました"'
+alias zsh-cache-rebuild='zsh-cache-clear && exec zsh'
+
