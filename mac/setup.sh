@@ -48,4 +48,7 @@ ln -sf ~/dotfiles/mac/hammerspoon/init.lua ~/.hammerspoon/init.lua
 mkdir -p ~/ghq
 ln -sf ~/dotfiles ~/ghq/dotfiles
 
+# claude
+./claude/setup.sh
+
 echo "--- Link dotfiles is Done!  ---"

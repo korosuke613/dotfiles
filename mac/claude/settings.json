@@ -1,0 +1,41 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__github__get_file_contents",
+      "mcp__github__pull_request_read",
+      "mcp__github__issue_read",
+      "mcp__github__list_issues",
+      "mcp__github__search_code",
+      "mcp__github__search_issues",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:aws.amazon.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Skill(dev-standards:dev-standards)",
+      "Skill(github:pr-respond)",
+      "Bash(tree:*)",
+      "Bash(wc:*)",
+      "Bash(gh run view:*)",
+      "Bash(gh pr checks:*)",
+      "Bash(gh issue view:*)",
+      "Bash(gh run list:*)"
+    ],
+    "defaultMode": "default"
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline.sh",
+    "padding": 0
+  },
+  "outputStyle": "Learning",
+  "enabledPlugins": {
+    "git@korosuke613": true,
+    "doc@korosuke613": true,
+    "engineer@korosuke613": true,
+    "security@korosuke613": true,
+    "github@korosuke613": true,
+    "dev-standards@korosuke613": true,
+    "claude-md-management@claude-plugins-official": true
+  },
+  "language": "Japanese"
+}
