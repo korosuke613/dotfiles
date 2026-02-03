@@ -15,12 +15,22 @@ export GIT_TERMINAL_PROMPT=0
 
 mkdir -p "$LOG_DIR" "$STATE_DIR"
 
+LOG_FILE="$LOG_DIR/dotfiles-sync.log"
+
 log() {
   local msg="$1"
-  printf '[%s] %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$msg" >> "$LOG_DIR/dotfiles-sync.log"
+  printf '[%s] %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$msg" >> "$LOG_FILE"
 }
 
-exec >> "$LOG_DIR/dotfiles-sync.log"
+err() {
+  local msg="$1"
+  printf '[%s] %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$msg" >&2
+  printf '[%s] %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$msg" >> "$LOG_FILE"
+}
+
+run() {
+  "$@" >> "$LOG_FILE" 2>&1
+}
 
 if [[ ! -d "$REPO/.git" ]]; then
   log "Repo not found: $REPO"
@@ -55,44 +65,47 @@ trap 'rmdir "$LOCK_DIR" >/dev/null 2>&1 || true' EXIT
 echo "$now_epoch" > "$LAST_RUN_FILE"
 log "Starting dotfiles sync"
 
-if ! git -C "$REPO" fetch origin main "$SYNC_BRANCH"; then
-  log "git fetch failed"
+if ! run git -C "$REPO" fetch origin main "$SYNC_BRANCH"; then
+  err "git fetch failed"
   exit 1
 fi
 
 if ! git -C "$REPO" show-ref --verify --quiet "refs/heads/$SYNC_BRANCH"; then
   if git -C "$REPO" show-ref --verify --quiet "refs/remotes/origin/$SYNC_BRANCH"; then
     log "Creating local $SYNC_BRANCH tracking origin/$SYNC_BRANCH"
-    git -C "$REPO" switch -c "$SYNC_BRANCH" --track "origin/$SYNC_BRANCH"
+    run git -C "$REPO" switch -c "$SYNC_BRANCH" --track "origin/$SYNC_BRANCH"
   else
     log "Creating local $SYNC_BRANCH from origin/main"
-    git -C "$REPO" switch -c "$SYNC_BRANCH" "origin/main"
-    git -C "$REPO" push -u origin "$SYNC_BRANCH"
+    run git -C "$REPO" switch -c "$SYNC_BRANCH" "origin/main"
+    if ! run git -C "$REPO" push -u origin "$SYNC_BRANCH"; then
+      err "git push failed"
+      exit 1
+    fi
   fi
 else
-  git -C "$REPO" switch "$SYNC_BRANCH"
+  run git -C "$REPO" switch "$SYNC_BRANCH"
 fi
 
-if ! git -C "$REPO" pull --rebase --autostash origin "$SYNC_BRANCH"; then
-  log "git pull --rebase failed; attempting rebase --abort"
-  git -C "$REPO" rebase --abort >/dev/null 2>&1 || true
+if ! run git -C "$REPO" pull --rebase --autostash origin "$SYNC_BRANCH"; then
+  err "git pull --rebase failed; attempting rebase --abort"
+  run git -C "$REPO" rebase --abort || true
   exit 1
 fi
 
 # Commit and push if staged changes exist
 if git -C "$REPO" status --porcelain | grep -q .; then
-  git -C "$REPO" add -A
+  run git -C "$REPO" add -A
   if ! git -C "$REPO" diff --cached --quiet; then
     local_ts=$(date '+%Y-%m-%d %H:%M')
-    if git -C "$REPO" -c commit.gpgsign=false commit -m "sync: $local_ts"; then
-      if git -C "$REPO" push origin "$SYNC_BRANCH"; then
+    if run git -C "$REPO" -c commit.gpgsign=false commit -m "sync: $local_ts"; then
+      if run git -C "$REPO" push origin "$SYNC_BRANCH"; then
         log "Pushed sync changes"
       else
-        log "git push failed"
+        err "git push failed"
         exit 1
       fi
     else
-      log "git commit failed"
+      err "git commit failed"
       exit 1
     fi
   fi
@@ -109,12 +122,12 @@ if [[ "$current_month" != "$last_month" ]]; then
   if command -v gh >/dev/null 2>&1; then
     ahead_count=$(git -C "$REPO" rev-list --count origin/main.."$SYNC_BRANCH")
     if [[ "$ahead_count" -gt 0 ]]; then
-      if ! gh pr list --base main --head "$SYNC_BRANCH" --state open | grep -q .; then
-        if gh pr create --base main --head "$SYNC_BRANCH" --title "dotfiles: sync $current_month" --body "Monthly squash merge for $current_month."; then
+      if ! run gh pr list --base main --head "$SYNC_BRANCH" --state open | grep -q .; then
+        if run gh pr create --base main --head "$SYNC_BRANCH" --title "dotfiles: sync $current_month" --body "Monthly squash merge for $current_month."; then
           echo "$current_month" > "$STATE_FILE"
           log "Created monthly PR for $current_month"
         else
-          log "gh pr create failed"
+          err "gh pr create failed"
           exit 1
         fi
       else
