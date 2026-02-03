@@ -61,12 +61,15 @@ source ${DOTFILES_ZSH_HOME}/.zshrc.alias
 # shellcheck source=.zshrc.cd_fzf
 source ${DOTFILES_ZSH_HOME}/.zshrc.cd_fzf
 
-# check_update_dotfiles
-# shellcheck source=.zshrc.check_update_dotfiles
-(source ${DOTFILES_ZSH_HOME}/.zshrc.check_update_dotfiles &) > /dev/null
-
 # dotfiles auto sync (runs at most once per hour)
-(${DOTFILES_HOME}/scripts/dotfiles-sync.sh >/dev/null &)
+# Only run for human-driven interactive shells:
+# - interactive shell with prompt
+# - stdout is a TTY (not piped)
+# - not in CI
+# - not an SSH non-interactive command
+if [[ -o interactive ]] && [[ -n "$PS1" ]] && [[ -z "$CI" ]] && [[ -t 1 ]] && [[ -z "$SSH_ORIGINAL_COMMAND" ]]; then
+  (${DOTFILES_HOME}/scripts/dotfiles-sync.sh >/dev/null &)
+fi
 
 # autocomplete
 # shellcheck source=.zshrc.autocomplete
