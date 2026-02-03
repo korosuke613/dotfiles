@@ -77,6 +77,15 @@ fi
 
 source ${DOTFILES_ZSH_HOME}/.zshrc.path
 
+# VSCodeでは強制的にEmacsモード
+if [[ "$TERM_PROGRAM" == "vscode" ]]; then
+    bindkey -e  # Emacsモード
+fi
+if [[ "$TERM_PROGRAM" == "kiro" ]]; then
+    bindkey -e  # Emacsモード
+fi
+
+
 # Setting of Go
 export GOPATH=$(go env GOPATH)
 export PATH=$PATH:$GOPATH/bin
