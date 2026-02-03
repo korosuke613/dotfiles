@@ -103,8 +103,7 @@ CACHE_MAX_AGE=300  # 5 minutes
 OP_CLAUDE_TOKEN_ITEM_NAME="Claude OAuth token"  # Name of the 1Password item storing the oauth token
 
 fetch_usage() {
-    TOKEN=$(security find-generic-password -s "Claude Code-credentials" -w 2>/dev/null | jq -r '.claudeAiOauth.accessToken // empty')
-	# TOKEN=$(op item get "$OP_CLAUDE_TOKEN_ITEM_NAME" --fields label=credential --reveal)
+	TOKEN=$(security find-generic-password -s "Claude Code-credentials" -w 2>/dev/null | jq -r '.claudeAiOauth.accessToken // empty')
 	if [ -n "$TOKEN" ]; then
         # Use --config with process substitution to avoid exposing token in process list
         curl --max-time 3 \
