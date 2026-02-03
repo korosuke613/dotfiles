@@ -62,6 +62,11 @@ if ! mkdir "$LOCK_DIR" 2>/dev/null; then
 fi
 trap 'rmdir "$LOCK_DIR" >/dev/null 2>&1 || true' EXIT
 
+printf '=== DOTFILES CHANGES DETECTED ===\n' >&2
+printf 'Syncing now (runs at most once per hour)...\n' >&2
+printf 'Log: %s\n' "$LOG_FILE" >&2
+printf '=================================\n' >&2
+
 echo "$now_epoch" > "$LAST_RUN_FILE"
 log "Starting dotfiles sync"
 
@@ -97,7 +102,7 @@ if git -C "$REPO" status --porcelain | grep -q .; then
   run git -C "$REPO" add -A
   if ! git -C "$REPO" diff --cached --quiet; then
     local_ts=$(date '+%Y-%m-%d %H:%M')
-    if run git -C "$REPO" -c commit.gpgsign=false commit -m "sync: $local_ts"; then
+    if run git -C "$REPO" commit -m "sync: $local_ts"; then
       if run git -C "$REPO" push origin "$SYNC_BRANCH"; then
         log "Pushed sync changes"
       else
