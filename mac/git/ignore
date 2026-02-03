@@ -4,3 +4,5 @@
 *.iml
 git-sim_media/
 
+
+**/.claude/settings.local.json
