@@ -61,9 +61,8 @@ source ${DOTFILES_ZSH_HOME}/.zshrc.alias
 # shellcheck source=.zshrc.cd_fzf
 source ${DOTFILES_ZSH_HOME}/.zshrc.cd_fzf
 
-# check_update_dotfiles
-# shellcheck source=.zshrc.check_update_dotfiles
-(source ${DOTFILES_ZSH_HOME}/.zshrc.check_update_dotfiles &) > /dev/null
+# dotfiles auto sync (runs at most once per hour)
+${DOTFILES_HOME}/scripts/dotfiles-sync.sh
 
 # autocomplete
 # shellcheck source=.zshrc.autocomplete
@@ -142,4 +141,3 @@ alias rm='echo "WARNING: rm は実行しないでください。代わりに tra
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/korosuke613/.lmstudio/bin"
 # End of LM Studio CLI section
-
