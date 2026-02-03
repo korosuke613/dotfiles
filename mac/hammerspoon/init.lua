@@ -1,12 +1,12 @@
 hs.hotkey.bind({"cmd"}, "t", function()
 	hs.application.enableSpotlightForNameSearches(true)
-    local iterm2 = hs.application.get("iTerm2")
-    if iterm2 == nil then
-        hs.application.launchOrFocus("/Applications/iTerm.app")
-    elseif iterm2:isFrontmost() then
-        iterm2:hide()
+    local ghostty = hs.application.get("Ghostty")
+    if ghostty == nil then
+        hs.application.launchOrFocus("/Applications/Ghostty.app")
+    elseif ghostty:isFrontmost() then
+        ghostty:hide()
     else
-        hs.application.launchOrFocus("/Applications/iTerm.app")
+        hs.application.launchOrFocus("/Applications/Ghostty.app")
     end
 end)
 
