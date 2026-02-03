@@ -19,9 +19,9 @@ dotfiles リポジトリを `sync` ブランチで自動同期するためのス
 ## 仕様（詳細）
 ### 起動条件
 - `.zshrc` から呼び出される前提
-- 対話的シェルのみ（`interactive` + `PS1`）  
-- stdout が TTY のときのみ（`-t 1`）  
-- `CI` 環境変数がない場合のみ  
+- 対話的シェルのみ（`interactive` + `PS1`）
+- stdin と stderr が TTY のときのみ（`-t 0`, `-t 2`）
+- `CI` 環境変数がない場合のみ
 - `SSH_ORIGINAL_COMMAND` がない場合のみ（ssh 非対話実行を除外）
 
 ### 実行頻度
