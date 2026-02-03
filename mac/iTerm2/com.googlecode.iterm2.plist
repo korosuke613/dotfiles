@@ -36,6 +36,22 @@
 	<false/>
 	<key>EscapeShellCharsWithBackslash</key>
 	<false/>
+	<key>GlobalKeyMap</key>
+	<dict>
+		<key>0xd-0x20000-0x24</key>
+		<dict>
+			<key>Action</key>
+			<integer>12</integer>
+			<key>Keycode</key>
+			<integer>13</integer>
+			<key>Modifiers</key>
+			<integer>131072</integer>
+			<key>Text</key>
+			<string>\n</string>
+			<key>Version</key>
+			<integer>1</integer>
+		</dict>
+	</dict>
 	<key>GlobalTouchBarMap</key>
 	<dict>
 		<key>touchbar:8E511EBD-701E-4191-BFD6-9BA8678C0EC3</key>
