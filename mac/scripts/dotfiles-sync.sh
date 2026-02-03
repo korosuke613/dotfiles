@@ -128,7 +128,13 @@ if ! mkdir "$LOCK_DIR" 2>/dev/null; then
   fi
   dbg "lock: acquired after cleanup"
 fi
-trap 'rmdir "$LOCK_DIR" >/dev/null 2>&1 || true' EXIT
+cleanup() {
+  if [[ "$NOTICE_PRINTED" == "1" ]]; then
+    printf '%s=================================%s\n' "$C_CYAN" "$C_RESET" >&2
+  fi
+  rmdir "$LOCK_DIR" >/dev/null 2>&1 || true
+}
+trap 'cleanup' EXIT
 
 if [[ $((now_epoch - last_epoch)) -lt 3600 ]]; then
   exit 0
@@ -139,7 +145,6 @@ printf '%s=== DOTFILES CHANGES DETECTED ===%s\n' "$C_CYAN" "$C_RESET" >&2
 printf '%sSyncing now%s (runs at most once per hour)...\n' "$C_YELLOW" "$C_RESET" >&2
 printf 'Log: %s%s%s\n' "$C_DIM" "$LOG_FILE" "$C_RESET" >&2
 NOTICE_PRINTED=1
-trap 'if [[ "$NOTICE_PRINTED" == "1" ]]; then printf "%s=================================%s\n" "$C_CYAN" "$C_RESET" >&2; fi' EXIT
 
 echo "$now_epoch" > "$LAST_RUN_FILE"
 log "Starting dotfiles sync"
