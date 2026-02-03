@@ -79,14 +79,42 @@ zprof
 EOF
 
 echo "実行中..."
-ZPROF_OUTPUT=$(ZDOTDIR="$ZDOTDIR" zsh -i -c "zmodload zsh/zprof; source $ZDOTDIR/.zshrc; zprof" 2>&1 | grep -A 50 "seconds" || true)
+
+# zprof実行（改善版）
+ZPROF_OUTPUT=$(zsh -c '
+zmodload zsh/zprof
+source ~/.zshrc >/dev/null 2>&1
+zprof
+' 2>&1)
 
 if [ -n "$ZPROF_OUTPUT" ]; then
-    echo "$ZPROF_OUTPUT" | head -20
+    echo "$ZPROF_OUTPUT" | head -25
     echo ""
-    echo -e "${CYAN}上位の時間消費関数が表示されました${NC}"
+
+    # 重複呼び出しの自動検出
+    echo -e "${YELLOW}【重複呼び出しの可能性】${NC}"
+    DUPLICATE_CALLS=$(echo "$ZPROF_OUTPUT" | awk '
+        NR > 3 && /^[[:space:]]*[0-9]+\)/ {
+            # 行フォーマット: num) calls time ... name
+            gsub(/\)/, "", $1)  # num) → num
+            calls = $2
+            name = $NF
+
+            if (calls > 1) {
+                printf "  %s⚠%s %s が %d 回呼び出されています\n", "\033[0;31m", "\033[0m", name, calls
+            }
+        }
+    ')
+
+    if [ -n "$DUPLICATE_CALLS" ]; then
+        echo "$DUPLICATE_CALLS"
+        echo -e "\n  ${CYAN}→ 同じ関数が複数回実行されている可能性があります${NC}"
+    else
+        echo -e "  ${GREEN}✓${NC} 重複呼び出しは検出されませんでした"
+    fi
 else
     echo -e "${YELLOW}⚠ zprof出力を取得できませんでした${NC}"
+    echo "  ヒント: .zshrc の先頭に 'zmodload zsh/zprof' を追加してみてください"
 fi
 
 rm -f "$TEMP_ZSHRC"
