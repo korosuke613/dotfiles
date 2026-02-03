@@ -22,6 +22,7 @@
     ],
     "defaultMode": "default"
   },
+  "model": "opusplan",
   "statusLine": {
     "type": "command",
     "command": "bash ~/.claude/statusline.sh",
@@ -37,5 +38,6 @@
     "dev-standards@korosuke613": true,
     "claude-md-management@claude-plugins-official": true
   },
+  "plansDirectory": "plans",
   "language": "Japanese"
 }

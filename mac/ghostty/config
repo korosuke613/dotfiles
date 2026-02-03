@@ -1,3 +1,4 @@
 font-size = 16
-theme = Dracula
+theme = Challenger Deep
 background-opacity = 0.9
+macos-window-buttons = hidden
