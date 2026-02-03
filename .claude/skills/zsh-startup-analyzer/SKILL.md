@@ -1,7 +1,7 @@
 ---
 name: zsh-startup-analyzer
 description: zshの起動時間を分析しボトルネックを特定。「zsh起動を高速化」「シェルが遅い」「zshボトルネック調査」で起動。macOS/Linux両対応。
-allowed-tools: Read, Glob, Grep, Bash(bash */analyze-zshrc.sh:*), Bash(bash */measure-startup.sh:*), Bash(bash */measure-individual.sh:*)
+allowed-tools: Read, Glob, Grep, Bash(bash */analyze-zshrc.sh *), Bash(bash */measure-startup.sh *), Bash(bash */measure-individual.sh *)
 ---
 
 # zsh起動高速化分析スキル
@@ -10,7 +10,11 @@ allowed-tools: Read, Glob, Grep, Bash(bash */analyze-zshrc.sh:*), Bash(bash */me
 
 ## 分析フロー
 
-1. **zshrc構造の自動検出**
+0. 各種スクリプトの実行
+   - `./scripts/` にあるスクリプト群を確認、実行する
+     - 実行方法: `bash <Claude skill dir>/scripts/<script-name>.sh [args]`
+
+1. **zshrc構造の把握**
    - ZDOTDIRの確認
    - sourceされているファイル一覧の取得
    - 分割構成の把握

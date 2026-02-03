@@ -1,5 +1,9 @@
 #!/usr/bin/env zsh
 
-# google cloud設定
-source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
-source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
+# google cloud設定（brew --prefix をハードコード化）
+source "/opt/homebrew/share/google-cloud-sdk/path.zsh.inc"
+
+# GCP completion は compinit を再度呼び出すため条件付きで読み込み
+# gcloudコマンドを実際に使う時のみ必要なので遅延読み込みも検討可能
+# 現在は読み込みをスキップして高速化（必要な場合は手動でsource）
+# source "/opt/homebrew/share/google-cloud-sdk/completion.zsh.inc"
