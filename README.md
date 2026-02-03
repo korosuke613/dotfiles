@@ -63,3 +63,15 @@ When loading .zshrc, it will tell you if there are any changes in the dotfiles r
 dotfiles on  main [!] 📨 gmail.com 
 ❯ 
 ```
+
+### Auto sync (mac)
+Each Mac uses the shared `sync` branch and automatically syncs every hour when `.zshrc` is loaded.
+
+Behavior:
+- `pull --rebase` from `origin/sync`
+- If there are changes, auto commit (no GPG signing) and push to `origin/sync`
+- When the month changes, create a PR from `sync` to `main` (monthly squash merge)
+
+Notes:
+- The default branch on GitHub remains `main`
+- The monthly PR is created at the first sync run after the month changes
