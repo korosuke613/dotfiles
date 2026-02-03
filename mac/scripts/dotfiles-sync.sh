@@ -16,6 +16,7 @@ export GIT_TERMINAL_PROMPT=0
 mkdir -p "$LOG_DIR" "$STATE_DIR"
 
 LOG_FILE="$LOG_DIR/dotfiles-sync.log"
+SHOW_OUTPUT=0
 
 log() {
   local msg="$1"
@@ -29,7 +30,11 @@ err() {
 }
 
 run() {
-  "$@" >> "$LOG_FILE" 2>&1
+  if [[ "$SHOW_OUTPUT" == "1" ]]; then
+    "$@" 2>&1 | tee -a "$LOG_FILE"
+  else
+    "$@" >> "$LOG_FILE" 2>&1
+  fi
 }
 
 if [[ ! -d "$REPO/.git" ]]; then
@@ -109,12 +114,14 @@ if git -C "$REPO" status --porcelain | grep -q .; then
     exit 0
   fi
 
+  SHOW_OUTPUT=1
   run git -C "$REPO" add -A
   if ! git -C "$REPO" diff --cached --quiet; then
     local_ts=$(date '+%Y-%m-%d %H:%M')
     if run git -C "$REPO" commit -m "sync: $local_ts"; then
       if run git -C "$REPO" push origin "$SYNC_BRANCH"; then
         log "Pushed sync changes"
+        SHOW_OUTPUT=0
       else
         err "git push failed"
         exit 1
