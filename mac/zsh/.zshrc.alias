@@ -48,10 +48,15 @@ alias ghn='echo_eval _ghn'
 
 alias python=python3
 
-alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 alias vi='vim'
+
+alias npx='echo "WARNING: npx は実行しないでください" && false'
+alias npm='echo "WARNING: npm は実行しないでください" && false'
+
+# alias rm='rm -i'
+alias rm='echo "WARNING: rm は実行しないでください。代わりに trash を使ってください" && false'
 
 # zshキャッシュ管理
 alias zsh-cache-clear='rm -rf ~/.cache/zsh/*.zsh && echo "zshキャッシュをクリアしました"'

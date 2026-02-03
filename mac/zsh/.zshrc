@@ -26,10 +26,6 @@ _cache_eval() {
     source "$cache_file"
 }
 
-alias npx='echo "WARNING: npx は実行しないでください" && false'
-alias npm='echo "WARNING: npm は実行しないでください" && false'
-alias rm='echo "WARNING: rm は実行しないでください。代わりに trash を使ってください" && false'
-
 # brew shellenv のキャッシュ化（1日ごとに更新）
 _cache_eval "brew_shellenv" "/opt/homebrew/bin/brew shellenv" 1
 
