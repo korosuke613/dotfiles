@@ -7,6 +7,10 @@ fi
 
 export DOTFILES_ZSH_HOME=${DOTFILES_HOME}/zsh
 
+alias npx='echo "WARNING: npx は実行しないでください" && false'
+alias npm='echo "WARNING: npm は実行しないでください" && false'
+alias rm='echo "WARNING: rm は実行しないでください。代わりに trash を使ってください" && false'
+
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
@@ -113,3 +117,20 @@ op daemon -d
 [[ -f "$HOME/fig-export/dotfiles/dotfile.zsh" ]] && builtin source "$HOME/fig-export/dotfiles/dotfile.zsh"
 
 # Q post block. Keep at the bottom of this file.
+
+# Created by `pipx` on 2025-06-28 13:40:13
+export PATH="$PATH:/Users/korosuke613/.local/bin"
+
+# Turso
+export PATH="$PATH:/Users/korosuke613/.turso"
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+alias npx='echo "WARNING: npx は実行しないでください" && false'
+alias npm='echo "WARNING: npm は実行しないでください" && false'
+alias rm='echo "WARNING: rm は実行しないでください。代わりに trash を使ってください" && false'
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/korosuke613/.lmstudio/bin"
+# End of LM Studio CLI section
+
