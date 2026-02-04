@@ -1,4 +1,29 @@
 #!/usr/bin/env zsh
 
-export PATH="/usr/local/opt/ansible@2.9/bin:$PATH"
+# Rancher Desktop
+export PATH="$HOME/.rd/bin:$PATH"
+
+# Go
+if [[ -z "$GOPATH" ]]; then
+    export GOPATH="${HOME}/go"
+fi
+export PATH="$PATH:$GOPATH/bin"
+
+# Bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# aqua
+export PATH="${AQUA_ROOT_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/aquaproj-aqua}/bin:$PATH"
+
+# pipx
+export PATH="$PATH:$HOME/.local/bin"
+
+# Turso
+export PATH="$PATH:$HOME/.turso"
+
+# LM Studio
+export PATH="$PATH:$HOME/.lmstudio/bin"
+
+# Deno
 export PATH="$HOME/.deno/bin:$PATH"
