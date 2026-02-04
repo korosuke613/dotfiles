@@ -30,13 +30,13 @@ _cache_eval() {
 _cache_eval "brew_shellenv" "/opt/homebrew/bin/brew shellenv" 1
 
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-export PATH="/Users/korosuke613/.rd/bin:$PATH"
+export PATH="$HOME/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 
 
 # zshの設定
-# shellcheck source=.zshrc.setting
-source ${DOTFILES_ZSH_HOME}/.zshrc.setting
+# shellcheck source=.zshrc.plugins
+source ${DOTFILES_ZSH_HOME}/.zshrc.plugins
 
 # proxy設定
 # shellcheck source=.zshrc.proxy
@@ -50,9 +50,9 @@ source ${DOTFILES_ZSH_HOME}/.zshrc.gcp
 export EDITOR=vim
 _cache_eval "direnv_hook" "direnv hook zsh" 7
 
-# ls を exa に置き換える
-# shellcheck source=.zshrc.exa
-source ${DOTFILES_ZSH_HOME}/.zshrc.exa
+# ls を eza に置き換える
+# shellcheck source=.zshrc.eza
+source ${DOTFILES_ZSH_HOME}/.zshrc.eza
 
 # cat を bat に置き換える
 # shellcheck source=.zshrc.bat
@@ -62,9 +62,6 @@ source ${DOTFILES_ZSH_HOME}/.zshrc.bat
 # shellcheck source=.zshrc.history
 source ${DOTFILES_ZSH_HOME}/.zshrc.history
 
-# auto assam
-# shellcheck source=.zshrc.auto_assam
-source ${DOTFILES_ZSH_HOME}/.zshrc.auto_assam
 
 # setting starship
 _cache_eval "starship_init" "starship init zsh" 7
@@ -92,11 +89,8 @@ fi
 
 source ${DOTFILES_ZSH_HOME}/.zshrc.path
 
-# VSCodeでは強制的にEmacsモード
-if [[ "$TERM_PROGRAM" == "vscode" ]]; then
-    bindkey -e  # Emacsモード
-fi
-if [[ "$TERM_PROGRAM" == "kiro" ]]; then
+# VSCode/Kiroでは強制的にEmacsモード
+if [[ "$TERM_PROGRAM" == "vscode" || "$TERM_PROGRAM" == "kiro" ]]; then
     bindkey -e  # Emacsモード
 fi
 
@@ -108,10 +102,10 @@ fi
 export PATH="$PATH:$GOPATH/bin"
 
 
-source /Users/korosuke613/.config/op/plugins.sh
+source $HOME/.config/op/plugins.sh
 
 # bun completions
-[ -s "/Users/korosuke613/.bun/_bun" ] && source "/Users/korosuke613/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
@@ -145,11 +139,11 @@ op daemon -d
 # Q post block. Keep at the bottom of this file.
 
 # Created by `pipx` on 2025-06-28 13:40:13
-export PATH="$PATH:/Users/korosuke613/.local/bin"
+export PATH="$PATH:$HOME/.local/bin"
 
 # Turso
-export PATH="$PATH:/Users/korosuke613/.turso"
+export PATH="$PATH:$HOME/.turso"
 
 # Added by LM Studio CLI (lms)
-export PATH="$PATH:/Users/korosuke613/.lmstudio/bin"
+export PATH="$PATH:$HOME/.lmstudio/bin"
 # End of LM Studio CLI section
