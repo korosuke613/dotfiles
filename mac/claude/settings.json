@@ -28,7 +28,6 @@
     "command": "bash ~/.claude/statusline.sh",
     "padding": 0
   },
-  "outputStyle": "Learning",
   "enabledPlugins": {
     "git@korosuke613": true,
     "doc@korosuke613": true,
@@ -36,8 +35,10 @@
     "security@korosuke613": true,
     "github@korosuke613": true,
     "dev-standards@korosuke613": true,
-    "claude-md-management@claude-plugins-official": true
+    "claude-md-management@claude-plugins-official": true,
+    "ept@cybozu-ept": true
   },
-  "plansDirectory": "plans",
-  "language": "Japanese"
+  "outputStyle": "Learning",
+  "language": "Japanese",
+  "plansDirectory": "plans"
 }
