@@ -36,6 +36,7 @@ declare -A SYMLINKS=(
     ["git/ignore"]="$HOME/.config/git/ignore"
     ["git/office.gitconfig"]="$HOME/.config/git/office"
     ["hammerspoon/init.lua"]="$HOME/.hammerspoon/init.lua"
+    ["ghostty/config"]="$HOME/Library/Application Support/com.mitchellh.ghostty/config"
 )
 
 # シンボリックリンク作成
