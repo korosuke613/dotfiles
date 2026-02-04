@@ -59,6 +59,6 @@ alias npm='echo "WARNING: npm は実行しないでください" && false'
 alias rm='echo "WARNING: rm は実行しないでください。代わりに trash を使ってください" && false'
 
 # zshキャッシュ管理
-alias zsh-cache-clear='rm -rf ~/.cache/zsh/*.zsh && echo "zshキャッシュをクリアしました"'
+alias zsh-cache-clear='command rm -rf ~/.cache/zsh/*.zsh && echo "zshキャッシュをクリアしました"'
 alias zsh-cache-rebuild='zsh-cache-clear && exec zsh'
 

@@ -1,2 +1,6 @@
 # .github/workflows/benchmark.yaml
 benchmark-results/
+
+# macOS system files
+.DS_Store
+*/.DS_Store
