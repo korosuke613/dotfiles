@@ -1,8 +1,0 @@
-brew "gnu-time"
-brew "zsh-completions"
-brew "zsh-syntax-highlighting"
-brew "zsh-autosuggestions"
-brew "direnv"
-brew "asdf"
-brew "starship"
-cask "google-cloud-sdk"
