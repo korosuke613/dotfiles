@@ -1,4 +1,3 @@
-# Q pre block. Keep at the top of this file.
 # zmodload zsh/zprof
 
 if [[ -z "${DOTFILES_HOME}" ]]; then
@@ -29,14 +28,9 @@ _cache_eval() {
 # brew shellenv のキャッシュ化（1日ごとに更新）
 _cache_eval "brew_shellenv" "/opt/homebrew/bin/brew shellenv" 1
 
-### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-export PATH="/Users/korosuke613/.rd/bin:$PATH"
-### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
-
-
 # zshの設定
-# shellcheck source=.zshrc.setting
-source ${DOTFILES_ZSH_HOME}/.zshrc.setting
+# shellcheck source=.zshrc.plugins
+source ${DOTFILES_ZSH_HOME}/.zshrc.plugins
 
 # proxy設定
 # shellcheck source=.zshrc.proxy
@@ -50,9 +44,9 @@ source ${DOTFILES_ZSH_HOME}/.zshrc.gcp
 export EDITOR=vim
 _cache_eval "direnv_hook" "direnv hook zsh" 7
 
-# ls を exa に置き換える
-# shellcheck source=.zshrc.exa
-source ${DOTFILES_ZSH_HOME}/.zshrc.exa
+# ls を eza に置き換える
+# shellcheck source=.zshrc.eza
+source ${DOTFILES_ZSH_HOME}/.zshrc.eza
 
 # cat を bat に置き換える
 # shellcheck source=.zshrc.bat
@@ -62,9 +56,6 @@ source ${DOTFILES_ZSH_HOME}/.zshrc.bat
 # shellcheck source=.zshrc.history
 source ${DOTFILES_ZSH_HOME}/.zshrc.history
 
-# auto assam
-# shellcheck source=.zshrc.auto_assam
-source ${DOTFILES_ZSH_HOME}/.zshrc.auto_assam
 
 # setting starship
 _cache_eval "starship_init" "starship init zsh" 7
@@ -92,30 +83,15 @@ fi
 
 source ${DOTFILES_ZSH_HOME}/.zshrc.path
 
-# VSCodeでは強制的にEmacsモード
-if [[ "$TERM_PROGRAM" == "vscode" ]]; then
-    bindkey -e  # Emacsモード
-fi
-if [[ "$TERM_PROGRAM" == "kiro" ]]; then
+# VSCode/Kiroでは強制的にEmacsモード
+if [[ "$TERM_PROGRAM" == "vscode" || "$TERM_PROGRAM" == "kiro" ]]; then
     bindkey -e  # Emacsモード
 fi
 
-
-# Setting of Go（GOPATHはデフォルト値を使用して高速化）
-if [[ -z "$GOPATH" ]]; then
-    export GOPATH="${HOME}/go"
-fi
-export PATH="$PATH:$GOPATH/bin"
-
-
-source /Users/korosuke613/.config/op/plugins.sh
+[[ -f "$HOME/.config/op/plugins.sh" ]] && source "$HOME/.config/op/plugins.sh"
 
 # bun completions
-[ -s "/Users/korosuke613/.bun/_bun" ] && source "/Users/korosuke613/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # Terraform
 export TF_CLI_ARGS_plan="--parallelism=50"
@@ -124,10 +100,7 @@ export TF_CLI_ARGS_apply="--parallelism=50"
 # atuin
 _cache_eval "atuin_init" "atuin init zsh --disable-up-arrow" 7
 
-source "$HOME/.rye/env"
-
-# aqua
-export PATH="${AQUA_ROOT_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/aquaproj-aqua}/bin:$PATH"
+[[ -f "$HOME/.rye/env" ]] && source "$HOME/.rye/env"
 
 [ -f ~/.inshellisense/key-bindings.zsh ] && source ~/.inshellisense/key-bindings.zsh
 
@@ -138,18 +111,3 @@ _cache_eval "mise_activate" "mise activate zsh" 7
 op daemon -d
 
 # zprof
-
-
-[[ -f "$HOME/fig-export/dotfiles/dotfile.zsh" ]] && builtin source "$HOME/fig-export/dotfiles/dotfile.zsh"
-
-# Q post block. Keep at the bottom of this file.
-
-# Created by `pipx` on 2025-06-28 13:40:13
-export PATH="$PATH:/Users/korosuke613/.local/bin"
-
-# Turso
-export PATH="$PATH:/Users/korosuke613/.turso"
-
-# Added by LM Studio CLI (lms)
-export PATH="$PATH:/Users/korosuke613/.lmstudio/bin"
-# End of LM Studio CLI section

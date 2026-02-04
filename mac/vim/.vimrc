@@ -1,6 +1,5 @@
 syntax enable
 set cursorline
-set cursorline!
 set number
 set hlsearch
 set ignorecase
