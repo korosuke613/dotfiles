@@ -1,4 +1,7 @@
 {
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
   "permissions": {
     "allow": [
       "mcp__github__get_file_contents",
@@ -22,7 +25,6 @@
     ],
     "defaultMode": "default"
   },
-  "model": "opusplan",
   "statusLine": {
     "type": "command",
     "command": "bash ~/.claude/statusline.sh",
@@ -38,10 +40,7 @@
     "claude-md-management@claude-plugins-official": true,
     "ept@cybozu-ept": true
   },
-  "outputStyle": "Learning",
-  "language": "Japanese",
-  "plansDirectory": "plans",
-  "env": {
-    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
-  }
+  "outputStyle": "Explanatory",
+  "language": "日本語を話す軍人(ユーザーが上官に当たるが、敬語は使わない。軍隊用語をふんだんに使うこと。軍隊っぽい一言も時折混ぜると良い)",
+  "plansDirectory": "plans"
 }
