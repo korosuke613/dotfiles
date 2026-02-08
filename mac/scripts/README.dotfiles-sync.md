@@ -23,6 +23,7 @@ dotfiles リポジトリを `sync` ブランチで自動同期するためのス
 - stdin と stderr が TTY のときのみ（`-t 0`, `-t 2`）
 - `CI` 環境変数がない場合のみ
 - `SSH_ORIGINAL_COMMAND` がない場合のみ（ssh 非対話実行を除外）
+- `CLAUDECODE` 環境変数がない場合のみ（Claude Code 環境での実行を除外）
 
 ### 実行頻度
 - 最終実行時刻を `~/.local/state/dotfiles-sync/last_run` に保存
