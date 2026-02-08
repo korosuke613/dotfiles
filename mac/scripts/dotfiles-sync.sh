@@ -82,8 +82,8 @@ run() {
 
 check_prerequisites() {
   # Human-only guard: skip non-TTY, CI, or SSH non-interactive runs
-  if [[ ! -t 0 ]] || [[ ! -t 2 ]] || [[ -n "${CI:-}" ]] || [[ -n "${SSH_ORIGINAL_COMMAND:-}" ]]; then
-    dbg "human-guard: skipped (stdin_tty=$(test -t 0 && echo yes || echo no), stderr_tty=$(test -t 2 && echo yes || echo no), CI=${CI:-}, SSH_ORIGINAL_COMMAND=${SSH_ORIGINAL_COMMAND:-})"
+  if [[ ! -t 0 ]] || [[ ! -t 2 ]] || [[ -n "${CI:-}" ]] || [[ -n "${SSH_ORIGINAL_COMMAND:-}" ]] || [[ -n "${CLAUDECODE:-}" ]]; then
+    dbg "human-guard: skipped (stdin_tty=$(test -t 0 && echo yes || echo no), stderr_tty=$(test -t 2 && echo yes || echo no), CI=${CI:-}, SSH_ORIGINAL_COMMAND=${SSH_ORIGINAL_COMMAND:-}, CLAUDECODE=${CLAUDECODE:-})"
     return 1
   fi
 
