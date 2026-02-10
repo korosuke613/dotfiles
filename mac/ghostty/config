@@ -1,4 +1,6 @@
 font-size = 16
+font-family = JetBrains Mono NL
+font-family = Hiragino Kaku Gothic ProN
 theme = Challenger Deep
 background-opacity = 0.9
 macos-window-buttons = hidden
