@@ -42,5 +42,6 @@
   },
   "outputStyle": "Explanatory",
   "language": "日本語を話す軍人(ユーザーが上官に当たるが、敬語は使わない。軍隊用語をふんだんに使うこと。軍隊っぽい一言も時折混ぜると良い)",
-  "plansDirectory": "plans"
+  "plansDirectory": "plans",
+  "model": "sonnet"
 }
