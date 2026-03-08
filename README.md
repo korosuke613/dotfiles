@@ -45,21 +45,14 @@ cd ~/dotfiles/ubuntu
 
 ## Features
 
-### Check update dotfiles repository
-When loading .zshrc, it will tell you if there are any changes in the dotfiles repository.
+### Auto sync (mac)
+Each Mac uses the shared `sync` branch and automatically syncs every hour when `.zshrc` is loaded.
 
-[details](mac/zsh/.zshrc.check_update_dotfiles)
+Behavior:
+- `pull --rebase` from `origin/sync`
+- If there are changes, auto commit (no GPG signing) and push to `origin/sync`
+- When the month changes, create a PR from `sync` to `main` (monthly squash merge)
 
-```
-=== DOTFILES IS DIRTY ===
-  The dotfiles have been changed. Please update them with the following command.
-
-  cd /Users/korosuke613/dotfiles
-  git add .
-  git commit -m "update dotfiles"
-  git push origin main
-=========================
-
-dotfiles on  main [!] 📨 gmail.com 
-❯ 
-```
+Notes:
+- The default branch on GitHub remains `main`
+- The monthly PR is created at the first sync run after the month changes

@@ -7,11 +7,27 @@ fi
 
 export DOTFILES_ZSH_HOME=${DOTFILES_HOME}/zsh
 
-alias npx='echo "WARNING: npx は実行しないでください" && false'
-alias npm='echo "WARNING: npm は実行しないでください" && false'
-alias rm='echo "WARNING: rm は実行しないでください。代わりに trash を使ってください" && false'
+# キャッシュディレクトリの初期化
+ZSH_CACHE_DIR="$HOME/.cache/zsh"
+[[ -d "$ZSH_CACHE_DIR" ]] || mkdir -p "$ZSH_CACHE_DIR"
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
+# evalキャッシュ関数
+# 使用法: _cache_eval "キャッシュ名" "コマンド" [有効期限（日）]
+_cache_eval() {
+    local cache_name="$1"
+    local command="$2"
+    local max_age="${3:-7}"  # デフォルト7日
+    local cache_file="$ZSH_CACHE_DIR/${cache_name}.zsh"
+
+    # キャッシュが存在しないか、max_age日より古い場合は再生成
+    if [[ ! -f "$cache_file" ]] || [[ -n $(find "$cache_file" -mtime +${max_age} 2>/dev/null) ]]; then
+        eval "$command" > "$cache_file"
+    fi
+    source "$cache_file"
+}
+
+# brew shellenv のキャッシュ化（1日ごとに更新）
+_cache_eval "brew_shellenv" "/opt/homebrew/bin/brew shellenv" 1
 
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 export PATH="/Users/korosuke613/.rd/bin:$PATH"
@@ -32,7 +48,7 @@ source ${DOTFILES_ZSH_HOME}/.zshrc.gcp
 
 # direnv
 export EDITOR=vim
-eval "$(direnv hook zsh)"
+_cache_eval "direnv_hook" "direnv hook zsh" 7
 
 # ls を exa に置き換える
 # shellcheck source=.zshrc.exa
@@ -51,7 +67,7 @@ source ${DOTFILES_ZSH_HOME}/.zshrc.history
 source ${DOTFILES_ZSH_HOME}/.zshrc.auto_assam
 
 # setting starship
-eval "$(starship init zsh)"
+_cache_eval "starship_init" "starship init zsh" 7
 
 # alias
 # shellcheck source=.zshrc.alias
@@ -61,9 +77,8 @@ source ${DOTFILES_ZSH_HOME}/.zshrc.alias
 # shellcheck source=.zshrc.cd_fzf
 source ${DOTFILES_ZSH_HOME}/.zshrc.cd_fzf
 
-# check_update_dotfiles
-# shellcheck source=.zshrc.check_update_dotfiles
-(source ${DOTFILES_ZSH_HOME}/.zshrc.check_update_dotfiles &) > /dev/null
+# dotfiles auto sync (runs at most once per hour)
+${DOTFILES_HOME}/scripts/dotfiles-sync.sh
 
 # autocomplete
 # shellcheck source=.zshrc.autocomplete
@@ -86,9 +101,11 @@ if [[ "$TERM_PROGRAM" == "kiro" ]]; then
 fi
 
 
-# Setting of Go
-export GOPATH=$(go env GOPATH)
-export PATH=$PATH:$GOPATH/bin
+# Setting of Go（GOPATHはデフォルト値を使用して高速化）
+if [[ -z "$GOPATH" ]]; then
+    export GOPATH="${HOME}/go"
+fi
+export PATH="$PATH:$GOPATH/bin"
 
 
 source /Users/korosuke613/.config/op/plugins.sh
@@ -105,7 +122,7 @@ export TF_CLI_ARGS_plan="--parallelism=50"
 export TF_CLI_ARGS_apply="--parallelism=50"
 
 # atuin
-eval "$(atuin init zsh --disable-up-arrow)"
+_cache_eval "atuin_init" "atuin init zsh --disable-up-arrow" 7
 
 source "$HOME/.rye/env"
 
@@ -114,7 +131,7 @@ export PATH="${AQUA_ROOT_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/aquaproj-aqua
 
 [ -f ~/.inshellisense/key-bindings.zsh ] && source ~/.inshellisense/key-bindings.zsh
 
-eval "$(mise activate)"
+_cache_eval "mise_activate" "mise activate zsh" 7
 
 # 1Password CLI
 # https://github.com/direnv/direnv/issues/662#issuecomment-2088058684
@@ -133,13 +150,6 @@ export PATH="$PATH:/Users/korosuke613/.local/bin"
 # Turso
 export PATH="$PATH:/Users/korosuke613/.turso"
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
-
-alias npx='echo "WARNING: npx は実行しないでください" && false'
-alias npm='echo "WARNING: npm は実行しないでください" && false'
-alias rm='echo "WARNING: rm は実行しないでください。代わりに trash を使ってください" && false'
-
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/korosuke613/.lmstudio/bin"
 # End of LM Studio CLI section
-
