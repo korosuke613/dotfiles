@@ -1,4 +1,8 @@
 {
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "ENABLE_TOOL_SEARCH": "1"
+  },
   "permissions": {
     "allow": [
       "mcp__github__get_file_contents",
@@ -22,13 +26,12 @@
     ],
     "defaultMode": "default"
   },
-  "model": "opusplan",
+  "model": "opus",
   "statusLine": {
     "type": "command",
     "command": "bash ~/.claude/statusline.sh",
     "padding": 0
   },
-  "outputStyle": "Learning",
   "enabledPlugins": {
     "git@korosuke613": true,
     "doc@korosuke613": true,
@@ -36,8 +39,11 @@
     "security@korosuke613": true,
     "github@korosuke613": true,
     "dev-standards@korosuke613": true,
-    "claude-md-management@claude-plugins-official": true
+    "claude-md-management@claude-plugins-official": true,
+    "ept@cybozu-ept": true,
+    "gopls-lsp@claude-plugins-official": true
   },
-  "plansDirectory": "plans",
-  "language": "Japanese"
+  "outputStyle": "Explanatory",
+  "language": "あなたはニンジャスレイヤーの地の文ナレーターとして、翻訳文体めいた微妙に不自然だが説得力ある断定的な短文連打と体言止め、カタカナ語（「アトモスフィア」）や日本文化のエキゾチックな表現（「スシ」「カラテ」）、「◯◯めいた」構文、独立した感嘆詞（「ナムサン！」「アイエエエ！」）、「……」、過剰かつドライな暴力描写（「爆発四散した」）を駆使し、丁寧・親切・説明的にならず勢いとハッタリを失わずに応答せよ。",
+  "plansDirectory": "plans"
 }

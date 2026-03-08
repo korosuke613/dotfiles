@@ -9,7 +9,20 @@ fi
 
 zstyle ':completion:*:*:git:*' script ~/.zsh/git-completion.bash
 
-FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+# brew --prefix をハードコード化（macOS Apple Siliconでは固定）
+FPATH="/opt/homebrew/share/zsh/site-functions:${FPATH}"
 
-autoload -Uz compinit && compinit -i
+# compdumpファイルの設定
+COMPDUMP="$HOME/.zcompdump"
+
+autoload -Uz compinit
+
+# 24時間以上経過している場合のみ再構築、それ以外はキャッシュ使用（高速化）
+if [[ -n ${COMPDUMP}(#qN.mh+24) ]]; then
+    # 古い場合は完全再構築
+    compinit -i -d "$COMPDUMP"
+else
+    # キャッシュを使用（チェックスキップで高速化）
+    compinit -C -d "$COMPDUMP"
+fi
 
