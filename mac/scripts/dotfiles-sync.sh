@@ -344,7 +344,7 @@ create_monthly_pr() {
 
   # 既存PRチェック（run を使わず直接gh cliを呼ぶ）
   local pr_count
-  pr_count=$(gh pr list --repo "$REPO" --base main --head "$pr_branch" --state open --json number --jq 'length' 2>>"$LOG_FILE") || true
+  pr_count=$(gh -C "$REPO" pr list --base main --head "$pr_branch" --state open --json number --jq 'length' 2>>"$LOG_FILE") || true
   if [[ "${pr_count:-0}" -gt 0 ]]; then
     echo "$current_month" > "$STATE_FILE"
     log "Monthly PR already exists for $pr_branch; recorded month"
@@ -387,7 +387,7 @@ create_monthly_pr() {
   fi
 
   # PR作成
-  if run gh pr create --repo "$REPO" --base main --head "$pr_branch" \
+  if run gh -C "$REPO" pr create --base main --head "$pr_branch" \
        --title "dotfiles: sync $current_month" \
        --body "Monthly squash merge for $current_month."; then
     echo "$current_month" > "$STATE_FILE"
