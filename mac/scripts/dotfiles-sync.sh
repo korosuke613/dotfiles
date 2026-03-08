@@ -82,8 +82,8 @@ run() {
 
 check_prerequisites() {
   # Human-only guard: skip non-TTY, CI, or SSH non-interactive runs
-  if [[ ! -t 0 ]] || [[ ! -t 2 ]] || [[ -n "${CI:-}" ]] || [[ -n "${SSH_ORIGINAL_COMMAND:-}" ]]; then
-    dbg "human-guard: skipped (stdin_tty=$(test -t 0 && echo yes || echo no), stderr_tty=$(test -t 2 && echo yes || echo no), CI=${CI:-}, SSH_ORIGINAL_COMMAND=${SSH_ORIGINAL_COMMAND:-})"
+  if [[ ! -t 0 ]] || [[ ! -t 2 ]] || [[ -n "${CI:-}" ]] || [[ -n "${SSH_ORIGINAL_COMMAND:-}" ]] || [[ -n "${CLAUDECODE:-}" ]]; then
+    dbg "human-guard: skipped (stdin_tty=$(test -t 0 && echo yes || echo no), stderr_tty=$(test -t 2 && echo yes || echo no), CI=${CI:-}, SSH_ORIGINAL_COMMAND=${SSH_ORIGINAL_COMMAND:-}, CLAUDECODE=${CLAUDECODE:-})"
     return 1
   fi
 
@@ -319,7 +319,6 @@ sync_changes() {
 # ============================================================
 
 create_monthly_pr() {
-  # Monthly PR creation (first run after month change)
   local current_month=$(date '+%Y-%m')
   local last_month=""
   if [[ -f "$STATE_FILE" ]]; then
@@ -341,20 +340,82 @@ create_monthly_pr() {
     return 0
   fi
 
-  if run gh pr list --base main --head "$SYNC_BRANCH" --state open | grep -q .; then
+  local pr_branch="sync-pr/${current_month}"
+
+  # 既存PRチェック（run を使わず直接gh cliを呼ぶ）
+  local pr_count
+  pr_count=$(cd "$REPO" && gh pr list --base main --head "$pr_branch" --state open --json number --jq 'length' 2>>"$LOG_FILE") || true
+  if [[ "${pr_count:-0}" -gt 0 ]]; then
     echo "$current_month" > "$STATE_FILE"
-    log "Monthly PR already exists; recorded month"
+    log "Monthly PR already exists for $pr_branch; recorded month"
     return 0
   fi
 
-  if run gh pr create --base main --head "$SYNC_BRANCH" --title "dotfiles: sync $current_month" --body "Monthly squash merge for $current_month."; then
-    echo "$current_month" > "$STATE_FILE"
-    log "Created monthly PR for $current_month"
-    return 0
-  else
-    err "gh pr create failed"
+  # 現在のブランチを記録
+  local original_branch
+  original_branch=$(git -C "$REPO" rev-parse --abbrev-ref HEAD)
+
+  # エフェメラルPRブランチ作成
+  if ! run git -C "$REPO" switch -c "$pr_branch" "$SYNC_BRANCH"; then
+    err "Failed to create branch $pr_branch"
+    run git -C "$REPO" switch "$original_branch" || true
     return 1
   fi
+
+  # main との差分をステージング状態に圧縮
+  if ! run git -C "$REPO" reset --soft origin/main; then
+    err "git reset --soft origin/main failed"
+    run git -C "$REPO" switch "$original_branch" || true
+    run git -C "$REPO" branch -D "$pr_branch" || true
+    return 1
+  fi
+
+  # 1コミットにまとめる
+  if ! run git -C "$REPO" commit -m "dotfiles: sync $current_month"; then
+    err "git commit failed on $pr_branch"
+    run git -C "$REPO" switch "$original_branch" || true
+    run git -C "$REPO" branch -D "$pr_branch" || true
+    return 1
+  fi
+
+  # プッシュ
+  if ! run git -C "$REPO" push -u origin "$pr_branch"; then
+    err "git push failed for $pr_branch"
+    run git -C "$REPO" switch "$original_branch" || true
+    run git -C "$REPO" branch -D "$pr_branch" || true
+    return 1
+  fi
+
+  # PR作成
+  if (cd "$REPO" && gh pr create --base main --head "$pr_branch" \
+       --title "dotfiles: sync $current_month" \
+       --body "Monthly squash merge for $current_month.") >> "$LOG_FILE" 2>&1; then
+    echo "$current_month" > "$STATE_FILE"
+    log "Created monthly PR for $current_month from $pr_branch"
+  else
+    err "gh pr create failed"
+    run git -C "$REPO" switch "$original_branch" || true
+    return 1
+  fi
+
+  # 元のブランチに復帰
+  if ! run git -C "$REPO" switch "$original_branch"; then
+    err "Failed to switch back to $original_branch"
+    return 1
+  fi
+
+  # 古いPRブランチをローカル削除
+  local old_branches
+  old_branches=$(git -C "$REPO" branch --list 'sync-pr/*' | grep -v "$pr_branch" || true)
+  if [[ -n "$old_branches" ]]; then
+    echo "$old_branches" | while read -r branch; do
+      branch="${branch## }"
+      log "Deleting old PR branch: $branch"
+      run git -C "$REPO" branch -D "$branch" || true
+    done
+  fi
+
+  return 0
 }
 
 # ============================================================
