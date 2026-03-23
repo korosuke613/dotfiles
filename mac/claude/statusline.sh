@@ -55,6 +55,8 @@ if [ "$1" = "--test" ]; then
 
     run_test "only seven_day" "{\"workspace\":{\"current_dir\":\"$HOME/test\",\"project_dir\":\"$HOME/test\"},\"model\":{\"display_name\":\"Opus\"},\"output_style\":{\"name\":\"default\"},\"context_window\":{\"used_percentage\":20},\"rate_limits\":{\"seven_day\":{\"used_percentage\":70.0,\"resets_at\":$seven_reset_ts}}}"
 
+    run_test "model name shortening" "{\"workspace\":{\"current_dir\":\"$HOME/test\",\"project_dir\":\"$HOME/test\"},\"model\":{\"display_name\":\"Opus 4.6 (1M context)\"},\"output_style\":{\"name\":\"default\"},\"context_window\":{\"used_percentage\":20}}"
+
     exit 0
 fi
 
@@ -104,11 +106,17 @@ git_info=""
 if git -C "$cwd" rev-parse --git-dir &>/dev/null; then
     branch=$(git -C "$cwd" -c core.useBuiltinFSMonitor=false -c core.untrackedCache=false branch --show-current 2>/dev/null || git -C "$cwd" -c core.useBuiltinFSMonitor=false -c core.untrackedCache=false rev-parse --short HEAD 2>/dev/null)
     if [ -n "$branch" ]; then
+        # Truncate long branch names to keep statusline compact
+        max_branch_len=20
+        if [ ${#branch} -gt $max_branch_len ]; then
+            branch="${branch:0:$max_branch_len}…"
+        fi
         git_info=" $(printf '\033[38;5;208m')on$(printf '\033[0m') $(printf '\033[38;5;208m')${branch}$(printf '\033[0m')"
     fi
 fi
 
-# Add model info
+# Add model info (shorten "1M context" → "1M")
+model="${model/ context/}"
 model_info=" | $(printf '\033[95m')${model}$(printf '\033[0m')"
 
 # Calculate context usage if available
