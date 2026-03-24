@@ -26,6 +26,20 @@
     ],
     "defaultMode": "default"
   },
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "idle_prompt|permission_prompt|elicitation_dialog",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.notification_type // \"unknown\"' | { read -r t; case \"$t\" in idle_prompt) msg='Claude Codeがユーザー＝サンの入力を待機している……';; permission_prompt) msg='Claude Codeが権限のユルシを求めている……';; elicitation_dialog) msg='Claude CodeがMCPの入力を求めている……';; *) exit 0;; esac; curl -s -d \"$msg\" ntfy.sh/korosuke613-claude-563d9d65 >/dev/null 2>&1 || true; }",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  },
   "statusLine": {
     "type": "command",
     "command": "bash ~/.claude/statusline.sh",
@@ -40,7 +54,9 @@
     "dev-standards@korosuke613": true,
     "claude-md-management@claude-plugins-official": true,
     "ept@cybozu-ept": true,
-    "gopls-lsp@claude-plugins-official": true
+    "gopls-lsp@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true
   },
   "outputStyle": "Explanatory",
   "language": "Japanese",
