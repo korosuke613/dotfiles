@@ -88,6 +88,9 @@ source ${DOTFILES_ZSH_HOME}/.zshrc.autocomplete
 # shellcheck source=.zshrc.local
 if [[ -f "${DOTFILES_ZSH_HOME}/.zshrc.local" ]]; then
   source ${DOTFILES_ZSH_HOME}/.zshrc.local
+else
+  export PIP_INDEX_URL=https://pypi.flatt.tech/simple/
+  export UV_INDEX_URL=https://pypi.flatt.tech/simple/
 fi
 
 source ${DOTFILES_ZSH_HOME}/.zshrc.path
@@ -138,9 +141,6 @@ _cache_eval "mise_activate" "mise activate zsh" 7
 op daemon -d
 
 # zprof
-
-export PIP_INDEX_URL=https://pypi.flatt.tech/simple/
-export UV_INDEX_URL=https://pypi.flatt.tech/simple/
 
 # Created by `pipx` on 2025-06-28 13:40:13
 export PATH="$PATH:/Users/korosuke613/.local/bin"
