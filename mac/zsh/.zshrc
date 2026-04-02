@@ -139,10 +139,8 @@ op daemon -d
 
 # zprof
 
-
-[[ -f "$HOME/fig-export/dotfiles/dotfile.zsh" ]] && builtin source "$HOME/fig-export/dotfiles/dotfile.zsh"
-
-# Q post block. Keep at the bottom of this file.
+export PIP_INDEX_URL=https://pypi.flatt.tech/simple/
+export UV_INDEX_URL=https://pypi.flatt.tech/simple/
 
 # Created by `pipx` on 2025-06-28 13:40:13
 export PATH="$PATH:/Users/korosuke613/.local/bin"
