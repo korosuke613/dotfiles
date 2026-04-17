@@ -61,5 +61,6 @@
   "outputStyle": "Explanatory",
   "language": "Japanese",
   "plansDirectory": "plans",
-  "voiceEnabled": true
+  "voiceEnabled": true,
+  "tui": "fullscreen"
 }
