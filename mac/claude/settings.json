@@ -24,7 +24,7 @@
       "Bash(gh issue view:*)",
       "Bash(gh run list:*)"
     ],
-    "defaultMode": "default"
+    "defaultMode": "auto"
   },
   "hooks": {
     "Notification": [
@@ -61,6 +61,7 @@
   "outputStyle": "Explanatory",
   "language": "Japanese",
   "plansDirectory": "plans",
+  "tui": "fullscreen",
   "voiceEnabled": true,
-  "tui": "fullscreen"
+  "skipAutoPermissionPrompt": true
 }
