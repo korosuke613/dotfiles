@@ -62,6 +62,6 @@
   "language": "Japanese",
   "plansDirectory": "plans",
   "tui": "fullscreen",
-  "voiceEnabled": true,
-  "skipAutoPermissionPrompt": true
+  "skipAutoPermissionPrompt": true,
+  "voiceEnabled": true
 }
