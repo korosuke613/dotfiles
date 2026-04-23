@@ -19,9 +19,9 @@ failed_alerts=""
 
 for alert_num in $alert_numbers; do
     if "$SCRIPT_DIR/dismiss-alert.sh" "$alert_num" "$reason" "$comment"; then
-        ((succeeded++))
+        succeeded=$((succeeded + 1))
     else
-        ((failed++))
+        failed=$((failed + 1))
         failed_alerts="${failed_alerts} #${alert_num}"
     fi
 done
