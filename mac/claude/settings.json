@@ -60,12 +60,9 @@
   },
   "outputStyle": "Explanatory",
   "language": "Japanese",
-  "effortLevel": "medium",
+  "effortLevel": "xhigh",
   "plansDirectory": "plans",
-<<<<<<< Updated upstream
   "tui": "fullscreen",
-=======
->>>>>>> Stashed changes
   "skipAutoPermissionPrompt": true,
   "voiceEnabled": true
 }
