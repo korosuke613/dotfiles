@@ -63,6 +63,8 @@
   "effortLevel": "xhigh",
   "plansDirectory": "plans",
   "tui": "fullscreen",
+  "theme": "dark-daltonized",
   "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true
+  "voiceEnabled": true,
+  "effortLevel": "high"
 }
