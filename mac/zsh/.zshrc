@@ -148,6 +148,9 @@ export PATH="$PATH:~/.local/bin"
 # Turso
 export PATH="$PATH:~/.turso"
 
+# docker sandboxes のテレメトリをオフ
+export SBX_NO_TELEMETRY=1
+
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:~/.lmstudio/bin"
 # End of LM Studio CLI section
