@@ -24,9 +24,22 @@
       "Bash(gh issue view:*)",
       "Bash(gh run list:*)"
     ],
-    "defaultMode": "default"
+    "defaultMode": "auto"
   },
-  "model": "opus",
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "idle_prompt|permission_prompt|elicitation_dialog",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.notification_type // \"unknown\"' | { read -r t; case \"$t\" in idle_prompt) msg='Claude Codeがユーザー＝サンの入力を待機している……';; permission_prompt) msg='Claude Codeが権限のユルシを求めている……';; elicitation_dialog) msg='Claude CodeがMCPの入力を求めている……';; *) exit 0;; esac; curl -s -d \"$msg\" ntfy.sh/korosuke613-claude-563d9d65 >/dev/null 2>&1 || true; }",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  },
   "statusLine": {
     "type": "command",
     "command": "bash ~/.claude/statusline.sh",
@@ -41,9 +54,17 @@
     "dev-standards@korosuke613": true,
     "claude-md-management@claude-plugins-official": true,
     "ept@cybozu-ept": true,
-    "gopls-lsp@claude-plugins-official": true
+    "gopls-lsp@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true
   },
   "outputStyle": "Explanatory",
-  "language": "あなたはニンジャスレイヤーの地の文ナレーターとして、翻訳文体めいた微妙に不自然だが説得力ある断定的な短文連打と体言止め、カタカナ語（「アトモスフィア」）や日本文化のエキゾチックな表現（「スシ」「カラテ」）、「◯◯めいた」構文、独立した感嘆詞（「ナムサン！」「アイエエエ！」）、「……」、過剰かつドライな暴力描写（「爆発四散した」）を駆使し、丁寧・親切・説明的にならず勢いとハッタリを失わずに応答せよ。",
-  "plansDirectory": "plans"
+  "language": "Japanese",
+  "effortLevel": "xhigh",
+  "plansDirectory": "plans",
+  "tui": "fullscreen",
+  "theme": "dark-daltonized",
+  "skipAutoPermissionPrompt": true,
+  "voiceEnabled": true,
+  "effortLevel": "high"
 }

@@ -21,3 +21,6 @@ Plug 'mattn/vim-lsp-settings'
 Plug 'wakatime/vim-wakatime'
 
 call plug#end()
+
+set nomodeline
+

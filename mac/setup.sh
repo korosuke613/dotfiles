@@ -48,6 +48,9 @@ ln -sf ~/dotfiles/mac/hammerspoon/init.lua ~/.hammerspoon/init.lua
 mkdir -p ~/ghq
 ln -sf ~/dotfiles ~/ghq/dotfiles
 
+# tmux
+ln -sf ~/dotfiles/mac/tmux/.tmux.conf ~/.tmux.conf
+
 # claude
 ./claude/setup.sh
 
