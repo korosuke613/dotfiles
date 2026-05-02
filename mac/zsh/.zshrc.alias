@@ -52,8 +52,8 @@ alias cp='cp -i'
 alias mv='mv -i'
 alias vi='vim'
 
-alias npx='echo "WARNING: npx は実行しないでください" && false'
-alias npm='echo "WARNING: npm は実行しないでください" && false'
+alias npx='echo "WARNING: npx は実行しないでください。代わりに pnpm exec を使ってください" && false'
+alias npm='echo "WARNING: npm は実行しないでください。代わりに pnpm を使ってください" && false'
 
 # alias rm='rm -i'
 alias rm='echo "WARNING: rm は実行しないでください。代わりに trash を使ってください" && false'
