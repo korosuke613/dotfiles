@@ -22,9 +22,29 @@
       "Bash(gh run view:*)",
       "Bash(gh pr checks:*)",
       "Bash(gh issue view:*)",
-      "Bash(gh run list:*)"
+      "Bash(gh run list:*)",
+      "mcp__linear__get_issue",
+      "mcp__linear__list_issues",
+      "mcp__sharedoc__getConfluencePage",
+      "mcp__aws-document__read_documentation",
+      "mcp__aws-document__search_documentation",
+      "Bash(pnpm list)",
+      "Bash(pnpm list *)",
+      "Bash(pnpm view *)",
+      "Bash(pnpm info *)",
+      "Bash(gh search *)",
+      "WebFetch(domain:docs.github.com)",
+      "Bash(pnpm build:github)",
+      "WebFetch(domain:localhost)",
+      "Bash(curl -sv http://localhost:3030/)",
+      "Bash(curl -s http://127.0.0.1:3030/ -o /tmp/claude/slide_root.html -w \"HTTP %{http_code} size %{size_download}\\\\n\")",
+      "Read(//tmp/claude/**)",
+      "mcp__playwright__browser_evaluate",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_take_screenshot",
+      "WebFetch(domain:github.blog)"
     ],
-    "defaultMode": "auto"
+    "defaultMode": "default"
   },
   "hooks": {
     "Notification": [
@@ -60,11 +80,14 @@
   },
   "outputStyle": "Explanatory",
   "language": "Japanese",
-  "effortLevel": "xhigh",
+  "effortLevel": "medium",
   "plansDirectory": "plans",
   "tui": "fullscreen",
   "theme": "dark-daltonized",
+  "editorMode": "normal",
+  "teammateMode": "auto",
+  "remoteControlAtStartup": false,
+  "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true,
-  "effortLevel": "high"
+  "voiceEnabled": true
 }
