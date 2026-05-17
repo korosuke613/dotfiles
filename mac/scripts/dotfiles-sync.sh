@@ -288,6 +288,8 @@ _commit_and_push() {
 }
 
 sync_changes() {
+  local preview_index
+
   # Commit & push if there are changes (ask human first)
   if ! git -C "$REPO" status --porcelain | grep -q .; then
     return 0
@@ -303,41 +305,48 @@ sync_changes() {
     return 1
   fi
 
-  if ! git -C "$REPO" diff --cached --quiet; then
-    info "Clearing staged changes before diff preview..."
-    if ! run git -C "$REPO" reset --quiet HEAD --; then
-      err "git reset --quiet HEAD -- failed"
-      return 1
-    fi
-  fi
+  preview_index=$(git -C "$REPO" rev-parse --git-path index.dotfiles-sync-preview)
+  command rm -f "$preview_index"
 
-  info "Staging changes for commit preview..."
-  run git -C "$REPO" add -A
-  if git -C "$REPO" diff --cached --quiet; then
+  info "Preparing diff preview without touching current staged changes..."
+  if ! run env GIT_INDEX_FILE="$preview_index" git -C "$REPO" add -A; then
+    err "Failed to prepare preview index"
+    command rm -f "$preview_index"
+    return 1
+  fi
+  if env GIT_INDEX_FILE="$preview_index" git -C "$REPO" diff --cached --quiet; then
     info "No changes were staged, skipping commit/push."
     log "No staged changes after git add -A; commit/push skipped"
+    command rm -f "$preview_index"
     return 0
   fi
 
   info "Showing staged diff preview..."
-  if ! git -C "$REPO" -c core.pager=less -c pager.diff=true diff --cached; then
+  if ! env GIT_INDEX_FILE="$preview_index" git -C "$REPO" -c core.pager=less -c pager.diff=true diff --cached; then
     err "git diff --cached failed"
-    run git -C "$REPO" reset --quiet HEAD --
+    command rm -f "$preview_index"
     return 1
   fi
 
   printf 'Commit and push this diff? [y/N]: ' >&2
   if ! read -r reply; then
     err "Failed to read user input"
+    command rm -f "$preview_index"
     return 1
   fi
   if [[ ! "$reply" =~ ^[Yy]$ ]]; then
     log "User declined commit/push after diff review"
-    info "Cleaning up staged changes..."
-    run git -C "$REPO" reset --quiet HEAD --
+    info "Canceled. Leaving current staged changes untouched."
+    command rm -f "$preview_index"
     return 1
   fi
 
+  command rm -f "$preview_index"
+  info "Staging changes for commit..."
+  if ! run git -C "$REPO" add -A; then
+    err "git add -A failed"
+    return 1
+  fi
   if ! _commit_and_push; then
     if ! git -C "$REPO" diff --cached --quiet; then
       info "Cleaning up staged changes after failed commit/push..."
