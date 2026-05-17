@@ -313,7 +313,8 @@ sync_changes() {
   info "Staging changes..."
   run git -C "$REPO" add -A
   if git -C "$REPO" diff --cached --quiet; then
-    log "No staged changes after git add -A"
+    info "No changes were staged, skipping commit/push."
+    log "No staged changes after git add -A; commit/push skipped"
     return 0
   fi
 
