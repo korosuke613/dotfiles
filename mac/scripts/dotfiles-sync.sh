@@ -288,13 +288,6 @@ _commit_and_push() {
 }
 
 sync_changes() {
-  unstage_changes() {
-    if ! git -C "$REPO" diff --cached --quiet; then
-      info "Cleaning up staged changes..."
-      run git -C "$REPO" reset --quiet HEAD --
-    fi
-  }
-
   # Commit & push if there are changes (ask human first)
   if ! git -C "$REPO" status --porcelain | grep -q .; then
     return 0
@@ -310,6 +303,30 @@ sync_changes() {
     return 1
   fi
 
+  if ! git -C "$REPO" diff --cached --quiet; then
+    info "Clearing staged changes before diff preview..."
+    if ! run git -C "$REPO" reset --quiet HEAD --; then
+      err "git reset --quiet HEAD -- failed"
+      return 1
+    fi
+  fi
+
+  info "Showing current diff..."
+  if ! git -C "$REPO" -c core.pager=less -c pager.diff=true diff; then
+    err "git diff failed"
+    return 1
+  fi
+
+  printf 'Commit and push this diff? [y/N]: ' >&2
+  if ! read -r reply; then
+    err "Failed to read user input"
+    return 1
+  fi
+  if [[ ! "$reply" =~ ^[Yy]$ ]]; then
+    log "User declined commit/push after diff review"
+    return 1
+  fi
+
   info "Staging changes..."
   run git -C "$REPO" add -A
   if git -C "$REPO" diff --cached --quiet; then
@@ -318,25 +335,11 @@ sync_changes() {
     return 0
   fi
 
-  info "Showing staged diff..."
-  if ! git -C "$REPO" -c core.pager=less -c pager.diff=true diff --cached; then
-    err "git diff --cached failed"
-    return 1
-  fi
-
-  printf 'Commit and push this diff? [y/N]: ' >&2
-  if ! read -r reply; then
-    unstage_changes
-    err "Failed to read user input"
-    return 1
-  fi
-  if [[ ! "$reply" =~ ^[Yy]$ ]]; then
-    unstage_changes
-    log "User declined commit/push after diff review"
-    return 1
-  fi
-
   if ! _commit_and_push; then
+    if ! git -C "$REPO" diff --cached --quiet; then
+      info "Cleaning up staged changes after failed commit/push..."
+      run git -C "$REPO" reset --quiet HEAD --
+    fi
     return 1
   fi
 
