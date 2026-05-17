@@ -303,12 +303,39 @@ sync_changes() {
     return 1
   fi
 
-  info "Staging changes..."
-  run git -C "$REPO" add -A
-  if ! git -C "$REPO" diff --cached --quiet; then
-    if ! _commit_and_push; then
-      return 1
+  info "Showing current diff..."
+  if ! git -C "$REPO" -c core.pager=less -c pager.diff=true diff; then
+    err "git diff failed"
+    return 1
+  fi
+  local untracked_files
+  untracked_files=$(git -C "$REPO" ls-files --others --exclude-standard)
+  if [[ -n "$untracked_files" ]]; then
+    info "Untracked files (also included by git add -A):"
+    printf '%s\n' "$untracked_files" >&2
+  fi
+
+  printf 'Commit and push this diff? [y/N]: ' >&2
+  if ! read -r reply; then
+    err "Failed to read user input"
+    return 1
+  fi
+  if [[ ! "$reply" =~ ^[Yy]$ ]]; then
+    log "User declined commit/push after diff review"
+    return 1
+  fi
+
+  info "Staging changes for commit..."
+  if ! run git -C "$REPO" add -A; then
+    err "git add -A failed"
+    return 1
+  fi
+  if ! _commit_and_push; then
+    if ! git -C "$REPO" diff --cached --quiet; then
+      info "Cleaning up staged changes after failed commit/push..."
+      run git -C "$REPO" reset --quiet HEAD --
     fi
+    return 1
   fi
 
   return 0
