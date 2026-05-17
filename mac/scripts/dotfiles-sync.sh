@@ -288,8 +288,6 @@ _commit_and_push() {
 }
 
 sync_changes() {
-  local preview_index
-
   # Commit & push if there are changes (ask human first)
   if ! git -C "$REPO" status --porcelain | grep -q .; then
     return 0
@@ -305,43 +303,28 @@ sync_changes() {
     return 1
   fi
 
-  preview_index=$(git -C "$REPO" rev-parse --git-path index.dotfiles-sync-preview)
-  command rm -f "$preview_index"
-
-  info "Preparing diff preview without touching current staged changes..."
-  if ! run env GIT_INDEX_FILE="$preview_index" git -C "$REPO" add -A; then
-    err "Failed to prepare preview index"
-    command rm -f "$preview_index"
+  info "Showing current diff..."
+  if ! git -C "$REPO" -c core.pager=less -c pager.diff=true diff; then
+    err "git diff failed"
     return 1
   fi
-  if env GIT_INDEX_FILE="$preview_index" git -C "$REPO" diff --cached --quiet; then
-    info "No changes were staged, skipping commit/push."
-    log "No staged changes after git add -A; commit/push skipped"
-    command rm -f "$preview_index"
-    return 0
-  fi
-
-  info "Showing staged diff preview..."
-  if ! env GIT_INDEX_FILE="$preview_index" git -C "$REPO" -c core.pager=less -c pager.diff=true diff --cached; then
-    err "git diff --cached failed"
-    command rm -f "$preview_index"
-    return 1
+  local untracked_files
+  untracked_files=$(git -C "$REPO" ls-files --others --exclude-standard)
+  if [[ -n "$untracked_files" ]]; then
+    info "Untracked files (also included by git add -A):"
+    printf '%s\n' "$untracked_files" >&2
   fi
 
   printf 'Commit and push this diff? [y/N]: ' >&2
   if ! read -r reply; then
     err "Failed to read user input"
-    command rm -f "$preview_index"
     return 1
   fi
   if [[ ! "$reply" =~ ^[Yy]$ ]]; then
     log "User declined commit/push after diff review"
-    info "Canceled. Leaving current staged changes untouched."
-    command rm -f "$preview_index"
     return 1
   fi
 
-  command rm -f "$preview_index"
   info "Staging changes for commit..."
   if ! run git -C "$REPO" add -A; then
     err "git add -A failed"
