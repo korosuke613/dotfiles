@@ -311,9 +311,18 @@ sync_changes() {
     fi
   fi
 
-  info "Showing current diff..."
-  if ! git -C "$REPO" -c core.pager=less -c pager.diff=true diff; then
-    err "git diff failed"
+  info "Staging changes for commit preview..."
+  run git -C "$REPO" add -A
+  if git -C "$REPO" diff --cached --quiet; then
+    info "No changes were staged, skipping commit/push."
+    log "No staged changes after git add -A; commit/push skipped"
+    return 0
+  fi
+
+  info "Showing staged diff preview..."
+  if ! git -C "$REPO" -c core.pager=less -c pager.diff=true diff --cached; then
+    err "git diff --cached failed"
+    run git -C "$REPO" reset --quiet HEAD --
     return 1
   fi
 
@@ -324,15 +333,9 @@ sync_changes() {
   fi
   if [[ ! "$reply" =~ ^[Yy]$ ]]; then
     log "User declined commit/push after diff review"
+    info "Cleaning up staged changes..."
+    run git -C "$REPO" reset --quiet HEAD --
     return 1
-  fi
-
-  info "Staging changes..."
-  run git -C "$REPO" add -A
-  if git -C "$REPO" diff --cached --quiet; then
-    info "No changes were staged, skipping commit/push."
-    log "No staged changes after git add -A; commit/push skipped"
-    return 0
   fi
 
   if ! _commit_and_push; then
