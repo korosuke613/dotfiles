@@ -288,6 +288,13 @@ _commit_and_push() {
 }
 
 sync_changes() {
+  unstage_changes() {
+    if ! git -C "$REPO" diff --cached --quiet; then
+      info "Cleaning up staged changes..."
+      run git -C "$REPO" reset --quiet HEAD --
+    fi
+  }
+
   # Commit & push if there are changes (ask human first)
   if ! git -C "$REPO" status --porcelain | grep -q .; then
     return 0
@@ -318,10 +325,12 @@ sync_changes() {
 
   printf 'Commit and push this diff? [y/N]: ' >&2
   if ! read -r reply; then
+    unstage_changes
     err "Failed to read user input"
     return 1
   fi
   if [[ ! "$reply" =~ ^[Yy]$ ]]; then
+    unstage_changes
     log "User declined commit/push after diff review"
     return 1
   fi
