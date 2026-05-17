@@ -305,10 +305,29 @@ sync_changes() {
 
   info "Staging changes..."
   run git -C "$REPO" add -A
-  if ! git -C "$REPO" diff --cached --quiet; then
-    if ! _commit_and_push; then
-      return 1
-    fi
+  if git -C "$REPO" diff --cached --quiet; then
+    log "No staged changes after git add -A"
+    return 0
+  fi
+
+  info "Showing staged diff..."
+  if ! git -C "$REPO" -c core.pager=less -c pager.diff=true diff --cached; then
+    err "git diff --cached failed"
+    return 1
+  fi
+
+  printf 'Commit and push this diff? [y/N]: ' >&2
+  if ! read -r reply; then
+    err "Failed to read user input"
+    return 1
+  fi
+  if [[ ! "$reply" =~ ^[Yy]$ ]]; then
+    log "User declined commit/push after diff review"
+    return 1
+  fi
+
+  if ! _commit_and_push; then
+    return 1
   fi
 
   return 0

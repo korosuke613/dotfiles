@@ -44,7 +44,9 @@ dotfiles リポジトリを `sync` ブランチで自動同期するためのス
 
 ### コミット & プッシュ
 - 変更がある場合のみ `Commit and push dotfiles changes now? [y/N]:` を表示
-- `y` / `Y` 以外は実行せず終了
+- 1回目で `y` / `Y` の場合は `git add -A` 後、ステージ済み差分をページャー表示
+- 差分確認後に `Commit and push this diff? [y/N]:` を再表示
+- いずれかで `y` / `Y` 以外なら実行せず終了
 - コミットメッセージ形式: `sync: YYYY-MM-DD HH:MM`
 - 署名は Git 設定に従う（例: 1Password SSH 署名）
 
