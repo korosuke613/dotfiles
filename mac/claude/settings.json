@@ -60,6 +60,9 @@
       }
     ]
   },
+  "worktree": {
+    "baseRef": "fresh"
+  },
   "statusLine": {
     "type": "command",
     "command": "bash ~/.claude/statusline.sh",
@@ -85,11 +88,10 @@
   "tui": "fullscreen",
   "theme": "dark-daltonized",
   "editorMode": "normal",
-  "teammateMode": "auto",
+  "teammateMode": "tmux",
   "remoteControlAtStartup": false,
+  "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true,
-  "theme": "dark-daltonized",
-  "teammateMode": "auto"
+  "voiceEnabled": true
 }
