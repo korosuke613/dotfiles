@@ -88,6 +88,9 @@ source ${DOTFILES_ZSH_HOME}/.zshrc.autocomplete
 # shellcheck source=.zshrc.local
 if [[ -f "${DOTFILES_ZSH_HOME}/.zshrc.local" ]]; then
   source ${DOTFILES_ZSH_HOME}/.zshrc.local
+else
+  export PIP_INDEX_URL=https://pypi.flatt.tech/simple/
+  export UV_INDEX_URL=https://pypi.flatt.tech/simple/
 fi
 
 source ${DOTFILES_ZSH_HOME}/.zshrc.path
@@ -139,16 +142,14 @@ op daemon -d
 
 # zprof
 
-
-[[ -f "$HOME/fig-export/dotfiles/dotfile.zsh" ]] && builtin source "$HOME/fig-export/dotfiles/dotfile.zsh"
-
-# Q post block. Keep at the bottom of this file.
-
 # Created by `pipx` on 2025-06-28 13:40:13
 export PATH="$PATH:/Users/korosuke613/.local/bin"
 
 # Turso
 export PATH="$PATH:/Users/korosuke613/.turso"
+
+# docker sandboxes のテレメトリをオフ
+export SBX_NO_TELEMETRY=1
 
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/korosuke613/.lmstudio/bin"
