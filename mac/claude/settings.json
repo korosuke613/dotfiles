@@ -76,17 +76,26 @@
     "github@korosuke613": true,
     "dev-standards@korosuke613": true,
     "claude-md-management@claude-plugins-official": true,
-    "ept@private-role": true,
     "gopls-lsp@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true,
     "code-simplifier@claude-plugins-official": true,
-    "skill-creator@claude-plugins-official": true
+    "skill-creator@claude-plugins-official": true,
+    "ept@private-role": true
+  },
+  "extraKnownMarketplaces": {
+    "private-role": {
+      "source": {
+        "source": "directory",
+        "path": "~/ghq/github.com/private-role/ai-guide"
+      }
+    }
   },
   "outputStyle": "Explanatory",
   "language": "Japanese",
   "effortLevel": "medium",
   "plansDirectory": "plans",
   "tui": "fullscreen",
+  "skipWorkflowUsageWarning": true,
   "theme": "dark-daltonized",
   "editorMode": "normal",
   "teammateMode": "auto",
