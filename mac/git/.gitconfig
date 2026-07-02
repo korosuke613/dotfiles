@@ -3,12 +3,8 @@
 	email = korosuke613613@gmail.com
 	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBQ9une2BjZT/F1aqINsSES6LtG1d0iLKo9pmElUI3aS korosuke613613@gmail.com
 
-[includeIf "gitdir:~/ghq/private-github.example.invalid/"]
-	path = ~/.config/git/office
-
 [core]
 	autocrlf = input
-#	pager = delta
 	hookspath = 
 
 [filter "lfs"]
@@ -16,16 +12,6 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
-
-[interactive]
-    diffFilter = delta --color-only
-
-[delta]
-	#side-by-side = true
-	line-numbers = true
-	#line-numbers-left-format = ""
-	#line-numbers-right-format = "│ "
-    syntax-theme = Dracula
 
 [init]
 	defaultBranch = main
@@ -47,9 +33,19 @@
 [credential "https://private-github.example.invalid"]
 	helper = 
 	helper = !/opt/homebrew/bin/gh auth git-credential
-[credential "https://github.com"]
-	helper = 
-	helper = !/opt/homebrew/bin/gh auth git-credential
+
 [credential "https://gist.github.com"]
 	helper = 
 	helper = !/opt/homebrew/bin/gh auth git-credential
+
+
+# ~/.gitconfig — 既定（全 github.com リポ）は従来どおり gh の OAuth トークンを使う
+[credential "https://github.com"]
+    helper = !/opt/homebrew/bin/gh auth git-credential
+
+[includeIf "gitdir:~/ghq/github.com/private-role/"]
+    path = ~/.config/git/private-role.inc
+# ~/.config/git/private-role.inc — private-role 配下でだけ読まれる
+
+[includeIf "gitdir:~/ghq/private-github.example.invalid/"]
+	path = ~/.config/git/office

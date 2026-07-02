@@ -154,3 +154,12 @@ export SBX_NO_TELEMETRY=1
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:~/.lmstudio/bin"
 # End of LM Studio CLI section
+
+
+unalias gh
+gh () {
+        case "$PWD" in
+                ($HOME/ghq/github.com/private-role/*) GH_TOKEN="$(ghtkn get)" command gh "$@" ;;
+                (*) command op plugin run -- gh "$@" ;;
+        esac
+}
