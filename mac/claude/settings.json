@@ -46,7 +46,7 @@
     ],
     "defaultMode": "default"
   },
-  "model": "sonnet",
+  "model": "claude-fable-5[1m]",
   "hooks": {
     "Notification": [
       {
@@ -94,6 +94,7 @@
   "outputStyle": "Explanatory",
   "language": "Japanese",
   "effortLevel": "medium",
+  "advisorModel": "opus",
   "plansDirectory": "plans",
   "tui": "fullscreen",
   "skipWorkflowUsageWarning": true,
