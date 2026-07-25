@@ -19,8 +19,8 @@ _cache_eval() {
     local max_age="${3:-7}"  # デフォルト7日
     local cache_file="$ZSH_CACHE_DIR/${cache_name}.zsh"
 
-    # キャッシュが存在しないか、max_age日より古い場合は再生成
-    if [[ ! -f "$cache_file" ]] || [[ -n $(find "$cache_file" -mtime +${max_age} 2>/dev/null) ]]; then
+    # キャッシュが存在しないか、空か、max_age日より古い場合は再生成
+    if [[ ! -s "$cache_file" ]] || [[ -n $(find "$cache_file" -mtime +${max_age} 2>/dev/null) ]]; then
         eval "$command" > "$cache_file"
     fi
     source "$cache_file"
