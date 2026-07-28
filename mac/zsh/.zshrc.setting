@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
 
-source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+_source_or_warn /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh "zsh-autosuggestions" "brew install zsh-autosuggestions"
+_source_or_warn /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh "zsh-syntax-highlighting" "brew install zsh-syntax-highlighting"
 

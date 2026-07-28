@@ -26,6 +26,16 @@ _cache_eval() {
     source "$cache_file"
 }
 
+# ファイルがあれば source、無ければ対処法つき警告を出す
+# 使用法: _source_or_warn <file> <表示名> <対処コマンド>
+_source_or_warn() {
+    if [[ -f "$1" ]]; then
+        source "$1"
+    else
+        echo "⚠ $2 未インストール → $3" >&2
+    fi
+}
+
 # brew shellenv のキャッシュ化（1日ごとに更新）
 _cache_eval "brew_shellenv" "/opt/homebrew/bin/brew shellenv" 1
 
@@ -111,7 +121,7 @@ fi
 export PATH="$PATH:$GOPATH/bin"
 
 
-source ~/.config/op/plugins.sh
+_source_or_warn "$HOME/.config/op/plugins.sh" "op plugins" "op plugin init gh"
 
 # bun completions
 [ -s "~/.bun/_bun" ] && source "~/.bun/_bun"
@@ -127,7 +137,7 @@ export TF_CLI_ARGS_apply="--parallelism=50"
 # atuin
 _cache_eval "atuin_init" "atuin init zsh --disable-up-arrow" 7
 
-source "$HOME/.rye/env"
+_source_or_warn "$HOME/.rye/env" "rye" "rye は開発終了のため uv への移行を検討"
 
 # aqua
 export PATH="${AQUA_ROOT_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/aquaproj-aqua}/bin:$PATH"
@@ -156,7 +166,7 @@ export PATH="$PATH:~/.lmstudio/bin"
 # End of LM Studio CLI section
 
 
-unalias gh
+unalias -m 'gh'
 gh () {
         case "$PWD" in
                 ($HOME/ghq/github.com/private-role/*) GH_TOKEN="$(ghtkn get)" command gh "$@" ;;
