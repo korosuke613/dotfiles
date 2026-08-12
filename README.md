@@ -26,23 +26,6 @@ cd ~/dotfiles/mac
 ./setup.sh
 ```
 
-## Setup (ubuntu)
-
-### Clone this repository
-**Please clone the dotfiles directly under your home directory.**
-
-```shell
-cd ~
-git clone https://github.com/korosuke613/dotfiles.git
-```
-
-### Install
-
-```console
-cd ~/dotfiles/ubuntu
-./setup.sh
-```
-
 ## Features
 
 ### Sync (mac)

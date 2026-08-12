@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
 
-cd ubuntu || exit 1
-./setup.sh
+set -euo pipefail
+
+cd "$(dirname "$0")/mac"
+exec ./setup.sh

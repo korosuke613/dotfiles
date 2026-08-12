@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## リポジトリ概要
 
-korosuke613のdotfilesリポジトリ。macOSとUbuntu環境の設定ファイルを管理している。
+korosuke613のmacOS用dotfilesリポジトリ。公開共通設定と、端末外のprivate role overlayを分離して管理する。
 
 ## セットアップコマンド
 
@@ -14,11 +14,7 @@ cd ~/dotfiles/mac
 ./setup.sh
 ```
 
-### Ubuntu
-```bash
-cd ~/dotfiles/ubuntu
-./setup.sh
-```
+
 
 ## アーキテクチャ
 
@@ -32,7 +28,7 @@ cd ~/dotfiles/ubuntu
   - `starship/` - プロンプト設定
   - `hammerspoon/` - macOSオートメーション
   - `ghostty/` - ターミナル設定
-- `ubuntu/` - Ubuntu用の設定ファイル（mac/と類似構造）
+- `~/.config/dotfiles/private/` - 公開repo外のrole別設定（未追跡）
 
 ### zsh設定の分割構成
 `.zshrc`は複数のファイルに分割されている：

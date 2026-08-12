@@ -47,20 +47,6 @@
     "defaultMode": "default"
   },
   "model": "sonnet",
-  "hooks": {
-    "Notification": [
-      {
-        "matcher": "idle_prompt|permission_prompt|elicitation_dialog",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "jq -r '.notification_type // \"unknown\"' | { read -r t; case \"$t\" in idle_prompt) msg='Claude Codeがユーザー＝サンの入力を待機している……';; permission_prompt) msg='Claude Codeが権限のユルシを求めている……';; elicitation_dialog) msg='Claude CodeがMCPの入力を求めている……';; *) exit 0;; esac; curl -s -d \"$msg\" ntfy.sh/REDACTED >/dev/null 2>&1 || true; }",
-            "timeout": 10
-          }
-        ]
-      }
-    ]
-  },
   "worktree": {
     "baseRef": "fresh"
   },
@@ -80,23 +66,7 @@
     "gopls-lsp@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true,
     "code-simplifier@claude-plugins-official": true,
-    "skill-creator@claude-plugins-official": true,
-    "ept@private-role": true,
-    "cosense-cli@cosense-cli": true
-  },
-  "extraKnownMarketplaces": {
-    "private-role": {
-      "source": {
-        "source": "directory",
-        "path": "~/ghq/github.com/private-role/ai-guide"
-      }
-    },
-    "cosense-cli": {
-      "source": {
-        "source": "github",
-        "repo": "private-role/example-plugin"
-      }
-    }
+    "skill-creator@claude-plugins-official": true
   },
   "outputStyle": "Explanatory",
   "language": "Japanese",
