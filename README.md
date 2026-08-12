@@ -3,6 +3,8 @@ my dotfiles ...
 
 Benchmark: https://korosuke613.github.io/dotfiles/dev/bench/
 
+Private role overlays: https://github.com/korosuke613/dotfiles-private
+
 ## Setup (mac)
 
 ### Clone this repository
