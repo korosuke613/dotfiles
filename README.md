@@ -45,14 +45,11 @@ cd ~/dotfiles/ubuntu
 
 ## Features
 
-### Auto sync (mac)
-Each Mac uses the shared `sync` branch and automatically syncs every hour when `.zshrc` is loaded.
+### Sync (mac)
+Shell startup does not modify the repository or contact the remote. The former
+automatic `sync`-branch workflow has been disabled because branch switching,
+staging, and pushing from `.zshrc` is unsafe.
 
-Behavior:
-- `pull --rebase` from `origin/sync`
-- If there are changes, auto commit (no GPG signing) and push to `origin/sync`
-- When the month changes, create a PR from `sync` to `main` (monthly squash merge)
-
-Notes:
-- The default branch on GitHub remains `main`
-- The monthly PR is created at the first sync run after the month changes
+Until the explicit `dot sync` workflow is installed, review and synchronize
+changes manually from the repository with ordinary Git commands. Never use
+`git add -A` for this repository.

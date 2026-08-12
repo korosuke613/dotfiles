@@ -87,9 +87,6 @@ source ${DOTFILES_ZSH_HOME}/.zshrc.alias
 # shellcheck source=.zshrc.cd_fzf
 source ${DOTFILES_ZSH_HOME}/.zshrc.cd_fzf
 
-# dotfiles auto sync (runs at most once per hour)
-${DOTFILES_HOME}/scripts/dotfiles-sync.sh
-
 # autocomplete
 # shellcheck source=.zshrc.autocomplete
 source ${DOTFILES_ZSH_HOME}/.zshrc.autocomplete
