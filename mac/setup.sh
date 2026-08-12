@@ -7,7 +7,9 @@ if [ -z "$(command -v brew)" ]; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/${USER}/.zprofile
     eval "$(/opt/homebrew/bin/brew shellenv)"
-    brew bundle
+    if [ -f ./Brewfile ]; then
+        brew bundle --file=./Brewfile
+    fi
 
     echo "--- Install Homebrew is Done!  ---"
 fi
@@ -35,8 +37,10 @@ ln -sf ~/dotfiles/mac/asdf/.tool-versions ~/.tool-versions
 
 # git
 mkdir -p ~/.config/git
+mkdir -p ~/.local/bin
 ln -sf ~/dotfiles/mac/git/.gitconfig ~/.gitconfig
 ln -sf ~/dotfiles/mac/git/ignore ~/.config/git/ignore
+ln -sf ~/dotfiles/mac/scripts/dot ~/.local/bin/dot
 
 
 # hammerspoon

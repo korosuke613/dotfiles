@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+case "${1:-}" in
+  sync)
+    script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+    exec "$script_dir/dot-sync"
+    ;;
+  scan)
+    script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+    exec "$script_dir/dot-public-scan.sh" "${2:---all}"
+    ;;
+  *)
+    printf 'Usage: %s {sync|scan [--all|--staged]}\n' "$0" >&2
+    exit 2
+    ;;
+esac
