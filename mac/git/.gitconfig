@@ -49,3 +49,7 @@
 
 [includeIf "gitdir:~/ghq/private-github.example.invalid/"]
 	path = ~/.config/git/office
+
+# このPC固有・dotfiles管理外のローカル上書き（存在しないPCでは無視される）
+[include]
+	path = ~/.gitconfig.local
