@@ -3,7 +3,7 @@
 set -euo pipefail
 
 usage() {
-  printf 'Usage: %s [--staged|--all]\\n' "$0" >&2
+  printf 'Usage: %s [--staged|--all]\n' "$0" >&2
   exit 2
 }
 
@@ -18,7 +18,8 @@ tmp_file=$(mktemp)
 trap 'rm -f "$tmp_file"' EXIT
 
 if [[ "$mode" == "--staged" ]]; then
-  git -C "$repo_root" diff --cached --no-ext-diff --unified=0 --binary >"$tmp_file"
+  git -C "$repo_root" diff --cached --no-ext-diff --unified=0 --binary |
+    grep -E '^\+[^+]' >"$tmp_file" || true
 fi
 
 patterns=(
@@ -26,9 +27,15 @@ patterns=(
   'BEGIN (OPENSSH|RSA|EC) PRIVATE KEY'
   'ntfy\.sh/'
   '/Users/[^/$[:space:]]+/'
-  '[[:alnum:]._%+-]+@(private-role|client-role)\.[[:alnum:].-]+'
-  'github\.dev\.private-role\.co\.jp'
 )
+
+denylist="${DOTFILES_PUBLIC_DENYLIST:-$HOME/.config/dotfiles/public-deny-patterns}"
+if [[ -f "$denylist" ]]; then
+  while IFS= read -r pattern; do
+    [[ -z "$pattern" || "$pattern" == \#* ]] && continue
+    patterns+=("$pattern")
+  done < "$denylist"
+fi
 
 failed=0
 for pattern in "${patterns[@]}"; do
@@ -49,4 +56,4 @@ if [[ "$failed" -ne 0 ]]; then
   exit 1
 fi
 
-printf 'public scan passed (%s)\\n' "$mode"
+printf 'public scan passed (%s)\n' "$mode"

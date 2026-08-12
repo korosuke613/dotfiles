@@ -40,7 +40,7 @@ _source_or_warn() {
 _cache_eval "brew_shellenv" "/opt/homebrew/bin/brew shellenv" 1
 
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-export PATH="~/.rd/bin:$PATH"
+export PATH="$HOME/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 
 
@@ -121,7 +121,7 @@ export PATH="$PATH:$GOPATH/bin"
 _source_or_warn "$HOME/.config/op/plugins.sh" "op plugins" "op plugin init gh"
 
 # bun completions
-[ -s "~/.bun/_bun" ] && source "~/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
@@ -150,16 +150,16 @@ op daemon -d
 # zprof
 
 # Created by `pipx` on 2025-06-28 13:40:13
-export PATH="$PATH:~/.local/bin"
+export PATH="$PATH:$HOME/.local/bin"
 
 # Turso
-export PATH="$PATH:~/.turso"
+export PATH="$PATH:$HOME/.turso"
 
 # docker sandboxes のテレメトリをオフ
 export SBX_NO_TELEMETRY=1
 
 # Added by LM Studio CLI (lms)
-export PATH="$PATH:~/.lmstudio/bin"
+export PATH="$PATH:$HOME/.lmstudio/bin"
 # End of LM Studio CLI section
 
 
