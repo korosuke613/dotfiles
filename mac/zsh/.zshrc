@@ -170,6 +170,15 @@ unalias -m 'gh'
 gh () {
         case "$PWD" in
                 ($HOME/ghq/github.com/private-role/*) GH_TOKEN="$(ghtkn get)" command gh "$@" ;;
+                ($HOME/ghq/github.com/client-repo/*) GH_TOKEN="$(OP_SERVICE_ACCOUNT_TOKEN="$(security find-generic-password -a "$USER" -s private-service-account -w)" op read 'op://REDACTED')" command gh "$@" ;;
                 (*) command op plugin run -- gh "$@" ;;
         esac
 }
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# NemoClaw PATH setup
+export PATH="$HOME/.local/bin:$PATH"
+# end NemoClaw PATH setup
