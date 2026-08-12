@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+repo_root=$(CDPATH= cd -- "$(dirname "$0")/../.." && pwd)
+export MISE_CEILING_PATHS="$(dirname "$repo_root")"
+setup_file="$repo_root/setup.sh"
+config_file="$repo_root/mise.toml"
+
+cutoff=$(date -u -v-7d '+%Y-%m-%dT%H:%M:%SZ')
+release=$(curl -fsSL 'https://api.github.com/repos/jdx/mise/releases?per_page=30' |
+  jq -r --arg cutoff "$cutoff" '
+    [.[] | select(.prerelease == false and .draft == false and .published_at <= $cutoff)][0].tag_name
+  ')
+[[ -n "$release" && "$release" != "null" ]] || {
+  printf 'tools update: unable to resolve a mise release at least 7 days old\n' >&2
+  exit 1
+}
+
+version="${release#v}"
+checksums=$(mktemp)
+mise_download=$(mktemp)
+trap 'rm -f "$checksums" "$mise_download"' EXIT
+curl -fsSL "https://github.com/jdx/mise/releases/download/$release/SHASUMS256.txt" -o "$checksums"
+checksum=$(awk -v asset="./mise-${release}-macos-arm64" '$2 == asset {print $1}' "$checksums")
+[[ "$checksum" =~ ^[0-9a-f]{64}$ ]] || {
+  printf 'tools update: unable to resolve mise checksum\n' >&2
+  exit 1
+}
+curl -fsSL "https://github.com/jdx/mise/releases/download/$release/mise-${release}-macos-arm64" \
+  -o "$mise_download"
+actual_checksum=$(shasum -a 256 "$mise_download" | awk '{print $1}')
+[[ "$actual_checksum" == "$checksum" ]] || {
+  printf 'tools update: downloaded mise checksum mismatch\n' >&2
+  exit 1
+}
+chmod 0755 "$mise_download"
+
+rewrite_assignment() {
+  local file="$1" key="$2" value="$3" tmp mode
+  tmp=$(mktemp)
+  mode=$(stat -f '%Lp' "$file")
+  awk -v key="$key" -v value="$value" '
+    $0 ~ "^" key "[[:space:]]*=" { print key " = \"" value "\""; next }
+    { print }
+  ' "$file" > "$tmp"
+  chmod "$mode" "$tmp"
+  mv "$tmp" "$file"
+}
+
+rewrite_shell_assignment() {
+  local file="$1" key="$2" value="$3" tmp mode
+  tmp=$(mktemp)
+  mode=$(stat -f '%Lp' "$file")
+  awk -v key="$key" -v value="$value" '
+    $0 ~ "^" key "=" { print key "=\"" value "\""; next }
+    { print }
+  ' "$file" > "$tmp"
+  chmod "$mode" "$tmp"
+  mv "$tmp" "$file"
+}
+
+rewrite_shell_assignment "$setup_file" mise_version "$version"
+rewrite_shell_assignment "$setup_file" mise_sha256 "$checksum"
+rewrite_assignment "$config_file" min_version "$version"
+mkdir -p "$HOME/.local/bin"
+install -m 0755 "$mise_download" "$HOME/.local/bin/mise"
+mise_cmd="$HOME/.local/bin/mise"
+
+tools=(
+  node terraform awscli direnv uv kubectl go pnpm eza bat fd starship
+  atuin gh ghq fzf ripgrep jq op git-lfs herdr ghtkn
+)
+for tool in "${tools[@]}"; do
+  "$mise_cmd" -C "$repo_root" use --yes --pin --minimum-release-age 7d "$tool@latest"
+done
+"$mise_cmd" -C "$repo_root" lock --platform macos-arm64
+
+printf 'tools update: review mise.toml, mise.lock, and setup.sh before committing\n'

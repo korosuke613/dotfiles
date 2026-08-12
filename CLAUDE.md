@@ -10,12 +10,12 @@ Private role repository: https://github.com/korosuke613/dotfiles-private
 
 ## セットアップコマンド
 
-### macOS
+### macOS (Apple Silicon)
 ```bash
 cd ~/dotfiles
-./mac/setup.sh check
-./mac/setup.sh dry-run
-./mac/setup.sh apply
+./setup.sh check
+./setup.sh dry-run
+./setup.sh apply
 ```
 
 
@@ -23,12 +23,13 @@ cd ~/dotfiles
 ## アーキテクチャ
 
 ### ディレクトリ構造
+- `mise.toml` / `mise.lock` - CLIの厳密なバージョンとdotfile配置
+- `setup.sh` - pinned mise導入、check/dry-run/apply
 - `mac/` - macOS用の設定ファイル
-  - `setup.sh` - check/dry-run/apply、Homebrew/vim-plug導入、リンク作成、role設定生成
   - `zsh/` - zsh設定（モジュール分割構成）
   - `claude/` - Claude Code設定
   - `git/` - 公開共通gitconfigとignore
-  - `scripts/dot` - 明示的なscan/syncコマンド
+  - `scripts/dot` - scan/doctor/tools updateコマンド
   - `starship/` - プロンプト設定
   - `hammerspoon/` - macOSオートメーション
   - `ghostty/` - ターミナル設定
@@ -41,7 +42,7 @@ cd ~/dotfiles
 identity、credential helper、package index、Claude plugin/marketplaceは
 private repoのroleに置き、公開ファイルへコピーしない。
 
-`mac/setup.sh apply`はmanifestを読み、以下を生成・適用する：
+`setup.sh apply`はmanifestを読み、以下を生成・適用する：
 
 - `~/.config/dotfiles/gitconfig` - 各roleのgitconfigをinclude
 - `~/.claude/settings.json` - public settingsとrole JSONを`jq`でmerge
@@ -53,26 +54,25 @@ repoへ移動してはいけない。
 
 ### Safe synchronization
 
-shell startupはgit branch、worktree、remoteを変更しない。公開内容の検査は
-`dot scan`、同期は人間が差分を確認する明示的な`dot sync`で行う。
-`git add -A`や、startupからのcommit/pushを使用してはいけない。
+shell startupはネットワークアクセス、daemon起動、git branch、worktree、
+remoteを変更しない。公開内容の検査は`dot scan`で行い、通常のGit操作で
+人間が差分を確認して同期する。`git add -A`やstartupからのcommit/pushを
+使用してはいけない。
 
 ### zsh設定の分割構成
-`.zshrc`は複数のファイルに分割されている：
-- `.zshrc.setting` - 基本設定
-- `.zshrc.alias` - エイリアス定義
-- `.zshrc.history` - 履歴設定
-- `.zshrc.cd_fzf` - fzfとの連携
-- `.zshrc.local` - 旧来のローカル環境固有設定（gitignore対象）
+`.zshrc`は責務別の`options.zsh`、`history.zsh`、`aliases.zsh`、
+`completion.zsh`、`integrations.zsh`に分割されている。端末固有設定は
+未追跡の`~/.config/dotfiles/local.zsh`へ置く。
 
 ### シンボリックリンク管理
-setup.shは各設定ファイルを`~/dotfiles/`から適切な場所（`~/.config/`等）へシンボリックリンクする。
+mise bootstrapは各設定ファイルを`~/dotfiles/`から適切な場所へリンクする。
 
 ## 注意事項
 
 - dotfilesはホームディレクトリ直下（`~/dotfiles`）にクローンすること
 - private roleは`~/.config/dotfiles/private`にcloneし、manifestで明示的に選択すること
-- zsh設定で`npx`、`npm`、`rm`コマンドは警告を出して実行しない設定になっている
+- CLIは原則miseで管理し、Homebrewとの重複は`dot doctor`で検出する
+- zsh設定で`npx`、`npm`、`rm`コマンドは警告を出して実行しない
 - `rm`の代わりに`trash`を使用すること
 - private roleの設定をpublic repoのCLAUDE.mdや設定ファイルへ再掲しないこと
 - roleの実装を調査するときはprivate repositoryも参照すること。ただし秘密値を回答やpublic repoへ転載しないこと

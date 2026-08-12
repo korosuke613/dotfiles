@@ -1,55 +1,53 @@
 # dotfiles
-my dotfiles ...
 
-Benchmark: https://korosuke613.github.io/dotfiles/dev/bench/
+Personal dotfiles for Apple Silicon Macs. `mise bootstrap` owns CLI versions
+and symlinked configuration; client and work identities remain in the private
+role repository.
 
 Private role overlays: https://github.com/korosuke613/dotfiles-private
 
-## Setup (mac)
+## Setup
 
-### Clone this repository
-**Please clone the dotfiles directly under your home directory.**
+Clone directly under the home directory:
 
 ```shell
-cd ~
-git clone https://github.com/korosuke613/dotfiles.git
+git clone https://github.com/korosuke613/dotfiles.git ~/dotfiles
+cd ~/dotfiles
 ```
 
-### Add zsh/.zshrc.proxy_ip
+Optionally clone the private repository to
+`~/.config/dotfiles/private`, then list enabled roles one per line in
+`~/.config/dotfiles/profiles`. Roles are explicit and are never inferred from
+the hostname, network, or current directory.
+
+Preview before applying:
+
 ```shell
-cd ~/dotfiles/mac/zsh
-touch .zshrc.proxy_ip
-touch .zshrc.local
+./setup.sh check
+./setup.sh dry-run
+./setup.sh apply
 ```
 
-### Select private roles (optional)
-Clone the private overlay repository to `~/.config/dotfiles/private`, then
-create `~/.config/dotfiles/profiles` with one explicitly selected role per
-line. Profiles are never inferred from the current directory, hostname, or
-network.
+`apply` installs a checksum-pinned mise binary when needed, validates private
+roles, applies dotfiles, and installs the exact CLI versions in `mise.toml`
+using `mise.lock`. It does not install Homebrew formulae, casks, or GUI apps.
+`dry-run` temporarily downloads and verifies the same pinned mise binary when
+it is not installed. `dot doctor` reports manual prerequisites.
+Claude Code and GitHub Copilot CLI keep their standalone installers. This
+repository manages Claude's settings, status line, and skills only.
 
-```text
-personal
-client-role
-```
+## Maintenance
 
-Missing private roles fail closed instead of silently using another identity.
-
-### Install the required libraries && Place each dotfiles as a symbolic link
 ```shell
-cd ~/dotfiles/mac
-./setup.sh
+dot doctor        # diagnose missing tools, apps, links, and private roles
+dot doctor --duplicates # list optional Homebrew cleanup commands
+dot scan          # scan tracked public content
+dot tools update  # pin releases at least seven days old and refresh mise.lock
 ```
 
-## Features
+Review the diff after `dot tools update`. Homebrew duplicates reported by
+`dot doctor` are intentionally removed by hand.
 
-### Sync (mac)
-Shell startup does not modify the repository or contact the remote. The former
-automatic `sync`-branch workflow has been disabled because branch switching,
-staging, and pushing from `.zshrc` is unsafe.
-
-After running the macOS setup, `dot sync` is available for reviewed changes.
-It only operates on `main`, refuses a dirty worktree or remote divergence,
-stages tracked updates only, runs the public-content scanner, and asks for
-confirmation again before commit and push. `dot scan` runs the scanner without
-syncing.
+Shell startup performs no downloads, installs, daemon launches, Git mutations,
+or remote synchronization. Machine-only zsh settings belong in the untracked
+`~/.config/dotfiles/local.zsh`.

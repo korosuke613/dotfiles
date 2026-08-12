@@ -1,0 +1,154 @@
+#!/usr/bin/env bash
+
+set -uo pipefail
+
+repo_root=$(CDPATH= cd -- "$(dirname "$0")/../.." && pwd)
+export MISE_CEILING_PATHS="$(dirname "$repo_root")"
+private_root="${DOTFILES_PRIVATE_HOME:-$HOME/.config/dotfiles/private}"
+profile_file="${DOTFILES_PROFILE_FILE:-$HOME/.config/dotfiles/profiles}"
+failed=0
+show_duplicates=0
+duplicates=()
+
+case "${1:-}" in
+  "") ;;
+  --duplicates) show_duplicates=1 ;;
+  *)
+    printf 'Usage: %s [--duplicates]\n' "$0" >&2
+    exit 2
+    ;;
+esac
+
+ok() {
+  printf 'ok: %s\n' "$1"
+}
+
+warn() {
+  printf 'warning: %s\n' "$1" >&2
+  failed=1
+}
+
+if [[ "$(uname -s)" != "Darwin" || "$(uname -m)" != "arm64" ]]; then
+  warn "only Apple Silicon macOS is supported"
+fi
+
+for command in git curl zsh; do
+  command -v "$command" >/dev/null 2>&1 \
+    && ok "$command is available" \
+    || warn "$command is missing"
+done
+
+mise_cmd=""
+if [[ -n "${MISE_BIN:-}" && -x "$MISE_BIN" ]]; then
+  mise_cmd="$MISE_BIN"
+else
+  mise_cmd=$(command -v mise 2>/dev/null || true)
+fi
+if [[ -z "$mise_cmd" ]]; then
+  warn "mise is missing; run $repo_root/setup.sh apply"
+else
+  required_mise=$(awk -F'"' '/^mise_version=/ {print $2; exit}' "$repo_root/setup.sh")
+  installed_mise=$("$mise_cmd" --version 2>/dev/null | awk '{print $1}')
+  if [[ "$installed_mise" != "$required_mise" ]]; then
+    warn "mise $required_mise is required (found $installed_mise); run $repo_root/setup.sh apply"
+  else
+    ok "mise $installed_mise is available"
+    missing=$("$mise_cmd" -C "$repo_root" ls --missing 2>/dev/null || true)
+    [[ -z "$missing" ]] || warn "mise tools are missing; run $repo_root/setup.sh apply"
+    if "$mise_cmd" -C "$repo_root" bootstrap dotfiles status --missing >/dev/null 2>&1; then
+      ok "managed dotfiles are applied"
+    else
+      warn "managed dotfiles have drifted; run $repo_root/setup.sh apply"
+    fi
+  fi
+fi
+
+while read -r name formula path; do
+  if [[ -f "$path" ]]; then
+    ok "$name is available"
+  else
+    warn "$name is missing; run: brew install $formula"
+  fi
+done <<'EOF'
+zsh-autosuggestions zsh-autosuggestions /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+zsh-syntax-highlighting zsh-syntax-highlighting /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+EOF
+
+[[ -d /opt/homebrew/share/google-cloud-sdk ]] \
+  && ok "Google Cloud SDK is available" \
+  || warn "Google Cloud SDK is missing; run: brew install --cask google-cloud-sdk"
+
+while IFS='|' read -r app path; do
+  [[ -d "$path" ]] && ok "$app is installed" || warn "$app is not installed"
+done <<'EOF'
+Ghostty|/Applications/Ghostty.app
+Hammerspoon|/Applications/Hammerspoon.app
+1Password|/Applications/1Password.app
+EOF
+
+if [[ -f "$profile_file" ]]; then
+  if DOTFILES_PRIVATE_HOME="$private_root" DOTFILES_PROFILE_FILE="$profile_file" \
+    "$repo_root/mac/scripts/bootstrap-preflight"; then
+    ok "private profiles are valid"
+  else
+    failed=1
+  fi
+else
+  ok "no private profiles selected"
+fi
+
+if command -v brew >/dev/null 2>&1; then
+  while read -r tool formula; do
+    if brew list --formula "$formula" >/dev/null 2>&1; then
+      duplicates+=("$tool: brew uninstall $formula")
+    fi
+  done <<'EOF'
+node node
+terraform terraform
+awscli awscli
+direnv direnv
+uv uv
+kubectl kubernetes-cli
+go go
+pnpm pnpm
+eza eza
+bat bat
+fd fd
+starship starship
+atuin atuin
+gh gh
+ghq ghq
+fzf fzf
+ripgrep ripgrep
+jq jq
+git-lfs git-lfs
+herdr herdr
+EOF
+else
+  warn "Homebrew is unavailable; native dependencies must be installed manually"
+fi
+
+for legacy in /opt/homebrew/bin/op; do
+  if [[ -e "$legacy" || -L "$legacy" ]]; then
+    duplicates+=("op: retained app-provided CLI at $legacy")
+  fi
+done
+
+if (( ${#duplicates[@]} )); then
+  if [[ "$show_duplicates" -eq 1 ]]; then
+    printf 'optional duplicate cleanup (review each command before running):\n'
+    for duplicate in "${duplicates[@]}"; do
+      printf '  - %s\n' "$duplicate"
+    done
+  else
+    printf 'notice: %s duplicate CLI installations remain; run dot doctor --duplicates\n' \
+      "${#duplicates[@]}"
+  fi
+fi
+
+if [[ "$failed" -eq 0 ]]; then
+  printf 'doctor: all required checks passed\n'
+else
+  printf 'doctor: action is required\n' >&2
+fi
+exit "$failed"

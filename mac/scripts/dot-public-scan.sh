@@ -43,7 +43,7 @@ for pattern in "${patterns[@]}"; do
   if [[ "$mode" == "--staged" ]]; then
     matches=$(grep -E -n -- "$pattern" "$tmp_file" || true)
   else
-    matches=$(git -C "$repo_root" grep -n -I -E -- "$pattern" HEAD -- \
+    matches=$(git -C "$repo_root" grep -n -I -E -- "$pattern" -- \
       ':(exclude)mac/scripts/dot-public-scan.sh' || true)
   fi
   if [[ -n "$matches" ]]; then

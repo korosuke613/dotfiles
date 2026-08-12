@@ -32,12 +32,12 @@
 	gpgsign = true
 [credential "https://gist.github.com"]
 	helper = 
-	helper = !/opt/homebrew/bin/gh auth git-credential
+	helper = !gh auth git-credential
 
 
 # ~/.gitconfig — 既定（全 github.com リポ）は従来どおり gh の OAuth トークンを使う
 [credential "https://github.com"]
-    helper = !/opt/homebrew/bin/gh auth git-credential
+    helper = !gh auth git-credential
 
 # Optional local/profile overrides are kept outside the public repository.
 [include]

@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+vim_plug="$HOME/.vim/autoload/plug.vim"
+git_completion_dir="$HOME/.zsh"
+
+if [[ ! -s "$vim_plug" ]]; then
+  mkdir -p "$(dirname "$vim_plug")"
+  curl -fL https://raw.githubusercontent.com/junegunn/vim-plug/0.14.0/plug.vim -o "$vim_plug"
+fi
+
+mkdir -p "$git_completion_dir"
+if [[ ! -s "$git_completion_dir/git-completion.bash" ]]; then
+  curl -fL https://raw.githubusercontent.com/git/git/v2.51.0/contrib/completion/git-completion.bash \
+    -o "$git_completion_dir/git-completion.bash"
+fi
+if [[ ! -s "$git_completion_dir/_git" ]]; then
+  curl -fL https://raw.githubusercontent.com/git/git/v2.51.0/contrib/completion/git-completion.zsh \
+    -o "$git_completion_dir/_git"
+fi

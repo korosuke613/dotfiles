@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+repo_root=$(CDPATH= cd -- "$(dirname "$0")/../.." && pwd)
+private_root="${DOTFILES_PRIVATE_HOME:-$HOME/.config/dotfiles/private}"
+profile_file="${DOTFILES_PROFILE_FILE:-$HOME/.config/dotfiles/profiles}"
+jq_bin="${JQ_BIN:-jq}"
+
+mkdir -p "$HOME/.config/dotfiles" "$HOME/.claude"
+gitconfig_tmp=$(mktemp)
+settings_tmp=$(mktemp)
+trap 'rm -f "$gitconfig_tmp" "$settings_tmp"' EXIT
+
+settings=("$repo_root/mac/claude/settings.json")
+if [[ -f "$profile_file" ]]; then
+  while IFS= read -r profile; do
+    [[ -z "$profile" || "$profile" == \#* ]] && continue
+    role_dir="$private_root/profiles/$profile"
+    if [[ -f "$role_dir/gitconfig" ]]; then
+      printf '[include]\n\tpath = %s\n\n' "$role_dir/gitconfig" >> "$gitconfig_tmp"
+    fi
+    [[ -f "$role_dir/claude-settings.json" ]] && settings+=("$role_dir/claude-settings.json")
+  done < "$profile_file"
+fi
+
+"$jq_bin" -s 'reduce .[] as $item ({}; . * $item)' "${settings[@]}" > "$settings_tmp"
+mv "$gitconfig_tmp" "$HOME/.config/dotfiles/gitconfig"
+mv "$settings_tmp" "$HOME/.claude/settings.json"
+trap - EXIT

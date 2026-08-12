@@ -14,14 +14,21 @@ done
 script_dir=$(CDPATH= cd -- "$(dirname "$script_path")" && pwd)
 
 case "${1:-}" in
-  sync)
-    exec "$script_dir/dot-sync"
-    ;;
   scan)
     exec "$script_dir/dot-public-scan.sh" "${2:---all}"
     ;;
+  doctor)
+    exec "$script_dir/dot-doctor" "${@:2}"
+    ;;
+  tools)
+    if [[ "${2:-}" == "update" && "$#" -eq 2 ]]; then
+      exec "$script_dir/dot-tools-update"
+    fi
+    printf 'Usage: %s tools update\n' "$0" >&2
+    exit 2
+    ;;
   *)
-    printf 'Usage: %s {sync|scan [--all|--staged]}\n' "$0" >&2
+    printf 'Usage: %s {scan [--all|--staged]|doctor|tools update}\n' "$0" >&2
     exit 2
     ;;
 esac

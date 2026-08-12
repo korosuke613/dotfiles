@@ -30,6 +30,7 @@ if [ ! -f "$ZSHRC_FILE" ]; then
 fi
 
 echo -e "${GREEN}✓${NC} .zshrc検出: $ZSHRC_FILE\n"
+ZSHRC_SOURCE_DIR=$(dirname "$(realpath "$ZSHRC_FILE")")
 
 # sourceされているファイルを再帰的に収集
 collect_source_files() {
@@ -58,6 +59,12 @@ collect_source_files() {
 # sourceされているファイル一覧
 echo -e "${BLUE}【sourceされているファイル】${NC}"
 ALL_SOURCE_FILES=$(collect_source_files "$ZSHRC_FILE" | sort -u)
+for module in options history aliases completion integrations; do
+    module_file="$ZSHRC_SOURCE_DIR/$module.zsh"
+    if [ -f "$module_file" ]; then
+        ALL_SOURCE_FILES=$(printf '%s\n%s\n' "$ALL_SOURCE_FILES" "$module_file" | sort -u)
+    fi
+done
 echo "$ALL_SOURCE_FILES" | while read -r file; do
     if [ -n "$file" ]; then
         echo "  $(basename "$file") ($file)"
@@ -70,7 +77,8 @@ echo -e "${BLUE}【ボトルネック候補】${NC}\n"
 
 # evalコマンド
 echo -e "${YELLOW}1. evalコマンド${NC}"
-EVAL_COUNT=$(grep -c 'eval' "$ZSHRC_FILE" 2>/dev/null || echo "0")
+EVAL_COUNT=$(grep -c 'eval' "$ZSHRC_FILE" 2>/dev/null || true)
+EVAL_COUNT=${EVAL_COUNT:-0}
 if [ "$EVAL_COUNT" -gt 0 ]; then
     echo -e "  ${RED}⚠${NC} 検出数: $EVAL_COUNT"
     grep -n 'eval' "$ZSHRC_FILE" | sed 's/^/    /' || true
@@ -107,7 +115,8 @@ echo ""
 
 # サブシェル（コマンド置換）
 echo -e "${YELLOW}3. サブシェル/コマンド置換${NC}"
-SUBSHELL_COUNT=$(grep -c '\$(' "$ZSHRC_FILE" 2>/dev/null || echo "0")
+SUBSHELL_COUNT=$(grep -c '\$(' "$ZSHRC_FILE" 2>/dev/null || true)
+SUBSHELL_COUNT=${SUBSHELL_COUNT:-0}
 if [ "$SUBSHELL_COUNT" -gt 0 ]; then
     echo -e "  ${RED}⚠${NC} 検出数: $SUBSHELL_COUNT"
     grep -n '\$(' "$ZSHRC_FILE" | head -10 | sed 's/^/    /' || true
@@ -186,15 +195,15 @@ echo ""
 # 分割ファイルの検出
 echo -e "${BLUE}【分割設定ファイル】${NC}"
 SPLIT_FILES=(
-    ".zshrc.setting"
-    ".zshrc.alias"
-    ".zshrc.history"
-    ".zshrc.cd_fzf"
-    ".zshrc.local"
+    "options.zsh"
+    "history.zsh"
+    "aliases.zsh"
+    "completion.zsh"
+    "integrations.zsh"
 )
 
 for file in "${SPLIT_FILES[@]}"; do
-    filepath="$ZSHRC_DIR/$file"
+    filepath="$ZSHRC_SOURCE_DIR/$file"
     if [ -f "$filepath" ]; then
         echo -e "  ${GREEN}✓${NC} $file"
     fi
