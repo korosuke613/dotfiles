@@ -96,8 +96,8 @@ source ${DOTFILES_ZSH_HOME}/.zshrc.autocomplete
 if [[ -f "${DOTFILES_ZSH_HOME}/.zshrc.local" ]]; then
   source ${DOTFILES_ZSH_HOME}/.zshrc.local
 else
-  export PIP_INDEX_URL=https://pypi.flatt.tech/simple/
-  export UV_INDEX_URL=https://pypi.flatt.tech/simple/
+  # Client-specific package indexes belong in a private role overlay.
+  unset PIP_INDEX_URL UV_INDEX_URL
 fi
 
 source ${DOTFILES_ZSH_HOME}/.zshrc.path
@@ -165,11 +165,7 @@ export PATH="$PATH:~/.lmstudio/bin"
 
 unalias -m 'gh'
 gh () {
-        case "$PWD" in
-                ($HOME/ghq/github.com/private-role/*) GH_TOKEN="$(ghtkn get)" command gh "$@" ;;
-                ($HOME/ghq/github.com/client-repo/*) GH_TOKEN="$(OP_SERVICE_ACCOUNT_TOKEN="$(security find-generic-password -a "$USER" -s private-service-account -w)" op read 'op://REDACTED')" command gh "$@" ;;
-                (*) command op plugin run -- gh "$@" ;;
-        esac
+        command gh "$@"
 }
 
 export NVM_DIR="$HOME/.nvm"
@@ -179,3 +175,20 @@ export NVM_DIR="$HOME/.nvm"
 # NemoClaw PATH setup
 export PATH="$HOME/.local/bin:$PATH"
 # end NemoClaw PATH setup
+
+# Optional private role overlays are explicit and never inferred from cwd,
+# hostname, or network location.
+DOTFILES_PRIVATE_HOME="${DOTFILES_PRIVATE_HOME:-$HOME/.config/dotfiles/private}"
+DOTFILES_PROFILE_FILE="${DOTFILES_PROFILE_FILE:-$HOME/.config/dotfiles/profiles}"
+if [[ -f "$DOTFILES_PROFILE_FILE" ]]; then
+  while IFS= read -r profile; do
+    [[ -z "$profile" || "$profile" == \#* ]] && continue
+    profile_file="$DOTFILES_PRIVATE_HOME/profiles/$profile/zsh.zsh"
+    if [[ -f "$profile_file" ]]; then
+      source "$profile_file"
+    else
+      echo "dotfiles: private profile '$profile' is missing: $profile_file" >&2
+      return 1
+    fi
+  done < "$DOTFILES_PROFILE_FILE"
+fi

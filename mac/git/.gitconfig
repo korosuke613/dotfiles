@@ -30,10 +30,6 @@
 
 [commit]
 	gpgsign = true
-[credential "https://private-github.example.invalid"]
-	helper = 
-	helper = !/opt/homebrew/bin/gh auth git-credential
-
 [credential "https://gist.github.com"]
 	helper = 
 	helper = !/opt/homebrew/bin/gh auth git-credential
@@ -43,13 +39,6 @@
 [credential "https://github.com"]
     helper = !/opt/homebrew/bin/gh auth git-credential
 
-[includeIf "gitdir:~/ghq/github.com/private-role/"]
-    path = ~/.config/git/private-role.inc
-# ~/.config/git/private-role.inc — private-role 配下でだけ読まれる
-
-[includeIf "gitdir:~/ghq/private-github.example.invalid/"]
-	path = ~/.config/git/office
-
-# このPC固有・dotfiles管理外のローカル上書き（存在しないPCでは無視される）
+# Optional local/profile overrides are kept outside the public repository.
 [include]
 	path = ~/.gitconfig.local
