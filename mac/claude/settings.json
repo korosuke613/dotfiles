@@ -46,7 +46,7 @@
     ],
     "defaultMode": "default"
   },
-  "model": "claude-fable-5[1m]",
+  "model": "sonnet",
   "hooks": {
     "Notification": [
       {
@@ -81,13 +81,20 @@
     "superpowers@claude-plugins-official": true,
     "code-simplifier@claude-plugins-official": true,
     "skill-creator@claude-plugins-official": true,
-    "ept@private-role": true
+    "ept@private-role": true,
+    "cosense-cli@cosense-cli": true
   },
   "extraKnownMarketplaces": {
     "private-role": {
       "source": {
         "source": "directory",
         "path": "~/ghq/github.com/private-role/ai-guide"
+      }
+    },
+    "cosense-cli": {
+      "source": {
+        "source": "github",
+        "repo": "private-role/example-plugin"
       }
     }
   },
@@ -104,6 +111,5 @@
   "remoteControlAtStartup": false,
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
-  "skipAutoPermissionPrompt": true,
   "voiceEnabled": true
 }
