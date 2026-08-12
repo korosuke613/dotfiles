@@ -48,6 +48,41 @@ dot tools update  # pin releases at least seven days old and refresh mise.lock
 Review the diff after `dot tools update`. Homebrew duplicates reported by
 `dot doctor` are intentionally removed by hand.
 
+## Secure Enclave commit signing
+
+Commit signing keys are per-machine and not synced by this repository: the
+Secure Enclave cannot import an existing key, only generate a new
+non-exportable one, so each machine needs its own key and its own additional
+GitHub Signing Key entry (existing keys on other machines are left alone).
+`~/.local/bin/ssh-sign` (managed by `mise.toml`) is a generic wrapper; run
+this once per machine to actually enable it:
+
+```shell
+sc_auth create-ctk-identity -l git-sign -k p-256-ne -t none
+ssh-keygen -w /usr/lib/ssh-keychain.dylib -K -N ""
+mv id_ecdsa_sk_rk ~/.ssh/id_git_sign
+mv id_ecdsa_sk_rk.pub ~/.ssh/id_git_sign.pub
+```
+
+Add the machine-local override (not tracked by any repository) to
+`~/.gitconfig.local`:
+
+```ini
+[user]
+	signingkey = ~/.ssh/id_git_sign
+
+[gpg "ssh"]
+	program = ~/.local/bin/ssh-sign
+```
+
+Register `~/.ssh/id_git_sign.pub` as a **Signing Key** at
+https://github.com/settings/keys (a distinct title per machine, e.g.
+`<hostname>-secure-enclave`), and optionally append the same line to
+`~/.ssh/allowed_signers` for local `git log --show-signature` verification.
+`-t none` skips authentication per signature (required for unattended /
+agent commits); local processes on this machine can therefore invoke
+signing without a human present.
+
 Shell startup performs no downloads, installs, daemon launches, Git mutations,
 or remote synchronization. Machine-only zsh settings belong in the untracked
 `~/.config/dotfiles/local.zsh`.

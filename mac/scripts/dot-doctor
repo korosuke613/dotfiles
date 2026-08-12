@@ -134,6 +134,10 @@ for legacy in /opt/homebrew/bin/op; do
   fi
 done
 
+if [[ "$(git config --get gpg.ssh.program 2>/dev/null)" != '~/.local/bin/ssh-sign' ]]; then
+  printf 'notice: Secure Enclave commit signing is not set up on this machine; see README "Secure Enclave commit signing"\n'
+fi
+
 if (( ${#duplicates[@]} )); then
   if [[ "$show_duplicates" -eq 1 ]]; then
     printf 'optional duplicate cleanup (review each command before running):\n'
