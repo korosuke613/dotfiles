@@ -51,3 +51,6 @@ Review the diff after `dot tools update`. Homebrew duplicates reported by
 Shell startup performs no downloads, installs, daemon launches, Git mutations,
 or remote synchronization. Machine-only zsh settings belong in the untracked
 `~/.config/dotfiles/local.zsh`.
+
+`cdq` lists the public and private dotfiles as `dotfiles` and
+`dotfiles-private` alongside normal ghq repositories.

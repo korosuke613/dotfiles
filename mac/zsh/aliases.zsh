@@ -24,7 +24,6 @@ alias gl='echo_eval "git log"'
 alias wip='echo_eval "git commit --fixup $(git log -1 --pretty=format:\"%H\" --grep=\"^fixup!\" --invert-grep)"'
 alias tf='terraform'
 alias k='kubectl'
-alias cdq='cd "$(ghq root)/$(ghq list | fzf)"'
 alias python='python3'
 alias cp='cp -i'
 alias mv='mv -i'
@@ -51,6 +50,34 @@ cdf() {
   target=$(fd -t d | fzf --height 50% --layout=reverse --border \
     --preview 'eza -F -1 {}') || return
   [[ -n "$target" ]] && cd "$target"
+}
+
+cdq() {
+  local choice repo private_repo
+  local -a repositories
+
+  private_repo="${DOTFILES_PRIVATE_HOME:-$HOME/.config/dotfiles/private}"
+  repositories=(dotfiles)
+  [[ -d "$private_repo/.git" ]] && repositories+=(dotfiles-private)
+
+  if (( $+commands[ghq] )); then
+    while IFS= read -r repo; do
+      case "$repo" in
+        dotfiles|github.com/korosuke613/dotfiles) continue ;;
+      esac
+      repositories+=("$repo")
+    done < <(ghq list)
+  fi
+
+  choice=$(printf '%s\n' "${repositories[@]}" | fzf) || return
+  case "$choice" in
+    dotfiles) cd "$HOME/dotfiles" ;;
+    dotfiles-private) cd "$private_repo" ;;
+    *)
+      (( $+commands[ghq] )) || return 1
+      cd "$(ghq root)/$choice"
+      ;;
+  esac
 }
 
 _ghn() {
