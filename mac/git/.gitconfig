@@ -42,3 +42,6 @@
 # Optional local/profile overrides are kept outside the public repository.
 [include]
 	path = ~/.gitconfig.local
+
+[include]
+	path = ~/.config/dotfiles/gitconfig
