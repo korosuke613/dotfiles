@@ -1,5 +1,34 @@
 #!/bin/sh
 
+mode="${1:-apply}"
+case "$mode" in
+    apply) ;;
+    check)
+        command -v brew >/dev/null 2>&1 || echo "check: Homebrew is not installed"
+        command -v zsh >/dev/null 2>&1 || echo "check: zsh is not installed"
+        command -v git >/dev/null 2>&1 || echo "check: git is not installed"
+        test -d "$HOME/dotfiles/mac" || {
+            echo "check: expected checkout at $HOME/dotfiles/mac" >&2
+            exit 1
+        }
+        exit 0
+        ;;
+    dry-run)
+        printf '%s\n' \
+            "Would link ~/.vimrc" \
+            "Would link ~/.zshrc" \
+            "Would link ~/.gitconfig" \
+            "Would link ~/.config/git/ignore" \
+            "Would link ~/.config/starship.toml" \
+            "Would link ~/.local/bin/dot"
+        exit 0
+        ;;
+    *)
+        echo "Usage: $0 [check|dry-run|apply]" >&2
+        exit 2
+        ;;
+esac
+
 # brew がインストールされていなければインストール
 if [ -z "$(command -v brew)" ]; then
     echo "--- Install Homebrew is Start! ---"
