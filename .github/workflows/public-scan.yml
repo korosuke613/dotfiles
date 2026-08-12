@@ -1,0 +1,18 @@
+name: Public content scan
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  scan:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Scan tracked public content
+        run: bash mac/scripts/dot-public-scan.sh --all
