@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+repo_root=$(git rev-parse --show-toplevel)
+branch=$(git -C "$repo_root" branch --show-current)
+
+if [[ "$branch" != "main" ]]; then
+  printf 'dot sync must run on main (current: %s)\\n' "${branch:-detached}" >&2
+  exit 1
+fi
+
+if ! git -C "$repo_root" diff --quiet || ! git -C "$repo_root" diff --cached --quiet; then
+  printf 'dot sync requires a clean worktree before pulling\\n' >&2
+  exit 1
+fi
+
+git -C "$repo_root" pull --rebase --ff-only
+
+if git -C "$repo_root" diff --quiet && git -C "$repo_root" diff --cached --quiet && [[ -z "$(git -C "$repo_root" ls-files --others --exclude-standard)" ]]; then
+  printf 'No changes to sync.\\n'
+  exit 0
+fi
+
+git -C "$repo_root" diff
+printf 'Stage reviewed tracked changes? [y/N]: ' >&2
+read -r answer
+if [[ ! "$answer" =~ ^[Yy]$ ]]; then
+  printf 'Sync cancelled.\\n' >&2
+  exit 1
+fi
+
+git -C "$repo_root" add --update
+git -C "$repo_root" diff --cached
+"$repo_root/mac/scripts/dot-public-scan.sh" --staged
+
+printf 'Commit and push this staged diff to main? [y/N]: ' >&2
+read -r answer
+if [[ ! "$answer" =~ ^[Yy]$ ]]; then
+  git -C "$repo_root" reset
+  printf 'Sync cancelled; staged changes were reset.\\n' >&2
+  exit 1
+fi
+
+git -C "$repo_root" commit -m "dotfiles: sync $(date '+%Y-%m-%d %H:%M')"
+git -C "$repo_root" push origin main
