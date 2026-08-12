@@ -6,6 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 korosuke613のmacOS用dotfilesリポジトリ。公開共通設定と、端末外のprivate role overlayを分離して管理する。
 
+Private role repository: https://github.com/korosuke613/dotfiles-private
+
 ## セットアップコマンド
 
 ### macOS
@@ -73,3 +75,4 @@ setup.shは各設定ファイルを`~/dotfiles/`から適切な場所（`~/.conf
 - zsh設定で`npx`、`npm`、`rm`コマンドは警告を出して実行しない設定になっている
 - `rm`の代わりに`trash`を使用すること
 - private roleの設定をpublic repoのCLAUDE.mdや設定ファイルへ再掲しないこと
+- roleの実装を調査するときはprivate repositoryも参照すること。ただし秘密値を回答やpublic repoへ転載しないこと
