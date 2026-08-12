@@ -18,7 +18,8 @@ tmp_file=$(mktemp)
 trap 'rm -f "$tmp_file"' EXIT
 
 if [[ "$mode" == "--staged" ]]; then
-  git -C "$repo_root" diff --cached --no-ext-diff --unified=0 --binary |
+  git -C "$repo_root" diff --cached --no-ext-diff --unified=0 --binary -- \
+    ':(exclude)mac/scripts/dot-public-scan.sh' |
     grep -E '^\+[^+]' >"$tmp_file" || true
 fi
 
@@ -42,7 +43,8 @@ for pattern in "${patterns[@]}"; do
   if [[ "$mode" == "--staged" ]]; then
     matches=$(grep -E -n -- "$pattern" "$tmp_file" || true)
   else
-    matches=$(git -C "$repo_root" grep -n -I -E -- "$pattern" HEAD -- || true)
+    matches=$(git -C "$repo_root" grep -n -I -E -- "$pattern" HEAD -- \
+      ':(exclude)mac/scripts/dot-public-scan.sh' || true)
   fi
   if [[ -n "$matches" ]]; then
     printf '%s\n' "$matches"
