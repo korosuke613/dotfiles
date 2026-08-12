@@ -1,6 +1,8 @@
 #!/bin/sh
 
 script_dir=$(CDPATH= cd -- "$(dirname "$0")" && pwd)
+private_root="${DOTFILES_PRIVATE_HOME:-$HOME/.config/dotfiles/private}"
+profile_file="${DOTFILES_PROFILE_FILE:-$HOME/.config/dotfiles/profiles}"
 mode="${1:-apply}"
 case "$mode" in
     apply) ;;
@@ -71,6 +73,21 @@ mkdir -p ~/.local/bin
 ln -sf "$script_dir/git/.gitconfig" ~/.gitconfig
 ln -sf "$script_dir/git/ignore" ~/.config/git/ignore
 ln -sf "$script_dir/scripts/dot" ~/.local/bin/dot
+
+mkdir -p "$HOME/.config/dotfiles"
+gitconfig_overlays=$(mktemp)
+if [ -f "$profile_file" ]; then
+    while IFS= read -r profile; do
+        case "$profile" in
+            ""|\#*) continue ;;
+        esac
+        role_gitconfig="$private_root/profiles/$profile/gitconfig"
+        if [ -f "$role_gitconfig" ]; then
+            printf '[include]\n\tpath = %s\n\n' "$role_gitconfig" >> "$gitconfig_overlays"
+        fi
+    done < "$profile_file"
+fi
+mv "$gitconfig_overlays" "$HOME/.config/dotfiles/gitconfig"
 
 
 # hammerspoon
