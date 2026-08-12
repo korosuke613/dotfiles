@@ -2,13 +2,22 @@
 
 set -euo pipefail
 
+script_path="$0"
+while [[ -L "$script_path" ]]; do
+  link=$(readlink "$script_path")
+  if [[ "$link" = /* ]]; then
+    script_path="$link"
+  else
+    script_path="$(dirname "$script_path")/$link"
+  fi
+done
+script_dir=$(CDPATH= cd -- "$(dirname "$script_path")" && pwd)
+
 case "${1:-}" in
   sync)
-    script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
     exec "$script_dir/dot-sync"
     ;;
   scan)
-    script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
     exec "$script_dir/dot-public-scan.sh" "${2:---all}"
     ;;
   *)
