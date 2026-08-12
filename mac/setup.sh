@@ -79,7 +79,7 @@ ln -sf "$script_dir/hammerspoon/init.lua" ~/.hammerspoon/init.lua
 
 # dotfiles
 mkdir -p ~/ghq
-ln -sf ~/dotfiles ~/ghq/dotfiles
+ln -sfn "$script_dir/.." "$HOME/ghq/dotfiles"
 
 # tmux
 ln -sf "$script_dir/tmux/.tmux.conf" ~/.tmux.conf
