@@ -44,7 +44,7 @@
       "mcp__playwright__browser_take_screenshot",
       "WebFetch(domain:github.blog)"
     ],
-    "defaultMode": "default"
+    "defaultMode": "auto"
   },
   "model": "sonnet",
   "worktree": {
