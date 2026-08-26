@@ -4,6 +4,9 @@ min_version = "2026.8.5"
 lockfile = true
 pin = true
 
+[env]
+KUBECONFIG = "{{env.HOME}}/.kube/config-home-k3s"
+
 [tools]
 node = "26.7.0"
 terraform = "1.15.8"
