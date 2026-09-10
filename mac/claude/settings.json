@@ -1,7 +1,6 @@
 {
   "env": {
-    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
-    "ENABLE_TOOL_SEARCH": "1"
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   },
   "permissions": {
     "allow": [
@@ -34,11 +33,6 @@
       "Bash(pnpm info *)",
       "Bash(gh search *)",
       "WebFetch(domain:docs.github.com)",
-      "Bash(pnpm build:github)",
-      "WebFetch(domain:localhost)",
-      "Bash(curl -sv http://localhost:3030/)",
-      "Bash(curl -s http://127.0.0.1:3030/ -o /tmp/claude/slide_root.html -w \"HTTP %{http_code} size %{size_download}\\\\n\")",
-      "Read(//tmp/claude/**)",
       "mcp__playwright__browser_evaluate",
       "mcp__playwright__browser_navigate",
       "mcp__playwright__browser_take_screenshot",
@@ -59,12 +53,10 @@
     "git@korosuke613": true,
     "doc@korosuke613": true,
     "engineer@korosuke613": true,
-    "security@korosuke613": true,
     "github@korosuke613": true,
     "dev-standards@korosuke613": true,
     "claude-md-management@claude-plugins-official": true,
     "gopls-lsp@claude-plugins-official": true,
-    "superpowers@claude-plugins-official": true,
     "code-simplifier@claude-plugins-official": true,
     "skill-creator@claude-plugins-official": true
   },
