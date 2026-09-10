@@ -15,6 +15,7 @@ version = "2.36.21"
 backend = "aqua:aws/aws-cli"
 
 [tools.awscli."platforms.macos-arm64"]
+checksum = "blake3:ed55562edb97949b36236af4c78dc785045c16eca8272808ee0fc756b591578b"
 url = "https://awscli.amazonaws.com/AWSCLIV2-2.36.21.pkg"
 
 [[tools.bat]]

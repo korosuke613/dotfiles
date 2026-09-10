@@ -6,3 +6,5 @@ git-sim_media/
 
 
 **/.claude/settings.local.json
+
+**/.claude/.cc-writes/
