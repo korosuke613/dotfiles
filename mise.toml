@@ -25,7 +25,7 @@ ripgrep = "15.2.0"
 jq = "1.8.2"
 op = "2.38.1"
 git-lfs = "3.7.1"
-herdr = "0.8.2"
+herdr = "0.9.0"
 ghtkn = "0.3.6"
 
 [dotfiles]
