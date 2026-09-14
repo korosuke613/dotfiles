@@ -1,0 +1,34 @@
+id = "local.title-sync"
+name = "Title Sync"
+version = "0.1.0"
+min_herdr_version = "0.9.0"
+description = "Sync agent terminal titles to Herdr agent and single-agent tab labels"
+platforms = ["linux"]
+
+[[actions]]
+id = "sync-current"
+title = "Sync current agent title"
+contexts = ["pane"]
+command = ["bash", "sync.sh"]
+
+[[actions]]
+id = "sync-all"
+title = "Sync all agent titles"
+contexts = ["workspace"]
+command = ["bash", "sync.sh", "--all"]
+
+[[events]]
+on = "pane.agent_detected"
+command = ["bash", "sync.sh"]
+
+[[events]]
+on = "pane.agent_status_changed"
+command = ["bash", "sync.sh"]
+
+[[events]]
+on = "pane.exited"
+command = ["bash", "sync.sh"]
+
+[[events]]
+on = "pane.closed"
+command = ["bash", "sync.sh"]
