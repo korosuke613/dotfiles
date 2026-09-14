@@ -9,7 +9,8 @@ Herdr 0.9.0+ の公式プラグイン機構を使い、エージェントが設�
 - Space / workspace: `project` metadataが明示された場合だけ変更
 - 追加LLM、端末本文の収集、常駐監視: なし
 
-homebox/Linuxで使うための設定です。dotfilesのmacOSセットアップからは自動登録しません。
+Linux/macOSで使うための設定です。dotfilesのセットアップからは自動登録しません。
+HerdrのMachineごとに、各サーバー上で個別にリンクしてください。
 
 ## Space名の設定
 
@@ -31,6 +32,19 @@ home-server - Automate Panel Renaming - GitHub Copilot
 `project` metadataがないWorkspaceは変更しません。複数Agentの場合は、focused、
 working、その他の順で代表Agentを選びます。Workspace名を手動変更すると、その後は
 自動更新を停止します。
+
+## Machineごとの登録
+
+プラグインはHerdr client間で共有されません。Local（Mac mini）とhomeboxの
+それぞれのHerdr serverで、同じdotfiles checkoutを参照してリンクします。
+
+```sh
+herdr plugin link ~/dotfiles/ubuntu/herdr/title-sync
+herdr plugin enable local.title-sync
+```
+
+Mac miniに`flock`やGNU `timeout`がなくても動くよう、ロックは`mkdir`へ、
+タイムアウトは利用可能なコマンドへフォールバックします。
 
 ## homeboxでの登録
 

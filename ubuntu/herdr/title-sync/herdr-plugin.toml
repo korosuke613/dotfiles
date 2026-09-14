@@ -3,7 +3,7 @@ name = "Title Sync"
 version = "0.1.0"
 min_herdr_version = "0.9.0"
 description = "Sync agent terminal titles to Herdr agent and single-agent tab labels"
-platforms = ["linux"]
+platforms = ["linux", "macos"]
 
 [[actions]]
 id = "sync-current"
