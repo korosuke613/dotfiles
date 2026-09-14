@@ -10,4 +10,7 @@ sidebar_max_width = 52
 rows = [["state_icon", "workspace"]]
 
 [ui.sidebar.agents]
-rows = [["state_icon", "tab"]]
+rows = [
+  ["state_icon", { token = "tab", bold = true, dim = false }],
+  [{ token = "agent", bold = true, dim = false }],
+]
