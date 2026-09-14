@@ -3,7 +3,8 @@ if (( $+commands[mise] )); then
   required_mise="${${mise_min_line#*\"}%\"*}"
   installed_mise=$(mise --version 2>/dev/null)
   installed_mise="${installed_mise%% *}"
-  if [[ "$installed_mise" == "$required_mise" ]]; then
+  autoload -Uz is-at-least
+  if is-at-least "$required_mise" "$installed_mise"; then
     mise_activation=$(mise activate zsh) && eval "$mise_activation"
     unset mise_activation
   fi
