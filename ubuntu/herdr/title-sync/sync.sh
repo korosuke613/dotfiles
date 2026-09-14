@@ -7,15 +7,29 @@ state_dir="${HERDR_PLUGIN_STATE_DIR:?HERDR_PLUGIN_STATE_DIR is required}"
 event_json="${HERDR_PLUGIN_EVENT_JSON:-}"
 
 mkdir -p "$state_dir"
-exec 9>"$state_dir/lock"
-flock 9
+if command -v flock >/dev/null 2>&1; then
+  exec 9>"$state_dir/lock"
+  flock 9
+else
+  lock_dir="$state_dir/lockdir"
+  while ! mkdir "$lock_dir" 2>/dev/null; do
+    sleep 0.1
+  done
+  trap 'rmdir "$lock_dir"' EXIT
+fi
 
 log() {
   printf 'title-sync: %s\n' "$*" >&2
 }
 
 run_herdr() {
-  timeout 10 "$herdr_bin" "$@"
+  if command -v timeout >/dev/null 2>&1; then
+    timeout 10 "$herdr_bin" "$@"
+  elif command -v gtimeout >/dev/null 2>&1; then
+    gtimeout 10 "$herdr_bin" "$@"
+  else
+    "$herdr_bin" "$@"
+  fi
 }
 
 normalize_title() {
