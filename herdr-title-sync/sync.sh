@@ -54,19 +54,24 @@ meaningful_title() {
 
 agent_name() {
   local title="$1"
+  local agent="$2"
   local slug
   slug=$(printf '%s' "$title" |
     LC_ALL=C tr '[:upper:]' '[:lower:]' |
     sed -E 's/[^a-z0-9_-]+/-/g; s/^-+//; s/-+$//' |
-    cut -c1-32)
+    cut -c1-24)
   [[ "$slug" =~ ^[a-z] ]] || slug="task-${slug}"
+  case "$agent" in
+    claude|copilot|codex|opencode) slug="${agent}-${slug}" ;;
+  esac
   printf '%s' "${slug:0:32}"
 }
 
 rename_agent() {
   local pane_id="$1"
   local title="$2"
-  run_herdr agent rename "$pane_id" "$(agent_name "$title")" >/dev/null
+  local agent="$3"
+  run_herdr agent rename "$pane_id" "$(agent_name "$title" "$agent")" >/dev/null
 }
 
 rename_tab_if_owned() {
@@ -149,7 +154,7 @@ sync_pane() {
   [[ -n "$tab_id" && -n "$agent" ]] || return 0
   meaningful_title "$title" "$agent" || return 0
 
-  rename_agent "$pane_id" "$title"
+  rename_agent "$pane_id" "$title" "$agent"
 
   snapshot=$(run_herdr api snapshot | jq -e '.result.snapshot')
   tab_json=$(jq -c --arg tab "$tab_id" '.tabs[] | select(.tab_id == $tab)' <<<"$snapshot")
