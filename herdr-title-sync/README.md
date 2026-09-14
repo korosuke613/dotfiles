@@ -46,6 +46,10 @@ herdr plugin enable local.title-sync
 Mac miniに`flock`やGNU `timeout`がなくても動くよう、ロックは`mkdir`へ、
 タイムアウトは利用可能なコマンドへフォールバックします。
 
+MacのSidebar表示設定はdotfilesの`mac/herdr/config.toml`で管理できます。
+Mac側の`~/.config/herdr/config.toml`へリンクまたは内容を反映した後、
+Herdrの`reload config`を実行してください。
+
 ## homeboxでの登録
 
 dotfilesを`~/dotfiles`に配置した状態で、Herdrサーバー上で実行します。
