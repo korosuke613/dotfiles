@@ -39,7 +39,7 @@ working、その他の順で代表Agentを選びます。Workspace名を手動�
 それぞれのHerdr serverで、同じdotfiles checkoutを参照してリンクします。
 
 ```sh
-herdr plugin link ~/dotfiles/ubuntu/herdr/title-sync
+herdr plugin link ~/dotfiles/herdr/title-sync
 herdr plugin enable local.title-sync
 ```
 
@@ -51,7 +51,7 @@ Mac miniに`flock`やGNU `timeout`がなくても動くよう、ロックは`mkd
 dotfilesを`~/dotfiles`に配置した状態で、Herdrサーバー上で実行します。
 
 ```sh
-herdr plugin link ~/dotfiles/ubuntu/herdr/title-sync
+herdr plugin link ~/dotfiles/herdr/title-sync
 herdr plugin enable local.title-sync
 herdr plugin action invoke local.title-sync.sync-all
 ```
