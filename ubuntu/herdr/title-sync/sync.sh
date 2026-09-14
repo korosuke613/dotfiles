@@ -38,10 +38,21 @@ meaningful_title() {
   [[ "$title" != "OpenCode" ]] || return 1
 }
 
+agent_name() {
+  local title="$1"
+  local slug
+  slug=$(printf '%s' "$title" |
+    LC_ALL=C tr '[:upper:]' '[:lower:]' |
+    sed -E 's/[^a-z0-9_-]+/-/g; s/^-+//; s/-+$//' |
+    cut -c1-32)
+  [[ "$slug" =~ ^[a-z] ]] || slug="task-${slug}"
+  printf '%s' "${slug:0:32}"
+}
+
 rename_agent() {
   local pane_id="$1"
   local title="$2"
-  run_herdr agent rename "$pane_id" "$title" >/dev/null
+  run_herdr agent rename "$pane_id" "$(agent_name "$title")" >/dev/null
 }
 
 rename_tab_if_owned() {
