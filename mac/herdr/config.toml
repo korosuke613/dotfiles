@@ -11,6 +11,6 @@ rows = [["state_icon", "workspace"]]
 
 [ui.sidebar.agents]
 rows = [
-  ["state_icon", { token = "tab", fg = "#cdd6f4", bold = true, dim = false }],
   [{ token = "agent", fg = "#cdd6f4", bold = true, dim = false }],
+  ["state_icon", { token = "tab", fg = "#cdd6f4", bold = true, dim = false }],
 ]

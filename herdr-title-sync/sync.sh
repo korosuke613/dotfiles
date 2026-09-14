@@ -55,15 +55,18 @@ meaningful_title() {
 agent_name() {
   local title="$1"
   local agent="$2"
+  case "$agent" in
+    claude|copilot|codex|opencode)
+      printf '%s' "$agent"
+      return
+      ;;
+  esac
   local slug
   slug=$(printf '%s' "$title" |
     LC_ALL=C tr '[:upper:]' '[:lower:]' |
     sed -E 's/[^a-z0-9_-]+/-/g; s/^-+//; s/-+$//' |
-    cut -c1-24)
+    cut -c1-32)
   [[ "$slug" =~ ^[a-z] ]] || slug="task-${slug}"
-  case "$agent" in
-    claude|copilot|codex|opencode) slug="${agent}-${slug}" ;;
-  esac
   printf '%s' "${slug:0:32}"
 }
 
