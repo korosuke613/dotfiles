@@ -30,7 +30,7 @@ export HERDR_PANE_ID="w1:p1"
 export HERDR_TEST_LOG="$tmp/log"
 
 bash "$root/sync.sh"
-grep -Fx 'agent rename w1:p1 Fix OAuth callback' "$tmp/log"
+grep -Fx 'agent rename w1:p1 fix-oauth-callback' "$tmp/log"
 grep -Fx 'tab rename w1:t1 Fix OAuth callback' "$tmp/log"
 
 printf 'title-sync tests passed\n'
