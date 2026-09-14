@@ -55,9 +55,14 @@ meaningful_title() {
 agent_name() {
   local title="$1"
   local agent="$2"
+  local ordinal="${3:-1}"
   case "$agent" in
     claude|copilot|codex|opencode)
-      printf '%s' "$agent"
+      if [[ "$ordinal" -eq 1 ]]; then
+        printf '%s' "$agent"
+      else
+        printf '%s-%s' "$agent" "$ordinal"
+      fi
       return
       ;;
   esac
@@ -74,7 +79,8 @@ rename_agent() {
   local pane_id="$1"
   local title="$2"
   local agent="$3"
-  run_herdr agent rename "$pane_id" "$(agent_name "$title" "$agent")" >/dev/null
+  local ordinal="$4"
+  run_herdr agent rename "$pane_id" "$(agent_name "$title" "$agent" "$ordinal")" >/dev/null
 }
 
 rename_tab_if_owned() {
@@ -147,7 +153,7 @@ sync_workspace() {
 
 sync_pane() {
   local pane_id="$1" workspace_id
-  local agent_json tab_id agent title snapshot tab_json agent_count current_tab
+  local agent_json tab_id agent title snapshot tab_json agent_count current_tab ordinal
 
   agent_json=$(run_herdr agent get "$pane_id" | jq -e '.result.agent')
   tab_id=$(jq -r '.tab_id // empty' <<<"$agent_json")
@@ -157,9 +163,12 @@ sync_pane() {
   [[ -n "$tab_id" && -n "$agent" ]] || return 0
   meaningful_title "$title" "$agent" || return 0
 
-  rename_agent "$pane_id" "$title" "$agent"
-
   snapshot=$(run_herdr api snapshot | jq -e '.result.snapshot')
+  ordinal=$(jq --arg agent "$agent" --arg pane "$pane_id" '
+    [.panes[] | select(.agent == $agent) | .pane_id] | sort | index($pane) + 1
+  ' <<<"$snapshot")
+  rename_agent "$pane_id" "$title" "$agent" "$ordinal"
+
   tab_json=$(jq -c --arg tab "$tab_id" '.tabs[] | select(.tab_id == $tab)' <<<"$snapshot")
   agent_count=$(jq --arg tab "$tab_id" '[.panes[] | select(.tab_id == $tab and .agent != null)] | length' <<<"$snapshot")
   current_tab=$(jq -r '.label // empty' <<<"$tab_json")
