@@ -78,12 +78,58 @@ rename_tab_if_owned() {
   printf '%s\n' "$title" >"$state_file"
 }
 
+rename_workspace_if_owned() {
+  local workspace_id="$1"
+  local project="$2"
+  local title="$3"
+  local current="$4"
+  local workspace_label="${project} - ${title}"
+  local state_file="$state_dir/workspace-${workspace_id}.label"
+
+  workspace_label=$(normalize_title "$workspace_label")
+  if [[ -f "$state_file" ]]; then
+    local expected
+    expected=$(<"$state_file")
+    if [[ "$current" != "$expected" && "$current" != "$workspace_label" ]]; then
+      log "workspace $workspace_id appears manually renamed; leaving it unchanged"
+      return 0
+    fi
+  elif [[ "$current" != "home" && "$current" != "$project" ]]; then
+    log "workspace $workspace_id has a non-default label; leaving it unchanged"
+    return 0
+  fi
+
+  [[ "$current" == "$workspace_label" ]] ||
+    run_herdr workspace rename "$workspace_id" "$workspace_label" >/dev/null
+  printf '%s\n' "$workspace_label" >"$state_file"
+}
+
+sync_workspace() {
+  local workspace_id="$1"
+  local snapshot workspace_json project current representative
+
+  workspace_json=$(run_herdr workspace get "$workspace_id" | jq -e '.result.workspace')
+  project=$(jq -r '.tokens.project // empty' <<<"$workspace_json")
+  [[ -n "$project" ]] || return 0
+  current=$(jq -r '.label // empty' <<<"$workspace_json")
+  snapshot=$(run_herdr api snapshot | jq -e '.result.snapshot')
+  representative=$(jq -r --arg workspace "$workspace_id" '
+    [.panes[] | select(.workspace_id == $workspace and .agent != null)] |
+    (map(select(.focused)) + map(select(.agent_status == "working")) + .) |
+    .[0].terminal_title_stripped // empty
+  ' <<<"$snapshot")
+  representative=$(normalize_title "$representative")
+  [[ -n "$representative" ]] || return 0
+  rename_workspace_if_owned "$workspace_id" "$project" "$representative" "$current"
+}
+
 sync_pane() {
-  local pane_id="$1"
+  local pane_id="$1" workspace_id
   local agent_json tab_id agent title snapshot tab_json agent_count current_tab
 
   agent_json=$(run_herdr agent get "$pane_id" | jq -e '.result.agent')
   tab_id=$(jq -r '.tab_id // empty' <<<"$agent_json")
+  workspace_id=$(jq -r '.workspace_id // empty' <<<"$agent_json")
   agent=$(jq -r '.agent // empty' <<<"$agent_json")
   title=$(normalize_title "$(jq -r '.terminal_title_stripped // empty' <<<"$agent_json")")
   [[ -n "$tab_id" && -n "$agent" ]] || return 0
@@ -98,6 +144,7 @@ sync_pane() {
   if [[ "$agent_count" -eq 1 && -n "$current_tab" ]]; then
     rename_tab_if_owned "$tab_id" "$title" "$current_tab"
   fi
+  [[ -n "$workspace_id" ]] && sync_workspace "$workspace_id"
 }
 
 sync_all() {

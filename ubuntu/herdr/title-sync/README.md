@@ -6,10 +6,31 @@ Herdr 0.9.0+ の公式プラグイン機構を使い、エージェントが設�
 - Agent: タイトルをHerdrの制約に合わせた小文字slugのAgent名へ同期
 - Tab: Agentが1つだけのTabに限り、同じタイトルへ同期
 - 複数AgentのTab: Tab名は変更しない
-- Space / workspace: 変更しない
+- Space / workspace: `project` metadataが明示された場合だけ変更
 - 追加LLM、端末本文の収集、常駐監視: なし
 
 homebox/Linuxで使うための設定です。dotfilesのmacOSセットアップからは自動登録しません。
+
+## Space名の設定
+
+virtual monorepoのルートではcwdだけでは実際の作業リポジトリを判定できないため、
+会話内容から推測しません。Workspaceごとにプロジェクトを明示してください。
+
+```sh
+herdr workspace report-metadata w18 \
+  --source local.title-sync \
+  --token project=home-server
+```
+
+以後、代表Agentのタイトルに合わせて次のように更新されます。
+
+```text
+home-server - Automate Panel Renaming - GitHub Copilot
+```
+
+`project` metadataがないWorkspaceは変更しません。複数Agentの場合は、focused、
+working、その他の順で代表Agentを選びます。Workspace名を手動変更すると、その後は
+自動更新を停止します。
 
 ## homeboxでの登録
 
