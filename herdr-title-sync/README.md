@@ -83,9 +83,8 @@ Tabと同じ完全な手動リネーム検出はできません。手動名を�
 プラグインを無効化してください。将来Herdr APIがAgentラベルを返すようになれば
 同じ保護を追加できます。
 
-Agent名はHerdr APIの制約により、Agent種別を先頭に付けた小文字の識別子になります。
-例えば `copilot-fix-oauth-callback` のような形式です。自然言語の元タイトルは
-Tab側に保持されます。
+Agent名はHerdr APIの制約により、既知のAgentでは`claude`、`copilot`などの
+短い識別子にします。作業内容はTab側の日本語タイトルで表示します。
 
 ## 制約
 
