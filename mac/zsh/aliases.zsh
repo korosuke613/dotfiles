@@ -42,12 +42,29 @@ if (( $+commands[bat] )); then
 fi
 
 cdf() {
-  local target
+  local target output dir repo
+  local -aU directories repositories
   [[ "$PWD" == "$HOME"/* || "$PWD" == "$HOME" ]] || {
     print -u2 "cdf: current directory must be under $HOME"
     return 1
   }
-  target=$(fd -t d | fzf --height 50% --layout=reverse --border \
+  output=$(fd -t d) || return
+  [[ -z "$output" ]] || directories=("${(@f)output}")
+  for dir in . "${directories[@]}"; do
+    for repo in "${dir%/}"/repos/*(-/N); do
+      [[ -e "$repo/.git" ]] && repositories+=("$repo")
+    done
+  done
+  if (( ${#repositories} )); then
+    # Explicit search roots bypass the ignored container, not the repos' ignore rules.
+    output=$(fd -t d . "${repositories[@]}") || return
+    directories+=("${repositories[@]}" "${repositories[@]:h}")
+    [[ -z "$output" ]] || directories+=("${(@f)output}")
+  fi
+  directories=("${directories[@]#./}")
+  directories=("${directories[@]%/}")
+  (( ${#directories} )) || return 0
+  target=$(printf '%s\n' "${directories[@]}" | fzf --height 50% --layout=reverse --border \
     --preview 'eza -F -1 {}') || return
   [[ -n "$target" ]] && cd "$target"
 }

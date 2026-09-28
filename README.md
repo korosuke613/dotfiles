@@ -89,3 +89,14 @@ or remote synchronization. Machine-only zsh settings belong in the untracked
 
 `cdq` lists the public and private dotfiles as `dotfiles` and
 `dotfiles-private` alongside normal ghq repositories.
+
+`cdf` searches directories below the current directory with `fd` and `fzf`.
+It also searches Git repositories directly under `repos/` in the current
+directory or visible descendants, even when the container is ignored.
+Linked repositories are included too; arbitrary directory symlinks are not
+followed recursively. Workspace names and locations are not hardcoded.
+Repository ignore rules stay active; there is no special exclusion list for
+dependency or build directories.
+
+Run its regression tests with `python3 mac/zsh/tests/test_cdf.py`
+(requires `zsh`, `fd`, and `git`; the tests replace the interactive `fzf` picker).
