@@ -42,12 +42,48 @@ if (( $+commands[bat] )); then
 fi
 
 cdf() {
-  local target
+  local target dir existing_dir repo_dir repo_path repo_candidate candidate_path candidate_found repos_root repos_relative
+  local -a directories
   [[ "$PWD" == "$HOME"/* || "$PWD" == "$HOME" ]] || {
     print -u2 "cdf: current directory must be under $HOME"
     return 1
   }
-  target=$(fd -t d | fzf --height 50% --layout=reverse --border \
+  directories=("${(@f)$(fd -t d)}")
+  if (( ${#directories} == 1 )) && [[ -z "${directories[1]}" ]]; then
+    directories=()
+  fi
+  repos_root="$HOME/vmonorepo/repos"
+  if [[ -d "$repos_root" && ( "$repos_root" == "$PWD" || "$repos_root" == "$PWD/"* ) ]]; then
+    repos_relative=""
+    [[ "$repos_root" == "$PWD" ]] || repos_relative="${repos_root#"$PWD"/}"
+    while IFS= read -r dir; do
+      repo_dir="${dir%/}"
+      repo_path="$repos_root/$repo_dir"
+      [[ -e "$repo_path/.git" ]] || continue
+      repo_candidate="$repo_dir"
+      [[ -z "$repos_relative" ]] || repo_candidate="$repos_relative/$repo_dir"
+      candidate_found=0
+      for existing_dir in "${directories[@]}"; do
+        if [[ "${existing_dir%/}" == "$repo_candidate" ]]; then
+          candidate_found=1
+          break
+        fi
+      done
+      (( candidate_found )) || directories+=("$repo_candidate")
+      while IFS= read -r dir; do
+        candidate_path="$repo_candidate/${dir%/}"
+        candidate_found=0
+        for existing_dir in "${directories[@]}"; do
+          if [[ "${existing_dir%/}" == "$candidate_path" ]]; then
+            candidate_found=1
+            break
+          fi
+        done
+        (( candidate_found )) || directories+=("$candidate_path")
+      done < <(cd "$repo_path" && fd -t d)
+    done < <(cd "$repos_root" && fd -t d --max-depth 1 --no-ignore-parent)
+  fi
+  target=$(printf '%s\n' "${directories[@]}" | fzf --height 50% --layout=reverse --border \
     --preview 'eza -F -1 {}') || return
   [[ -n "$target" ]] && cd "$target"
 }
