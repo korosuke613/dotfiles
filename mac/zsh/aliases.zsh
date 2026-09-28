@@ -42,64 +42,28 @@ if (( $+commands[bat] )); then
 fi
 
 cdf() {
-  local target dir existing_dir repo_dir repo_path repo_candidate candidate_path candidate_found repos_root repos_relative search_dir
-  local -a directories
+  local target output dir repo
+  local -aU directories repositories
   [[ "$PWD" == "$HOME"/* || "$PWD" == "$HOME" ]] || {
     print -u2 "cdf: current directory must be under $HOME"
     return 1
   }
-  directories=("${(@f)$(fd -t d)}")
-  if (( ${#directories} == 1 )) && [[ -z "${directories[1]}" ]]; then
-    directories=()
-  fi
-  search_dir="$PWD"
-  while [[ "$search_dir" == "$HOME" || "$search_dir" == "$HOME"/* ]]; do
-    if [[ "${search_dir##*/}" == vmonorepo && -d "$search_dir/repos" ]]; then
-      repos_root="$search_dir/repos"
-      break
-    fi
-    [[ "$search_dir" == "$HOME" ]] && break
-    search_dir="${search_dir%/*}"
-  done
-  if [[ -z "$repos_root" ]]; then
-    for dir in "${directories[@]}"; do
-      search_dir="$PWD/${dir%/}"
-      if [[ "${search_dir##*/}" == vmonorepo && -d "$search_dir/repos" ]]; then
-        repos_root="$search_dir/repos"
-        break
-      fi
+  output=$(fd -t d) || return
+  [[ -z "$output" ]] || directories=("${(@f)output}")
+  for dir in . "${directories[@]}"; do
+    for repo in "${dir%/}"/repos/*(-/N); do
+      [[ -e "$repo/.git" ]] && repositories+=("$repo")
     done
+  done
+  if (( ${#repositories} )); then
+    # Explicit search roots bypass the ignored container, not the repos' ignore rules.
+    output=$(fd -t d . "${repositories[@]}") || return
+    directories+=("${repositories[@]}" "${repositories[@]:h}")
+    [[ -z "$output" ]] || directories+=("${(@f)output}")
   fi
-  if [[ -n "$repos_root" && ( "$repos_root" == "$PWD" || "$repos_root" == "$PWD/"* ) ]]; then
-    repos_relative=""
-    [[ "$repos_root" == "$PWD" ]] || repos_relative="${repos_root#"$PWD"/}"
-    while IFS= read -r dir; do
-      repo_dir="${dir%/}"
-      repo_path="$repos_root/$repo_dir"
-      [[ -e "$repo_path/.git" ]] || continue
-      repo_candidate="$repo_dir"
-      [[ -z "$repos_relative" ]] || repo_candidate="$repos_relative/$repo_dir"
-      candidate_found=0
-      for existing_dir in "${directories[@]}"; do
-        if [[ "${existing_dir%/}" == "$repo_candidate" ]]; then
-          candidate_found=1
-          break
-        fi
-      done
-      (( candidate_found )) || directories+=("$repo_candidate")
-      while IFS= read -r dir; do
-        candidate_path="$repo_candidate/${dir%/}"
-        candidate_found=0
-        for existing_dir in "${directories[@]}"; do
-          if [[ "${existing_dir%/}" == "$candidate_path" ]]; then
-            candidate_found=1
-            break
-          fi
-        done
-        (( candidate_found )) || directories+=("$candidate_path")
-      done < <(cd "$repo_path" && fd -t d)
-    done < <(cd "$repos_root" && fd -t d --max-depth 1 --no-ignore-parent)
-  fi
+  directories=("${directories[@]#./}")
+  directories=("${directories[@]%/}")
+  (( ${#directories} )) || return 0
   target=$(printf '%s\n' "${directories[@]}" | fzf --height 50% --layout=reverse --border \
     --preview 'eza -F -1 {}') || return
   [[ -n "$target" ]] && cd "$target"
