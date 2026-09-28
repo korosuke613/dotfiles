@@ -42,7 +42,7 @@ if (( $+commands[bat] )); then
 fi
 
 cdf() {
-  local target dir existing_dir repo_dir repo_path repo_candidate candidate_path candidate_found repos_root repos_relative
+  local target dir existing_dir repo_dir repo_path repo_candidate candidate_path candidate_found repos_root repos_relative search_dir
   local -a directories
   [[ "$PWD" == "$HOME"/* || "$PWD" == "$HOME" ]] || {
     print -u2 "cdf: current directory must be under $HOME"
@@ -52,8 +52,25 @@ cdf() {
   if (( ${#directories} == 1 )) && [[ -z "${directories[1]}" ]]; then
     directories=()
   fi
-  repos_root="$HOME/vmonorepo/repos"
-  if [[ -d "$repos_root" && ( "$repos_root" == "$PWD" || "$repos_root" == "$PWD/"* ) ]]; then
+  search_dir="$PWD"
+  while [[ "$search_dir" == "$HOME" || "$search_dir" == "$HOME"/* ]]; do
+    if [[ "${search_dir##*/}" == vmonorepo && -d "$search_dir/repos" ]]; then
+      repos_root="$search_dir/repos"
+      break
+    fi
+    [[ "$search_dir" == "$HOME" ]] && break
+    search_dir="${search_dir%/*}"
+  done
+  if [[ -z "$repos_root" ]]; then
+    for dir in "${directories[@]}"; do
+      search_dir="$PWD/${dir%/}"
+      if [[ "${search_dir##*/}" == vmonorepo && -d "$search_dir/repos" ]]; then
+        repos_root="$search_dir/repos"
+        break
+      fi
+    done
+  fi
+  if [[ -n "$repos_root" && ( "$repos_root" == "$PWD" || "$repos_root" == "$PWD/"* ) ]]; then
     repos_relative=""
     [[ "$repos_root" == "$PWD" ]] || repos_relative="${repos_root#"$PWD"/}"
     while IFS= read -r dir; do
