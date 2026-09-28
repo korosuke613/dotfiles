@@ -3,10 +3,10 @@
 # Claude Code Statusline Script
 #
 # Output preview:
-#   mynewshq/src on feat/branch | Opus | ctx: 42% | limit: 15%(22m), 39%(1d18h)
-#   ~~~~~~~~~~~~ ~~~~~~~~~~~~~   ~~~~   ~~~~~~~~   ~~~~~~~~~~~~~~~~~~~~~~~~~~
-#   dir(cyan)    branch(orange)  model  context    usage: 5h%(left), 7d%(left)
-#                                (pink) (g/y/r)    (g/y/r)
+#   mynewshq/src on feat/branch | Opus | c:42% | l:15%(22m) 39%(1d18h)
+#   ~~~~~~~~~~~~ ~~~~~~~~~~~~~   ~~~~   ~~~~~   ~~~~~~~~~~~~~~~~~~~~~~
+#   dir(cyan)    branch(orange)  model  context  usage: 5h%(left), 7d%(left)
+#                                (pink) (g/y/r)  (g/y/r)
 #
 # Colors: green(<50%), yellow(50-79%), red(>=80%)
 #
@@ -57,6 +57,8 @@ if [ "$1" = "--test" ]; then
 
     run_test "model name shortening" "{\"workspace\":{\"current_dir\":\"$HOME/test\",\"project_dir\":\"$HOME/test\"},\"model\":{\"display_name\":\"Opus 4.6 (1M context)\"},\"output_style\":{\"name\":\"default\"},\"context_window\":{\"used_percentage\":20}}"
 
+    run_test "deep worktree path (long)" "{\"workspace\":{\"current_dir\":\"$HOME/ghq/kiba-vmonorepo/repos/helpfeel-demo-setup-automation/.claude/worktrees/agent-a73e82e9c5bb50daf\",\"project_dir\":\"$HOME/ghq/kiba-vmonorepo\"},\"model\":{\"display_name\":\"Opus\"},\"output_style\":{\"name\":\"default\"},\"context_window\":{\"used_percentage\":20}}"
+
     exit 0
 fi
 
@@ -101,6 +103,14 @@ else
     dir_display="${cwd/#$HOME/~}"
 fi
 
+# Truncate long directory paths (e.g. deep worktree paths) to keep statusline compact
+max_dir_len=45
+if [ ${#dir_display} -gt $max_dir_len ]; then
+    head_len=20
+    tail_len=$((max_dir_len - head_len - 1))
+    dir_display="${dir_display:0:$head_len}…${dir_display: -$tail_len}"
+fi
+
 # Get git info (skip locks for safety)
 git_info=""
 if git -C "$cwd" rev-parse --git-dir &>/dev/null; then
@@ -124,7 +134,7 @@ context_info=""
 if [ -n "$used_pct" ]; then
     used_int=$(printf "%.0f" "$used_pct")
     ctx_color=$(get_usage_color "$used_int")
-    context_info=" | ctx: ${ctx_color}${used_int}%${RESET}"
+    context_info=" | c:${ctx_color}${used_int}%${RESET}"
 fi
 
 # Rate limit info from JSON input (Claude Code v2.1.80+)
@@ -181,7 +191,7 @@ if [ -n "$five_pct" ] || [ -n "$seven_pct" ]; then
     fi
 
     # Join parts with ", "
-    usage_info=" | limit: $(printf '%s' "${parts[0]}")$([ ${#parts[@]} -gt 1 ] && printf ', %s' "${parts[1]}")"
+    usage_info=" | l:$(printf '%s' "${parts[0]}")$([ ${#parts[@]} -gt 1 ] && printf ' %s' "${parts[1]}")"
 fi
 
 # Build status line (Starship-style: dir + git + model + context + usage)
