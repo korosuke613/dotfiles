@@ -10,7 +10,7 @@ Herdr 0.9.0+ の公式プラグイン機構を使い、エージェントが設�
 - 追加LLM、端末本文の収集、常駐監視: なし
 
 Linux/macOSで使うための設定です。dotfilesのセットアップからは自動登録しません。
-HerdrのMachineごとに、各サーバー上で個別にリンクしてください。
+HerdrのMachineごとに、各サーバー上で個別に登録してください。
 
 ## Space名の設定
 
@@ -35,13 +35,19 @@ working、その他の順で代表Agentを選びます。Workspace名を手動�
 
 ## Machineごとの登録
 
-プラグインはHerdr client間で共有されません。Local（Mac mini）とhomeboxの
-それぞれのHerdr serverで、同じdotfiles checkoutを参照してリンクします。
+プラグインはHerdr client間で共有されません。Herdr serverごとに登録します。
+dotfilesのcheckoutがあるMachineはlink、ないMachineはGitHubからinstallします。
+
+### Local（Mac mini）: checkoutをlink
 
 ```sh
 herdr plugin link ~/dotfiles/herdr-title-sync
 herdr plugin enable local.title-sync
+herdr plugin action invoke local.title-sync.sync-all
 ```
+
+linkは作業ツリーを直接参照するため、`git pull`後は再リンク不要です。
+Herdrが次のイベントから更新後のスクリプトを実行します。
 
 Mac miniに`flock`やGNU `timeout`がなくても動くよう、ロックは`mkdir`へ、
 タイムアウトは利用可能なコマンドへフォールバックします。
@@ -50,27 +56,35 @@ MacのSidebar表示設定はdotfilesの`mac/herdr/config.toml`で管理できま
 Mac側の`~/.config/herdr/config.toml`へリンクまたは内容を反映した後、
 Herdrの`reload config`を実行してください。
 
-## homeboxでの登録
+### homebox: GitHubからinstall
 
-dotfilesを`~/dotfiles`に配置した状態で、Herdrサーバー上で実行します。
+homeboxには`~/dotfiles`のcheckoutがないため、GitHubからinstallします。
 
 ```sh
-herdr plugin link ~/dotfiles/herdr-title-sync
+herdr plugin install korosuke613/dotfiles/herdr-title-sync --ref main
 herdr plugin enable local.title-sync
 herdr plugin action invoke local.title-sync.sync-all
 ```
 
-既存のリンクを更新した場合、再リンクは不要です。Herdrが次のイベントから
-作業ツリーのスクリプトを実行します。
+installはその時点のcommitに固定されます（`herdr plugin list`で確認可能）。
+`herdr plugin`に更新コマンドはないため、スクリプトを更新した場合は
+uninstallしてから再度installしてください。
 
-停止・撤去:
+```sh
+herdr plugin uninstall local.title-sync
+herdr plugin install korosuke613/dotfiles/herdr-title-sync --ref main
+herdr plugin enable local.title-sync
+```
+
+### 停止・撤去
 
 ```sh
 herdr plugin disable local.title-sync
-herdr plugin unlink local.title-sync
+herdr plugin unlink local.title-sync      # linkした場合
+herdr plugin uninstall local.title-sync   # installした場合
 ```
 
-無効化・unlinkは既存のラベルを自動的に元へ戻しません。
+無効化・unlink・uninstallは既存のラベルを自動的に元へ戻しません。
 
 ## 手動リネーム
 
