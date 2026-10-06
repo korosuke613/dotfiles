@@ -14,3 +14,6 @@ rows = [
   [{ token = "agent", fg = "#cdd6f4", bold = true, dim = false }],
   ["state_icon", { token = "tab", fg = "#cdd6f4", bold = true, dim = false }],
 ]
+
+[ui.toast]
+delivery = "system"
