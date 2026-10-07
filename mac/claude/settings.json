@@ -58,7 +58,8 @@
     "claude-md-management@claude-plugins-official": true,
     "gopls-lsp@claude-plugins-official": true,
     "code-simplifier@claude-plugins-official": true,
-    "skill-creator@claude-plugins-official": true
+    "skill-creator@claude-plugins-official": true,
+    "cc-plugin-you-should-know@builtin": true
   },
   "outputStyle": "Explanatory",
   "language": "Japanese",
