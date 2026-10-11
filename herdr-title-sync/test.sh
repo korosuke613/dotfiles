@@ -37,4 +37,31 @@ grep -Fx 'agent rename w1:p1 copilot' "$tmp/log"
 grep -Fx 'tab rename w1:t1 Fix OAuth callback' "$tmp/log"
 grep -Fx 'workspace rename w1 home-server - Fix OAuth callback' "$tmp/log"
 
+# 回帰: ID再利用で前セッションの状態ファイルが残っていても、初期名なら更新される
+: >"$tmp/log"
+printf 'Old session tab\n' >"$HERDR_PLUGIN_STATE_DIR/tab-w1_t1.label"
+printf 'home-server - Old session\n' >"$HERDR_PLUGIN_STATE_DIR/workspace-w1.label"
+bash "$root/sync.sh"
+grep -Fx 'tab rename w1:t1 Fix OAuth callback' "$tmp/log"
+grep -Fx 'workspace rename w1 home-server - Fix OAuth callback' "$tmp/log"
+[[ "$(<"$HERDR_PLUGIN_STATE_DIR/tab-w1_t1.label")" == "Fix OAuth callback" ]]
+
+# 手動変更(初期名でも保存値でも新タイトルでもない)は引き続き尊重される
+: >"$tmp/log"
+cat >"$tmp/herdr-manual" <<'STUB'
+#!/usr/bin/env bash
+set -euo pipefail
+case "$1 $2" in
+  "api snapshot") "$HERDR_REAL_STUB" "$@" | jq '.result.snapshot.tabs[0].label="My name"' ;;
+  "workspace get") "$HERDR_REAL_STUB" "$@" | jq '.result.workspace.label="My space"' ;;
+  *) "$HERDR_REAL_STUB" "$@" ;;
+esac
+STUB
+chmod +x "$tmp/herdr-manual"
+printf 'Old session tab\n' >"$HERDR_PLUGIN_STATE_DIR/tab-w1_t1.label"
+printf 'home-server - Old session\n' >"$HERDR_PLUGIN_STATE_DIR/workspace-w1.label"
+HERDR_REAL_STUB="$tmp/herdr" HERDR_BIN_PATH="$tmp/herdr-manual" bash "$root/sync.sh" 2>/dev/null
+! grep -q '^tab rename' "$tmp/log"
+! grep -q '^workspace rename' "$tmp/log"
+
 printf 'title-sync tests passed\n'

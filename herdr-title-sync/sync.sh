@@ -89,15 +89,18 @@ rename_tab_if_owned() {
   local current="$3"
   local state_file="$state_dir/tab-${tab_id//:/_}.label"
 
-  if [[ -f "$state_file" ]]; then
+  # タブIDは新しいセッションで再利用されるため、状態ファイルに前セッションの
+  # 古い名前が残りうる。現在名が初期名(1-5)なら手動変更ではないので管理下とする。
+  if [[ "$current" =~ ^[1-5]$ ]]; then
+    :
+  elif [[ -f "$state_file" ]]; then
     local expected
     expected=$(<"$state_file")
     if [[ "$current" != "$expected" && "$current" != "$title" ]]; then
       log "tab $tab_id appears manually renamed; leaving it unchanged"
       return 0
     fi
-  elif [[ "$current" != "1" && "$current" != "2" && "$current" != "3" &&
-          "$current" != "4" && "$current" != "5" ]]; then
+  else
     log "tab $tab_id has a non-default label; leaving it unchanged"
     return 0
   fi
@@ -115,14 +118,17 @@ rename_workspace_if_owned() {
   local state_file="$state_dir/workspace-${workspace_id}.label"
 
   workspace_label=$(normalize_title "$workspace_label")
-  if [[ -f "$state_file" ]]; then
+  # 状態ファイルが古くても、現在名が初期名(home / project)なら管理下とする。
+  if [[ "$current" == "home" || "$current" == "$project" ]]; then
+    :
+  elif [[ -f "$state_file" ]]; then
     local expected
     expected=$(<"$state_file")
     if [[ "$current" != "$expected" && "$current" != "$workspace_label" ]]; then
       log "workspace $workspace_id appears manually renamed; leaving it unchanged"
       return 0
     fi
-  elif [[ "$current" != "home" && "$current" != "$project" ]]; then
+  else
     log "workspace $workspace_id has a non-default label; leaving it unchanged"
     return 0
   fi
