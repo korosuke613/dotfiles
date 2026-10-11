@@ -5,8 +5,8 @@ set -euo pipefail
 repo_root=$(CDPATH= cd -- "$(dirname "$0")" && pwd)
 export MISE_CEILING_PATHS="$(dirname "$repo_root")"
 mode="${1:-apply}"
-mise_version="2026.8.5"
-mise_sha256="0268084c853545dc4a81acc0a494965a784a8935f3aa53728f0703398dc0cdbd"
+mise_version="2026.10.8"
+mise_sha256="dd77de9a7574e38d8409fb06fa85e1581415896639d075987791d8c4e5a57b73"
 mise_bin="${MISE_BIN:-$HOME/.local/bin/mise}"
 
 usage() {
