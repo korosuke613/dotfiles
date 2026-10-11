@@ -109,3 +109,19 @@ zsh-cache-clear() {
   print "zsh cache cleared"
 }
 alias zsh-cache-rebuild='zsh-cache-clear && exec zsh'
+
+# Saved machine enablement is global, so this also affects already-open herdr clients.
+_herdr_machines_set() {
+  local id
+  herdr machine list --json | jq -r '.[].id' | while IFS= read -r id; do
+    herdr machine "$1" "$id" >/dev/null || return
+  done
+}
+
+herdr-local() {
+  _herdr_machines_set disable && herdr "$@"
+}
+
+herdr-all() {
+  _herdr_machines_set enable && herdr "$@"
+}
