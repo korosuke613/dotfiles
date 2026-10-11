@@ -1,2 +1,6 @@
 # .github/workflows/benchmark.yaml
 benchmark-results/
+
+# Claude Code skills generated locally
+mac/claude/skills/.trash/
+mac/claude/skills/synced/
