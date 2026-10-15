@@ -38,7 +38,10 @@
       "mcp__playwright__browser_take_screenshot",
       "WebFetch(domain:github.blog)"
     ],
-    "defaultMode": "auto"
+    "defaultMode": "auto",
+    "ask": [
+      "Bash(dangerouslyDisableSandbox:true)"
+    ]
   },
   "model": "sonnet",
   "worktree": {
@@ -74,5 +77,10 @@
   "remoteControlAtStartup": false,
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
-  "voiceEnabled": true
+  "voiceEnabled": true,
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true,
+    "allowUnsandboxedCommands": true
+  }
 }
