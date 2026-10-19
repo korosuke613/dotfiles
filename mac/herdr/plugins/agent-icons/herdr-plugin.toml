@@ -1,0 +1,13 @@
+id = "korosuke613.agent-icons"
+name = "Agent Icons"
+version = "0.1.0"
+min_herdr_version = "0.9.5"
+description = "Report a brand emoji per agent kind as the $icon pane token"
+platforms = ["macos", "linux"]
+
+[[startup]]
+command = ["/usr/bin/python3", "sync.py"]
+
+[[events]]
+on = "pane.agent_detected"
+command = ["/usr/bin/python3", "sync.py"]
