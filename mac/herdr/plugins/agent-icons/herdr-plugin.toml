@@ -2,7 +2,7 @@ id = "korosuke613.agent-icons"
 name = "Agent Icons"
 version = "0.1.0"
 min_herdr_version = "0.9.5"
-description = "Report a brand emoji per agent kind as the $icon pane token"
+description = "Report a brand emoji per agent kind as the display name and the pane repository as $repo"
 platforms = ["macos", "linux"]
 
 [[startup]]
