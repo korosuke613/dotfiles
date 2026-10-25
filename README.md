@@ -100,3 +100,10 @@ dependency or build directories.
 
 Run its regression tests with `python3 mac/zsh/tests/test_cdf.py`
 (requires `zsh`, `fd`, and `git`; the tests replace the interactive `fzf` picker).
+
+Inside a Herdr pane, the `sbx` wrapper sets `HERDR_AGENT` for `sbx run`.
+Herdr otherwise sees only the `sbx` process and never detects the agent in
+the sandbox, so the Herdr plugins (`herdr-title-sync`, `agent-icons`) skip that
+pane. The agent comes from the `sbx run` argument or the prefix of the default
+sandbox name (`claude-home` → `claude`). Run its tests with
+`python3 mac/zsh/tests/test_sbx.py` (requires `zsh`).
