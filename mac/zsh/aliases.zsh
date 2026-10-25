@@ -125,3 +125,26 @@ herdr-local() {
 herdr-all() {
   _herdr_machines_set enable && herdr "$@"
 }
+
+# herdr detects agents from the pane's foreground process, which is sbx itself
+# for `sbx run`. HERDR_AGENT names the agent behind the sandbox boundary.
+sbx() {
+  local arg agent
+  if [[ -n "$HERDR_PANE_ID" && "$1" == run ]]; then
+    for arg in "${@:2}"; do
+      [[ "$arg" == -- ]] && break
+      # Matches the agent (`sbx run claude`) and its default sandbox name (`claude-home`).
+      case "${arg%%-*}" in
+        claude|codex|copilot|cursor|gemini|opencode)
+          agent="${arg%%-*}"
+          break
+          ;;
+      esac
+    done
+  fi
+  if [[ -n "$agent" ]]; then
+    HERDR_AGENT="$agent" command sbx "$@"
+  else
+    command sbx "$@"
+  fi
+}
