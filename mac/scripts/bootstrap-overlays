@@ -6,11 +6,15 @@ repo_root=$(CDPATH= cd -- "$(dirname "$0")/../.." && pwd)
 private_root="${DOTFILES_PRIVATE_HOME:-$HOME/.config/dotfiles/private}"
 profile_file="${DOTFILES_PROFILE_FILE:-$HOME/.config/dotfiles/profiles}"
 jq_bin="${JQ_BIN:-jq}"
+live_settings="$HOME/.claude/settings.json"
+snapshot="${DOTFILES_CLAUDE_SNAPSHOT:-$HOME/.config/dotfiles/claude-settings.generated.json}"
 
 mkdir -p "$HOME/.config/dotfiles" "$HOME/.claude"
 gitconfig_tmp=$(mktemp)
 settings_tmp=$(mktemp)
-trap 'rm -f "$gitconfig_tmp" "$settings_tmp"' EXIT
+merge_tmp=$(mktemp)
+merged_tmp=$(mktemp)
+trap 'rm -f "$gitconfig_tmp" "$settings_tmp" "$merge_tmp" "$merged_tmp"' EXIT
 
 settings=("$repo_root/mac/claude/settings.json")
 if [[ -f "$profile_file" ]]; then
@@ -25,6 +29,38 @@ if [[ -f "$profile_file" ]]; then
 fi
 
 "$jq_bin" -s 'reduce .[] as $item ({}; . * $item)' "${settings[@]}" > "$settings_tmp"
+
+# Claude Code も settings.json に書き込むため、丸ごと上書きせずに
+# 前回の生成結果・今回の生成結果・実ファイルを3-way mergeする。
+# 初回は前回の生成結果がないので、今回の生成結果を前回分とみなす。
+settings_out="$settings_tmp"
+prefer=live
+[[ "${DOTFILES_DISCARD_CLAUDE_DRIFT:-0}" == 1 ]] && prefer=sources
+if [[ -f "$live_settings" ]]; then
+  baseline="$snapshot"
+  [[ -f "$baseline" ]] || baseline="$settings_tmp"
+  "$jq_bin" -n --slurpfile base "$baseline" --slurpfile new "$settings_tmp" \
+    --slurpfile live "$live_settings" --arg prefer "$prefer" \
+    -f "$repo_root/mac/scripts/claude-settings-merge.jq" \
+    > "$merge_tmp"
+  if [[ "$("$jq_bin" '.conflicts | length' "$merge_tmp")" != 0 ]]; then
+    printf 'overlays: %s and the sources changed the same keys:\n' "$live_settings" >&2
+    "$jq_bin" -r 'def show: if . == {"__claude_settings_merge_missing__": true} then "(none)" else tojson end; .conflicts[] | "  \(.path | join(".")): previous \(.base | show), sources \(.new | show), live \(.live | show)"' \
+      "$merge_tmp" >&2
+    printf 'overlays: fix the sources or %s, or rerun with: setup.sh apply --discard-claude-drift\n' "$live_settings" >&2
+    exit 1
+  fi
+  overrides=$("$jq_bin" '.overrides | length' "$merge_tmp")
+  if [[ "$overrides" != 0 ]]; then
+    printf 'overlays: kept %s local Claude settings over the sources; run dot doctor to review\n' "$overrides" >&2
+  fi
+  "$jq_bin" '.result' "$merge_tmp" > "$merged_tmp"
+  settings_out="$merged_tmp"
+fi
+
 mv "$gitconfig_tmp" "$HOME/.config/dotfiles/gitconfig"
-mv "$settings_tmp" "$HOME/.claude/settings.json"
+cp "$settings_tmp" "$snapshot"
+chmod 600 "$snapshot"
+mv "$settings_out" "$live_settings"
+rm -f "$settings_tmp" "$merge_tmp" "$merged_tmp"
 trap - EXIT

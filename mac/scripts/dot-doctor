@@ -97,6 +97,27 @@ else
   ok "no private profiles selected"
 fi
 
+claude_settings="$HOME/.claude/settings.json"
+claude_snapshot="${DOTFILES_CLAUDE_SNAPSHOT:-$HOME/.config/dotfiles/claude-settings.generated.json}"
+jq_cmd=$(command -v jq 2>/dev/null || true)
+if [[ ! -f "$claude_snapshot" ]]; then
+  warn "Claude settings snapshot is missing; run $repo_root/setup.sh apply"
+elif [[ -z "$jq_cmd" ]]; then
+  warn "jq is missing; cannot check Claude settings drift"
+else
+  # 生成元と違う管理対象キーを列挙する。Claude Code が自分で足したキーは対象外。
+  claude_overrides=$("$jq_cmd" -n --slurpfile base "$claude_snapshot" \
+    --slurpfile new "$claude_snapshot" --slurpfile live "$claude_settings" --arg prefer live \
+    -f "$repo_root/mac/scripts/claude-settings-merge.jq" \
+    | "$jq_cmd" -r 'def show: if . == {"__claude_settings_merge_missing__": true} then "(none)" else tojson end; .overrides[] | "  \(.path | join(".")): sources \(.new | show), live \(.live | show)"')
+  if [[ -z "$claude_overrides" ]]; then
+    ok "Claude settings have no local overrides since the last apply"
+  else
+    printf 'notice: local Claude settings override the sources; move them into the sources if they should stay:\n%s\n' \
+      "$claude_overrides"
+  fi
+fi
+
 if command -v brew >/dev/null 2>&1; then
   while read -r tool formula; do
     if brew list --formula "$formula" >/dev/null 2>&1; then

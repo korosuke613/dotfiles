@@ -36,6 +36,17 @@ it is not installed. `dot doctor` reports manual prerequisites.
 Claude Code and GitHub Copilot CLI keep their standalone installers. This
 repository manages Claude's settings, status line, and skills only.
 
+`~/.claude/settings.json` is generated from `mac/claude/settings.json` and each
+role's `claude-settings.json`, but Claude Code also writes to it (`/model`,
+`/config`, `/plugin`, dismissed prompts). `apply` therefore keeps the previous
+output in `~/.config/dotfiles/claude-settings.generated.json` and three-way
+merges it with the new output and the live file: keys only Claude wrote are
+kept, keys nobody changed by hand follow the sources, keys changed by hand stay
+as they are, and `permissions` lists are merged as sets. `apply` stops only
+when the same key was changed both by hand and in the sources; resolve it in
+the sources, or run `./setup.sh apply --discard-claude-drift` to let the
+sources win for every managed key. `dot doctor` lists the keys kept by hand.
+
 ## Maintenance
 
 ```shell
