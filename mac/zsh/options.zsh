@@ -6,6 +6,6 @@ export TF_CLI_ARGS_apply="--parallelism=50"
 setopt autocd
 setopt interactive_comments
 
-if [[ "$TERM_PROGRAM" == "vscode" || "$TERM_PROGRAM" == "kiro" ]]; then
-  bindkey -e
-fi
+# zsh picks viins when EDITOR contains "vi" at startup, which happens in
+# terminals that inherit EDITOR=vim (VSCode, Kiro, herdr panes).
+bindkey -e
