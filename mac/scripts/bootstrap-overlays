@@ -32,15 +32,17 @@ fi
 
 # Claude Code も settings.json に書き込むため、丸ごと上書きせずに
 # 前回の生成結果・今回の生成結果・実ファイルを3-way mergeする。
-# 初回は前回の生成結果がないので、今回の生成結果を前回分とみなす。
+# 初回は前回の生成結果がないので、実ファイルにあるキーだけ今回の生成結果を
+# 前回分とみなす（実ファイルにないキーは手で消したのではなく未反映として足す）。
 settings_out="$settings_tmp"
 prefer=live
 [[ "${DOTFILES_DISCARD_CLAUDE_DRIFT:-0}" == 1 ]] && prefer=sources
 if [[ -f "$live_settings" ]]; then
   baseline="$snapshot"
-  [[ -f "$baseline" ]] || baseline="$settings_tmp"
+  first=false
+  [[ -f "$baseline" ]] || { baseline="$settings_tmp"; first=true; }
   "$jq_bin" -n --slurpfile base "$baseline" --slurpfile new "$settings_tmp" \
-    --slurpfile live "$live_settings" --arg prefer "$prefer" \
+    --slurpfile live "$live_settings" --arg prefer "$prefer" --arg first "$first" \
     -f "$repo_root/mac/scripts/claude-settings-merge.jq" \
     > "$merge_tmp"
   if [[ "$("$jq_bin" '.conflicts | length' "$merge_tmp")" != 0 ]]; then

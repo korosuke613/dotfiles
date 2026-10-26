@@ -6,6 +6,11 @@
 #   new:  the settings generated from the current sources
 #   live: ~/.claude/settings.json, which Claude Code also writes to
 #
+# With --arg first true there is no previous output yet: base is ignored and
+# taken to be new restricted to the keys live already has. A differing live
+# value is kept as a local change, and a key live lacks is added from new
+# instead of being read as a local deletion.
+#
 # Objects are merged key by key; any other value (arrays included) is one
 # leaf. Arrays under "permissions" are merged as sets instead, so rules
 # approved in Claude Code and rules added to the sources can coexist.
@@ -37,7 +42,12 @@ def set_merge($b; $n; $l):
 
 def is_list: type == "array" or . == missing;
 
-$base[0] as $b | $new[0] as $n | $live[0] as $l
+$new[0] as $n | $live[0] as $l
+| (if $ARGS.named.first == "true" then
+     reduce ($n | [leaves])[] as $p ({};
+       if ($l | at($p)) != missing then setpath($p; $n | at($p)) else . end)
+   else $base[0]
+   end) as $b
 | ([$b, $n, $l] | map([leaves]) | add | unique) as $paths
 | reduce $paths[] as $p ({result: {}, conflicts: []};
     ($b | at($p)) as $bv | ($n | at($p)) as $nv | ($l | at($p)) as $lv
