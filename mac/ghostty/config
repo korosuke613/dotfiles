@@ -5,3 +5,7 @@ theme = Challenger Deep
 background-opacity = 0.9
 macos-window-buttons = hidden
 desktop-notifications = true
+
+# Under the kitty keyboard protocol (enabled by herdr), Ghostty 1.3.1 drops
+# Option from Option+Backspace and sends a bare DEL. Send ESC DEL explicitly.
+keybind = alt+backspace=text:\x1b\x7f
