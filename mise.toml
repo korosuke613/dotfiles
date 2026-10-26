@@ -28,6 +28,10 @@ git-lfs = "3.7.1"
 herdr = "0.9.5"
 ghtkn = "0.3.6"
 
+[env]
+# eMudhra 中間証明書の脆弱性対応。AWS CLI 同梱の CA バンドルが更新されるまで、brew の ca-certificates を使う
+AWS_CA_BUNDLE = "/opt/homebrew/etc/ca-certificates/cert.pem"
+
 [dotfiles]
 "~/.zshrc" = "mac/zsh/.zshrc"
 "~/.vimrc" = "mac/vim/.vimrc"

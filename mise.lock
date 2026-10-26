@@ -11,12 +11,11 @@ url_api = "https://api.github.com/repos/atuinsh/atuin/releases/assets/500652047"
 provenance = "github-attestations"
 
 [[tools.awscli]]
-version = "2.36.21"
+version = "2.38.5"
 backend = "aqua:aws/aws-cli"
 
 [tools.awscli."platforms.macos-arm64"]
-checksum = "blake3:ed55562edb97949b36236af4c78dc785045c16eca8272808ee0fc756b591578b"
-url = "https://awscli.amazonaws.com/AWSCLIV2-2.36.21.pkg"
+url = "https://awscli.amazonaws.com/AWSCLIV2-2.38.5.pkg"
 
 [[tools.bat]]
 version = "0.26.1"
@@ -100,12 +99,12 @@ url = "https://github.com/git-lfs/git-lfs/releases/download/v3.7.1/git-lfs-darwi
 url_api = "https://api.github.com/repos/git-lfs/git-lfs/releases/assets/305262593"
 
 [[tools.go]]
-version = "1.26.5"
+version = "1.27.3"
 backend = "core:go"
 
 [tools.go."platforms.macos-arm64"]
-checksum = "sha256:efb87ff28af9a188d0536ef5d42e63dd52ba8263cd7344a993cc48dd11dedb6a"
-url = "https://dl.google.com/go/go1.26.5.darwin-arm64.tar.gz"
+checksum = "sha256:dd3908cf20959d798c1e06ebe5b72213f0505ce01373b40ce3110975a6cd99c2"
+url = "https://dl.google.com/go/go1.27.3.darwin-arm64.tar.gz"
 
 [[tools.herdr]]
 version = "0.9.5"
@@ -135,12 +134,12 @@ checksum = "sha256:fc8582acde13869a606730a79379d6515f30c68afcced0b5ac8789d5d002b
 url = "https://dl.k8s.io/v1.36.3/bin/darwin/arm64/kubectl"
 
 [[tools.node]]
-version = "26.7.0"
+version = "26.12.1"
 backend = "core:node"
 
 [tools.node."platforms.macos-arm64"]
-checksum = "sha256:7ee659a7768e641bbfd5360940660b8e8fd0052f77488f365562bac522fc15d4"
-url = "https://nodejs.org/dist/v26.7.0/node-v26.7.0-darwin-arm64.tar.gz"
+checksum = "sha256:1901d539912c02afa10d1cc126943a8855a7eedebe830119463470db5e6c59e8"
+url = "https://nodejs.org/dist/v26.12.1/node-v26.12.1-darwin-arm64.tar.gz"
 
 [[tools.op]]
 version = "2.38.1"
@@ -186,11 +185,11 @@ checksum = "sha256:f210110c5698b94d803a7a63cdb0251b5455c150841478808e2bbb343f95e
 url = "https://releases.hashicorp.com/terraform/1.15.8/terraform_1.15.8_darwin_arm64.zip"
 
 [[tools.uv]]
-version = "0.12.1"
+version = "0.13.5"
 backend = "aqua:astral-sh/uv"
 
 [tools.uv."platforms.macos-arm64"]
-checksum = "sha256:77d2906988e8074fd43f2f329ec452ebbf9b0c257ba1c66451c71de70a6baf42"
-url = "https://github.com/astral-sh/uv/releases/download/0.12.1/uv-aarch64-apple-darwin.tar.gz"
-url_api = "https://api.github.com/repos/astral-sh/uv/releases/assets/497097062"
+checksum = "sha256:743f85035a1996ecb350659e01cd9faea9709829be09b1b4b03c73eaf3c9cd73"
+url = "https://github.com/astral-sh/uv/releases/download/0.13.5/uv-aarch64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/astral-sh/uv/releases/assets/664335803"
 provenance = "github-attestations"
