@@ -5,12 +5,13 @@ set -euo pipefail
 repo_root=$(CDPATH= cd -- "$(dirname "$0")" && pwd)
 export MISE_CEILING_PATHS="$(dirname "$repo_root")"
 mode="${1:-apply}"
+option="${2:-}"
 mise_version="2026.10.8"
 mise_sha256="dd77de9a7574e38d8409fb06fa85e1581415896639d075987791d8c4e5a57b73"
 mise_bin="${MISE_BIN:-$HOME/.local/bin/mise}"
 
 usage() {
-  printf 'Usage: %s [check|dry-run|apply]\n' "$0" >&2
+  printf 'Usage: %s [check|dry-run|apply [--discard-claude-drift]]\n' "$0" >&2
   exit 2
 }
 
@@ -79,6 +80,11 @@ case "$mode" in
     fi
     ;;
   apply)
+    case "$option" in
+      "") ;;
+      --discard-claude-drift) export DOTFILES_DISCARD_CLAUDE_DRIFT=1 ;;
+      *) usage ;;
+    esac
     mise_cmd=$(find_mise) || {
       install_mise
       mise_cmd="$mise_bin"

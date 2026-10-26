@@ -45,7 +45,12 @@ private repoのroleに置き、公開ファイルへコピーしない。
 `setup.sh apply`はmanifestを読み、以下を生成・適用する：
 
 - `~/.config/dotfiles/gitconfig` - 各roleのgitconfigをinclude
-- `~/.claude/settings.json` - public settingsとrole JSONを`jq`でmerge
+- `~/.claude/settings.json` - public settingsとrole JSONを`jq`でmerge。
+  Claude Code自身も書き込むため、前回の生成結果
+  （`~/.config/dotfiles/claude-settings.generated.json`）・今回の生成結果・
+  実ファイルを`mac/scripts/claude-settings-merge.jq`で3-way mergeする。
+  手での変更と生成元の変更が同じキーでぶつかったときだけ停止する
+  （手で残した値は`dot doctor`で確認、生成元優先は`apply --discard-claude-drift`）
 - `.zshrc` - 各roleの`zsh.zsh`をshell起動時にsource
 
 role JSONはpublic設定をベースにmanifestの順序でmergeされ、同じキーは
