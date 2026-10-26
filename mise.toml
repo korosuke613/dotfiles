@@ -5,13 +5,13 @@ lockfile = true
 pin = true
 
 [tools]
-node = "26.7.0"
+node = "26.12.1"
 terraform = "1.15.8"
 awscli = "2.36.21"
 direnv = "2.37.1"
-uv = "0.12.1"
+uv = "0.13.5"
 kubectl = "1.36.3"
-go = "1.26.5"
+go = "1.27.3"
 pnpm = "11.20.0"
 eza = "0.23.5"
 bat = "0.26.1"
