@@ -7,7 +7,7 @@ pin = true
 [tools]
 node = "26.12.1"
 terraform = "1.15.8"
-awscli = "2.36.21"
+awscli = "2.38.5"
 direnv = "2.37.1"
 uv = "0.13.5"
 kubectl = "1.36.3"
