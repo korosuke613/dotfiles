@@ -74,6 +74,7 @@ tools=(
 for tool in "${tools[@]}"; do
   "$mise_cmd" -C "$repo_root" use --yes --pin --minimum-release-age 7d "$tool@latest"
 done
-"$mise_cmd" -C "$repo_root" lock --platform macos-arm64
+# mise.toml は ~/.config/mise/config.toml 経由のグローバル設定なので、--global で lock する
+"$mise_cmd" lock --global --platform macos-arm64
 
 printf 'tools update: review mise.toml, mise.lock, and setup.sh before committing\n'

@@ -3,19 +3,25 @@
 set -euo pipefail
 
 repo_root=$(CDPATH= cd -- "$(dirname "$0")/../.." && pwd)
-mise_config="$HOME/.config/mise/config.toml"
+link_mise_file() {
+  local source="$1"
+  local target="$2"
+  local current_target="" backup
+  if [[ -e "$target" || -L "$target" ]]; then
+    [[ -L "$target" ]] && current_target=$(readlink "$target")
+    if [[ "$current_target" != "$source" ]]; then
+      backup="${target}.backup-$(date '+%Y%m%d%H%M%S')"
+      mv "$target" "$backup"
+      printf 'migration: backed up existing %s to %s\n' "$target" "$backup"
+    fi
+  fi
+  ln -sfn "$source" "$target"
+}
 
 mkdir -p "$HOME/.config/mise"
-if [[ -e "$mise_config" || -L "$mise_config" ]]; then
-  current_target=""
-  [[ -L "$mise_config" ]] && current_target=$(readlink "$mise_config")
-  if [[ "$current_target" != "$repo_root/mise.toml" ]]; then
-    backup="${mise_config}.backup-$(date '+%Y%m%d%H%M%S')"
-    mv "$mise_config" "$backup"
-    printf 'migration: backed up existing mise config to %s\n' "$backup"
-  fi
-fi
-ln -sfn "$repo_root/mise.toml" "$mise_config"
+link_mise_file "$repo_root/mise.toml" "$HOME/.config/mise/config.toml"
+# mise はグローバル設定の lock を ~/.config/mise/mise.lock に書くので、リポジトリの lock に向ける
+link_mise_file "$repo_root/mise.lock" "$HOME/.config/mise/mise.lock"
 
 remove_legacy_link() {
   local target="$1"
