@@ -6,8 +6,8 @@ repo_root=$(CDPATH= cd -- "$(dirname "$0")" && pwd)
 export MISE_CEILING_PATHS="$(dirname "$repo_root")"
 mode="${1:-apply}"
 option="${2:-}"
-mise_version="2026.10.8"
-mise_sha256="dd77de9a7574e38d8409fb06fa85e1581415896639d075987791d8c4e5a57b73"
+mise_version="2026.10.17"
+mise_sha256="9e27709db5eb1e900d83149418d3067309f2a5004d4994d94246ab658ba4a3ce"
 mise_bin="${MISE_BIN:-$HOME/.local/bin/mise}"
 
 usage() {

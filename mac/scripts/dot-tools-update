@@ -69,7 +69,7 @@ mise_cmd="$HOME/.local/bin/mise"
 
 tools=(
   node terraform awscli direnv uv kubectl go pnpm eza bat fd starship
-  atuin gh ghq fzf ripgrep jq op git-lfs herdr ghtkn
+  atuin gh ghq fzf ripgrep jq git-lfs herdr ghtkn
 )
 for tool in "${tools[@]}"; do
   "$mise_cmd" -C "$repo_root" use --yes --pin --minimum-release-age 7d "$tool@latest"

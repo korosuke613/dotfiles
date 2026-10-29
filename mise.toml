@@ -1,4 +1,4 @@
-min_version = "2026.10.8"
+min_version = "2026.10.17"
 
 [settings]
 lockfile = true
@@ -6,27 +6,26 @@ pin = true
 
 [tools]
 node = "26.12.1"
-terraform = "1.15.8"
-awscli = "2.38.5"
-direnv = "2.37.1"
+terraform = "1.17.0"
+awscli = { version = "2.38.5", symlink_bins = "true" }
+direnv = "2.38.2"
 uv = "0.13.5"
-kubectl = "1.36.3"
+kubectl = "1.37.1"
 go = "1.27.3"
-pnpm = "11.20.0"
+pnpm = "12.15.0"
 eza = "0.23.5"
 bat = "0.26.1"
-fd = "10.4.2"
-starship = "1.26.0"
-atuin = "18.19.0"
-gh = "2.97.0"
-ghq = "1.10.1"
-fzf = "0.74.2"
+fd = "10.5.0"
+starship = "1.27.0"
+atuin = "18.24.1"
+gh = "2.103.0"
+ghq = "1.11.2"
+fzf = "0.74.5"
 ripgrep = "15.2.0"
 jq = "1.8.2"
-op = "2.38.1"
-git-lfs = "3.7.1"
+git-lfs = "3.8.0"
 herdr = "0.9.5"
-ghtkn = "0.3.6"
+ghtkn = "0.4.2"
 
 [env]
 # eMudhra 中間証明書の脆弱性対応。AWS CLI 同梱の CA バンドルが更新されるまで、brew の ca-certificates を使う
