@@ -24,7 +24,6 @@ fzf = "0.74.5"
 ripgrep = "15.2.0"
 jq = "1.8.2"
 git-lfs = "3.8.0"
-herdr = "0.9.5"
 ghtkn = "0.4.2"
 
 [env]

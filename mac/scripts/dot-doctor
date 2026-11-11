@@ -143,7 +143,6 @@ fzf fzf
 ripgrep ripgrep
 jq jq
 git-lfs git-lfs
-herdr herdr
 EOF
 else
   warn "Homebrew is unavailable; native dependencies must be installed manually"
