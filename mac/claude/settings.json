@@ -38,10 +38,7 @@
       "mcp__playwright__browser_take_screenshot",
       "WebFetch(domain:github.blog)"
     ],
-    "defaultMode": "auto",
-    "ask": [
-      "Bash(dangerouslyDisableSandbox:true)"
-    ]
+    "defaultMode": "auto"
   },
   "model": "sonnet",
   "worktree": {
