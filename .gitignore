@@ -4,3 +4,6 @@ benchmark-results/
 # Claude Code skills generated locally
 mac/claude/skills/.trash/
 mac/claude/skills/synced/
+
+# Claude Code のプランファイル（マシンごとの作業メモ）
+plans/

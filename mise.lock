@@ -34,7 +34,6 @@ backend = "aqua:sharkdp/bat"
 
 [tools.bat."platforms.linux-arm64"]
 checksum = "sha256:422eb73e11c854fddd99f5ca8461c2f1d6e6dce0a2a8c3d5daade5ffcb6564aa"
-checksum_source = "mise-versions"
 url = "https://github.com/sharkdp/bat/releases/download/v0.26.1/bat-v0.26.1-aarch64-unknown-linux-gnu.tar.gz"
 url_api = "https://api.github.com/repos/sharkdp/bat/releases/assets/323548647"
 
@@ -49,7 +48,6 @@ backend = "aqua:direnv/direnv"
 
 [tools.direnv."platforms.linux-arm64"]
 checksum = "sha256:ec2a32dbe2f19dd085bd9315a1b4ea88b55ec288aa7eabe8723490baf466cb23"
-checksum_source = "mise-versions"
 url = "https://github.com/direnv/direnv/releases/download/v2.38.2/direnv.linux-arm64"
 url_api = "https://api.github.com/repos/direnv/direnv/releases/assets/627455481"
 
@@ -76,7 +74,6 @@ backend = "aqua:sharkdp/fd"
 
 [tools.fd."platforms.linux-arm64"]
 checksum = "sha256:c0ee43802e3313a317c5af2f4eabd6ba13eeedd595af9775f05e18a13ac4f52c"
-checksum_source = "mise-versions"
 url = "https://github.com/sharkdp/fd/releases/download/v10.5.0/fd-v10.5.0-aarch64-unknown-linux-gnu.tar.gz"
 url_api = "https://api.github.com/repos/sharkdp/fd/releases/assets/530482307"
 
@@ -91,7 +88,6 @@ backend = "aqua:junegunn/fzf"
 
 [tools.fzf."platforms.linux-arm64"]
 checksum = "sha256:cf058001da21724a469b714a29cf4aab9cbe860d218a0d6c1b5b661efad7784c"
-checksum_source = "mise-versions"
 url = "https://github.com/junegunn/fzf/releases/download/v0.74.5/fzf-0.74.5-linux_arm64.tar.gz"
 url_api = "https://api.github.com/repos/junegunn/fzf/releases/assets/629581759"
 
@@ -122,7 +118,6 @@ backend = "aqua:x-motemen/ghq"
 
 [tools.ghq."platforms.linux-arm64"]
 checksum = "sha256:0a083c5d5b214dd0f4f693cf8839b15f6b5cc4e2d91b0cb4abb8748dcdb353c9"
-checksum_source = "mise-versions"
 url = "https://github.com/x-motemen/ghq/releases/download/v1.11.2/ghq_linux_arm64.zip"
 url_api = "https://api.github.com/repos/x-motemen/ghq/releases/assets/598741476"
 
@@ -153,7 +148,6 @@ backend = "aqua:git-lfs/git-lfs"
 
 [tools.git-lfs."platforms.linux-arm64"]
 checksum = "sha256:ac9c8efac980bb0505ead384d087e2acb6486fd8498691a2165fa174ec6118c2"
-checksum_source = "mise-versions"
 url = "https://github.com/git-lfs/git-lfs/releases/download/v3.8.0/git-lfs-linux-arm64-v3.8.0.tar.gz"
 url_api = "https://api.github.com/repos/git-lfs/git-lfs/releases/assets/532993825"
 
@@ -236,7 +230,6 @@ backend = "aqua:BurntSushi/ripgrep"
 
 [tools.ripgrep."platforms.linux-arm64"]
 checksum = "sha256:a740b91c82eaf9914cfedd353572f2791cbe0162c84101ee0951058f4dcbc90d"
-checksum_source = "mise-versions"
 url = "https://github.com/BurntSushi/ripgrep/releases/download/15.2.0/ripgrep-15.2.0-aarch64-unknown-linux-gnu.tar.gz"
 url_api = "https://api.github.com/repos/BurntSushi/ripgrep/releases/assets/478119579"
 
@@ -251,7 +244,6 @@ backend = "aqua:starship/starship"
 
 [tools.starship."platforms.linux-arm64"]
 checksum = "sha256:341f5cbf24699fa0b27ec88965ad25f862ea09e15d35a543fd6ffdff1d2aa00d"
-checksum_source = "mise-versions"
 url = "https://github.com/starship/starship/releases/download/v1.27.0/starship-aarch64-unknown-linux-musl.tar.gz"
 url_api = "https://api.github.com/repos/starship/starship/releases/assets/650074383"
 
